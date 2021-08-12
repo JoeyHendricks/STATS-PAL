@@ -33,6 +33,7 @@ class TestPercentileHypothesisTest(unittest.TestCase):
         Expected result is that every increment will comeback as false.
         """
         for increment in range(4, 100):
+            print(increment)
             scenario = CreateFictitiousScenario()
             scenario.benchmark_percentage_increased = {"start": 2, "end": increment}
 
@@ -50,6 +51,7 @@ class TestPercentileHypothesisTest(unittest.TestCase):
         Expected result is that every increment will comeback as false.
         """
         for increment in range(4, 100):
+            print(increment)
             scenario = CreateFictitiousScenario()
             scenario.benchmark_percentage_decreased = {"start": 2, "end": increment}
 
@@ -58,10 +60,10 @@ class TestPercentileHypothesisTest(unittest.TestCase):
                 group_b=scenario.benchmark_measurements
             )
             results = hypothesis.test()
-            self.assertFalse(results)
             print(results)
             if HUMAN_OBSERVER is True:
                 self._show_scatter_plot(scenario)
+            self.assertFalse(results)
 
     def test_hypothesis_test_with_a_constant_benchmark(self) -> None:
         """
@@ -71,6 +73,7 @@ class TestPercentileHypothesisTest(unittest.TestCase):
         change = [{"start": 0, "end": 1}, {"start": 0, "end": 2}]
 
         for increment in change:
+            print(increment)
             scenario = CreateFictitiousScenario()
             scenario.benchmark_percentage_increased = increment
 
@@ -78,9 +81,9 @@ class TestPercentileHypothesisTest(unittest.TestCase):
                 group_a=scenario.baseline_measurements,
                 group_b=scenario.benchmark_measurements
             )
-            self.assertTrue(hypothesis.test())
             if HUMAN_OBSERVER is True:
                 self._show_scatter_plot(scenario)
+            self.assertTrue(hypothesis.test())
 
 
 

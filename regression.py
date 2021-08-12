@@ -13,15 +13,63 @@ class PercentileHypothesisTest:
     Please share feedback and let me know if you encounter any type 1 or type 2 errors using this test.
     """
     # The change matrix
+
     MATRIX = [
-        [2, 0.07688676],
-        [4, 0.13395531],
-        [8, 0.20272898],
-        [16, 0.21770635],
-        [32, 0.36872261],
+        [0.10, 0.002008],
+        [0.20, 0.003065],
+        [0.40, 0.004570],
+        [0.80, 0.006656],
+        [0.90, 0.009469],
+        [1, 0.013160],
+        [2, 0.01786],
+        [3, 0.02364],
+        [4, 0.03069],
+        [5, 0.03884],
+        [6, 0.04802],
+        [7, 0.05799],
+        [8, 0.06841],
+        [9, 0.07883],
+        [10, 0.0887],
+        [11, 0.0975],
+        [12, 0.1048],
+        [13, 0.1100],
+        [14, 0.1127],
+        [15, 0.1129],
+        [16, 0.1322],
+        [17, 0.1551],
+        [18, 0.1722],
+        [19, 0.2064],
+        [20, 0.22],
+        [21, 0.24],
+        [22, 0.26],
+        [23, 0.28],
+        [24, 0.30],
+
     ]
+
     # The percentile curve distribution
-    PERCENTILE_DISTRIBUTION = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
+    PERCENTILE_DISTRIBUTION = [
+
+        5, 6, 7, 8, 9, 10,
+        11, 12, 13, 14, 15,
+        16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25,
+        26, 27, 28, 29, 30,
+        31, 32, 33, 34, 35,
+        36, 37, 38, 39, 40,
+        41, 42, 43, 44, 45,
+        46, 47, 48, 49, 50,
+        51, 52, 53, 54, 55,
+        56, 57, 58, 59, 60,
+        61, 62, 63, 64, 65,
+        66, 67, 68, 69, 70,
+        71, 72, 73, 74, 75,
+        76, 77, 78, 79, 80,
+        81, 82, 83, 84, 85,
+        86, 87, 88, 89, 90,
+        91, 92, 93, 94, 95
+
+    ]
 
     def __init__(self, group_a: list, group_b: list) -> None:
         """
@@ -48,7 +96,7 @@ class PercentileHypothesisTest:
         """
         return float(np.percentile(array, percentile))
 
-    def _score_percentage_variance_number_against_change_matrix(self, number: float) -> float:
+    def _score_difference_against_change_matrix(self, number: float) -> float:
         """
         Will score the number against the change matrix.
         More broken "thresholds" will result in a lower score for this percentile
@@ -82,21 +130,16 @@ class PercentileHypothesisTest:
         """
         if self._p_value is None:
             for A, B in zip(self.group_a, self.group_b):
-                percentage_variance = abs((B - A) / A * 100)
+                difference = abs((B - A) / A * 100) + np.var((A, B))
                 self.absolute_scores.append(
-                    self._score_percentage_variance_number_against_change_matrix(
-                        number=percentage_variance
+                    self._score_difference_against_change_matrix(
+                        number=difference
                     )
                 )
 
             self._p_value = sum(self.absolute_scores) / len(self.PERCENTILE_DISTRIBUTION) - np.std(
                 self.absolute_scores
             )
-        #print("------------------")
-        #print(self._p_value)
-        #print(self.absolute_scores)
-        #print(np.std(self.absolute_scores))
-        #print("------------------")
         return self._p_value
 
     def test(self) -> bool:
