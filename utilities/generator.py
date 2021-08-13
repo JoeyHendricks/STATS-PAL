@@ -1,8 +1,9 @@
+import pandas as pd
 import string
 import random
+import json
 
 random.seed(1541561651354842310231651651321321654)  # <-- Used to make test runs consistent
-# 121515
 
 
 class CreateFictitiousScenario:
@@ -100,3 +101,61 @@ class CreateFictitiousScenario:
     @benchmark_measurements.setter
     def benchmark_measurements(self, value):
         self._benchmark_measurements = value
+
+
+class ConvertCsvResultsIntoJson:
+
+    def __init__(self, path: str) -> None:
+        """
+        When constructed will start the conversion process.
+
+        :param path: The path to the file
+        """
+        self.file = pd.read_csv(path, chunksize=10000, delimiter=";")
+        self.data = {}
+        self.convert_csv_to_json()
+
+    @property
+    def json(self):
+        """
+        will convert the python dictionary to true json
+        :return:
+        """
+        return json.dumps(self.data)
+
+    def convert_csv_to_json(self) -> None:
+        """
+        Will read the csv file in chunks and convert it to json.
+        """
+        for chunk in self.file:
+            self.add_chunk_to_json(chunk)
+
+    def add_chunk_to_json(self, chunk) -> None:
+        """
+        Will transfer the lines of the chunk into the json data set.
+        Keep in mind that the json structure will be kept in the
+        correct order.
+
+        That way it is possible to still connect the Y axis to the X axis
+        and see which action was executed.
+
+        :param chunk: A part of the csv (10k rows)
+        """
+        for line in chunk.values.tolist():
+
+            response_time = float(line[0].replace(",", "."))
+            runid = line[1]
+            timestamp = line[2]
+            action = line[3]
+
+            if runid not in self.data:
+                self.data[runid] = {
+                    "response_times": [response_time],
+                    "timestamps": [timestamp],
+                    "actions": [action]
+                }
+
+            else:
+                self.data[runid]["response_times"].append(response_time)
+                self.data[runid]["timestamps"].append(timestamp)
+                self.data[runid]["actions"].append(action)

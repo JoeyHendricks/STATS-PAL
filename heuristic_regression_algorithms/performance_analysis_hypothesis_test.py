@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class PercentileHypothesisTest:
+class PercentileTest:
     """
     A percentile hypothesis test to find the difference in the behaviour of two populations.
     This hypothesis test is originally designed to pick up changes in measurement patterns.
@@ -15,36 +15,17 @@ class PercentileHypothesisTest:
     # The change matrix
 
     MATRIX = [
-        [0.10, 0.002008],
-        [0.20, 0.003065],
-        [0.40, 0.004570],
-        [0.80, 0.006656],
-        [0.90, 0.009469],
-        [1, 0.013160],
-        [2, 0.01786],
-        [3, 0.02364],
-        [4, 0.03069],
-        [5, 0.03884],
-        [6, 0.04802],
-        [7, 0.05799],
-        [8, 0.06841],
-        [9, 0.07883],
-        [10, 0.0887],
-        [11, 0.0975],
-        [12, 0.1048],
-        [13, 0.1100],
-        [14, 0.1127],
-        [15, 0.1129],
-        [16, 0.1322],
-        [17, 0.1551],
-        [18, 0.1722],
-        [19, 0.2064],
-        [20, 0.22],
-        [21, 0.24],
-        [22, 0.26],
-        [23, 0.28],
-        [24, 0.30],
-
+        [0.50, 0.01],
+        [1, 0.02],
+        [2, 0.04],
+        [3, 0.08],
+        [4, 0.12],
+        [5, 0.16],
+        [6, 0.20],
+        [7, 0.24],
+        [8, 0.28],
+        [9, 0.32],
+        [10, 0.36]
     ]
 
     # The percentile curve distribution
@@ -67,7 +48,7 @@ class PercentileHypothesisTest:
         76, 77, 78, 79, 80,
         81, 82, 83, 84, 85,
         86, 87, 88, 89, 90,
-        91, 92, 93, 94, 95
+        91, 92, 93, 94, 95,
 
     ]
 
@@ -101,9 +82,9 @@ class PercentileHypothesisTest:
         Will score the number against the change matrix.
         More broken "thresholds" will result in a lower score for this percentile
 
-        0 to means there is a significant amount of regression 
+        0 to means there is a significant amount of regression
         while 1 means there is no regression for the given percentile.
-          
+
         :param number: The difference in percentage between two percentiles.
         :return: The score which is a float between 0.00 to 1.00.
         """
@@ -130,13 +111,12 @@ class PercentileHypothesisTest:
         """
         if self._p_value is None:
             for A, B in zip(self.group_a, self.group_b):
-                difference = abs((B - A) / A * 100) + np.var((A, B))
+                relative_delta = abs((B - A) / A * 100)
                 self.absolute_scores.append(
                     self._score_difference_against_change_matrix(
-                        number=difference
+                        number=relative_delta
                     )
                 )
-
             self._p_value = sum(self.absolute_scores) / len(self.PERCENTILE_DISTRIBUTION) - np.std(
                 self.absolute_scores
             )
