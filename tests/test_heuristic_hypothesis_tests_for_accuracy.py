@@ -171,3 +171,4 @@ class TestAgainstRealWordData(unittest.TestCase):
                 benchmark_y_axis=scenario["benchmark"]["response_times"]
             )
         self.assertTrue(hypothesis.test())
+
