@@ -1,4 +1,4 @@
-from heuristic_regression_algorithms.performance_analysis_hypothesis_test import PercentileTest
+from heuristic_algorithms.performance_analysis_hypothesis_test import PercentileTest
 from utilities.generator import CreateFictitiousScenario
 from data import real_world_raw_performance_test_data
 import matplotlib.pyplot as plt
