@@ -1,6 +1,8 @@
-from utilities.generator import ConvertCsvResultsIntoJson
+from utilities.helpers import ConvertCsvResultsIntoJson
 
+acc90 = "C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\real-world-raw-performance-test-data.csv"
+prod = "C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\raw_data_prod_anoniem.csv"
 
-real_world_raw_performance_test_data = ConvertCsvResultsIntoJson(
-    "C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\real-world-raw-performance-test-data.csv"
+response_times_prod = ConvertCsvResultsIntoJson(
+    prod
 ).data

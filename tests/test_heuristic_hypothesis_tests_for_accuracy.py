@@ -1,6 +1,6 @@
 from heuristic_algorithms.performance_analysis_hypothesis_test import PercentileTest
-from utilities.generator import CreateFictitiousScenario
-from data import real_world_raw_performance_test_data
+from utilities.helpers import CreateFictitiousScenario
+from data import response_times_acc90
 import matplotlib.pyplot as plt
 import numpy as np
 import unittest
@@ -112,8 +112,8 @@ class TestAgainstRealWordData(unittest.TestCase):
         :return:
         """
         scenario = {
-            "baseline": real_world_raw_performance_test_data["RID-1"],
-            "benchmark": real_world_raw_performance_test_data["RID-2"]
+            "baseline": response_times_acc90["RID-1"],
+            "benchmark": response_times_acc90["RID-2"]
         }
         hypothesis = PercentileTest(
             group_a=scenario["baseline"]["response_times"],
@@ -134,8 +134,8 @@ class TestAgainstRealWordData(unittest.TestCase):
         :return:
         """
         scenario = {
-            "baseline": real_world_raw_performance_test_data["RID-2"],
-            "benchmark": real_world_raw_performance_test_data["RID-3"]
+            "baseline": response_times_acc90["RID-2"],
+            "benchmark": response_times_acc90["RID-3"]
         }
         hypothesis = PercentileTest(
             group_a=scenario["baseline"]["response_times"],
@@ -156,8 +156,8 @@ class TestAgainstRealWordData(unittest.TestCase):
         :return:
         """
         scenario = {
-            "baseline": real_world_raw_performance_test_data["RID-3"],
-            "benchmark": real_world_raw_performance_test_data["RID-4"]
+            "baseline": response_times_acc90["RID-3"],
+            "benchmark": response_times_acc90["RID-4"]
         }
         hypothesis = PercentileTest(
             group_a=scenario["baseline"]["response_times"],
@@ -171,4 +171,26 @@ class TestAgainstRealWordData(unittest.TestCase):
                 benchmark_y_axis=scenario["benchmark"]["response_times"]
             )
         self.assertTrue(hypothesis.test())
+
+    def test_hypothesis_test_benchmark_is_not_different_from_baseline_x(self) -> None:
+        """
+
+        :return:
+        """
+        scenario = {
+            "baseline": response_times_acc90["RID-5"],
+            "benchmark": response_times_acc90["RID-6"]
+        }
+        hypothesis = PercentileTest(
+            group_a=scenario["baseline"]["response_times"],
+            group_b=scenario["benchmark"]["response_times"]
+        )
+        if HUMAN_OBSERVER is True:
+            show_scatter_plot(
+                baseline_x_axis=scenario["baseline"]["timestamps"],
+                baseline_y_axis=scenario["baseline"]["response_times"],
+                benchmark_x_axis=scenario["benchmark"]["timestamps"],
+                benchmark_y_axis=scenario["benchmark"]["response_times"]
+            )
+        self.assertFalse(hypothesis.test())
 

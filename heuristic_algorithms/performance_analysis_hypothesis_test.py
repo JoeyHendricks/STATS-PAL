@@ -1,7 +1,8 @@
 import numpy as np
+from math import log2
 
 
-class PercentileTest:
+class DivergenceTest:
     """
     A percentile hypothesis test to find the difference in the behaviour of two populations.
     This hypothesis test is originally designed to pick up changes in measurement patterns.
@@ -14,41 +15,38 @@ class PercentileTest:
     """
     # The change matrix
 
-    MATRIX = [
-        [0.50, 0.01],
-        [1, 0.02],
-        [2, 0.04],
-        [3, 0.08],
-        [4, 0.12],
-        [5, 0.16],
-        [6, 0.20],
-        [7, 0.24],
-        [8, 0.28],
-        [9, 0.32],
-        [10, 0.36]
+    # The percentile curve distribution
+    DISTRIBUTION = [
+
+        [5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20],
+        [21, 22, 23, 24, 25],
+        [26, 27, 28, 29, 30],
+        [31, 32, 33, 34, 35],
+        [36, 37, 38, 39, 40],
+        [41, 42, 43, 44, 45],
+        [46, 47, 48, 49, 50],
+        [51, 52, 53, 54, 55],
+        [56, 57, 58, 59, 60],
+        [61, 62, 63, 64, 65],
+        [66, 67, 68, 69, 70],
+        [71, 72, 73, 74, 75],
+        [76, 77, 78, 79, 80],
+        [81, 82, 83, 84, 85],
+        [86, 87, 88, 89, 90],
+        [91, 92, 93, 94, 95],
+
     ]
 
-    # The percentile curve distribution
-    PERCENTILE_DISTRIBUTION = [
+    LETTER_GRADES = [
 
-        5, 6, 7, 8, 9, 10,
-        11, 12, 13, 14, 15,
-        16, 17, 18, 19, 20,
-        21, 22, 23, 24, 25,
-        26, 27, 28, 29, 30,
-        31, 32, 33, 34, 35,
-        36, 37, 38, 39, 40,
-        41, 42, 43, 44, 45,
-        46, 47, 48, 49, 50,
-        51, 52, 53, 54, 55,
-        56, 57, 58, 59, 60,
-        61, 62, 63, 64, 65,
-        66, 67, 68, 69, 70,
-        71, 72, 73, 74, 75,
-        76, 77, 78, 79, 80,
-        81, 82, 83, 84, 85,
-        86, 87, 88, 89, 90,
-        91, 92, 93, 94, 95,
+        {"threshold": 2.50, "letter": "A"},
+        {"threshold": 3.00, "letter": "B"},
+        {"threshold": 4.00, "letter": "C"},
+        {"threshold": 6.00, "letter": "D"},
+        {"threshold": 8.00, "letter": "E"},
+        {"threshold": 10.0, "letter": "F"},
 
     ]
 
@@ -60,14 +58,24 @@ class PercentileTest:
         :param group_a: An list of floats of the A population (baseline).
         :param group_b: An list of floats of the B population (benchmark).
         """
-        self.group_a = [
-            self._calculate_percentile(group_a, percentile) for percentile in self.PERCENTILE_DISTRIBUTION
-        ]
-        self.group_b = [
-            self._calculate_percentile(group_b, percentile) for percentile in self.PERCENTILE_DISTRIBUTION
-        ]
-        self._p_value = None
-        self.absolute_scores = []
+        self.group_a = self.bin_into_percentiles_ranges(group_a)
+        self.group_b = self.bin_into_percentiles_ranges(group_b)
+        self.c_value, self.absolute_change = self._estimate_c_value()
+        self.grade = self._letter_grade_comparison()
+
+    def bin_into_percentiles_ranges(self, data):
+        """
+
+        :return:
+        """
+        percentile_ranges = []
+        for belt in self.DISTRIBUTION:
+            group = []
+            for percentile in belt:
+                group.append(self._calculate_percentile(data, percentile))
+            percentile_ranges.append(group)
+
+        return percentile_ranges
 
     @staticmethod
     def _calculate_percentile(array: list, percentile: int) -> float:
@@ -77,27 +85,17 @@ class PercentileTest:
         """
         return float(np.percentile(array, percentile))
 
-    def _score_difference_against_change_matrix(self, number: float) -> float:
+    @staticmethod
+    def _calculate_kl_divergence(p, q):
         """
-        Will score the number against the change matrix.
-        More broken "thresholds" will result in a lower score for this percentile
 
-        0 to means there is a significant amount of regression
-        while 1 means there is no regression for the given percentile.
-
-        :param number: The difference in percentage between two percentiles.
-        :return: The score which is a float between 0.00 to 1.00.
+        :param p:
+        :param q:
+        :return:
         """
-        score = 1
-        for threshold, punishment in self.MATRIX:
-            if number >= threshold:
-                score -= punishment
-            else:
-                continue
-        return score
+        return sum(p[i] * log2(p[i] / q[i]) for i in range(len(p)))
 
-    @property
-    def probability_value(self) -> float:
+    def _estimate_c_value(self) -> tuple:
         """
         Will find out what the difference in percentage is between each percentile.
         It will than feed that percentage through a matrix to find out
@@ -109,33 +107,54 @@ class PercentileTest:
 
         :return: A float which represent the probability value
         """
-        if self._p_value is None:
-            for A, B in zip(self.group_a, self.group_b):
-                relative_delta = abs((B - A) / A * 100)
-                self.absolute_scores.append(
-                    self._score_difference_against_change_matrix(
-                        number=relative_delta
-                    )
-                )
-            self._p_value = sum(self.absolute_scores) / len(self.PERCENTILE_DISTRIBUTION) - np.std(
-                self.absolute_scores
+        divergence_per_percentile_range = []
+        for A, B in zip(self.group_a, self.group_b):
+            divergence_per_percentile_range.append(
+                abs(self._calculate_kl_divergence(A, B))
             )
-        return self._p_value
+        c = sum(divergence_per_percentile_range) + np.std(divergence_per_percentile_range)
+        return c, divergence_per_percentile_range
 
-    def test(self) -> bool:
+    def _letter_grade_comparison(self):
         """
-        This method will execute the hypothesis test.
-        It will test if group B is slower than group A.
 
-        If hypothesis test is correct a False boolean will be returned.
-        When the hypothesis is wrong this method will reply True.
-
-        :return: The outcome of the hypothesis test
+        :return:
         """
-        if float(self.probability_value) < 0.90:  # <-- Everything below this score contains to much change.
-            # We can reject the null hypothesis. (Failed)
-            return False
+        for grade in self.LETTER_GRADES:
+            if self.c_value < grade["threshold"]:
+                return grade["letter"]
+            else:
+                continue
+        return "F"
 
-        else:
-            # We can NOT reject the null hypothesis. (Passed)
-            return True
+
+
+print("real world data")
+from data import response_times_prod
+
+sample_order = [
+    {"data": ["RID-1", "RID-2"]},
+    {"data": ["RID-2", "RID-3"]},
+    {"data": ["RID-3", "RID-4"]},
+    {"data": ["RID-4", "RID-5"]},
+    {"data": ["RID-5", "RID-6"]},
+    {"data": ["RID-1", "RID-6"]},
+]
+
+for samples in sample_order:
+    print("----------------------------")
+    print(samples["data"])
+    print(
+        DivergenceTest(
+            group_a=response_times_prod[samples["data"][0]]["response_times"],
+            group_b=response_times_prod[samples["data"][1]]["response_times"]
+        ).grade
+    )
+    print(
+        DivergenceTest(
+            group_a=response_times_prod[samples["data"][0]]["response_times"],
+            group_b=response_times_prod[samples["data"][1]]["response_times"]
+        ).c_value
+    )
+
+    print("----------------------------")
