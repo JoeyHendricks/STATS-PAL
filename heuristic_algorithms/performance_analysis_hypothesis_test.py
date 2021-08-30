@@ -4,18 +4,23 @@ from math import log2
 
 class DivergenceTest:
     """
-    A percentile hypothesis test to find the difference in the behaviour of two populations.
-    This hypothesis test is originally designed to pick up changes in measurement patterns.
+    A equivalence test to determine how much regression there
+    is between sample A and B.
 
-    For this to work properly this test expects a large baseline and benchmark population.
-    This is why this test works great for finding spotting difference in large performance test
-    results sets in an automated way.
+    To determine how much regression is to much this class uses boundaries
+    defined around the Kullback–Leibler divergence. To asses if the change
+    between 2 samples is within the acceptable ranges of normalcy.
 
-    Please share feedback and let me know if you encounter any type 1 or type 2 errors using this test.
+    The core idea behind this algorithm is to find how much regression
+    there is between two sample not to define if that is good or bad.
+    Yet this test is equipped with some general boundaries and guidelines
+    that will hopefully be useful for most use-cases.
+
+    As this entire is algorithm an heuristic it is key that if the standard
+    are insufficient for your use-case that you define your own that work
+    better in your context.
     """
-    # The change matrix
-
-    # The percentile curve distribution
+    # Raw data will be structured into a exponential curve.
     DISTRIBUTION = [
 
         [5, 6, 7, 8, 9, 10],
@@ -38,22 +43,55 @@ class DivergenceTest:
         [91, 92, 93, 94, 95],
 
     ]
+    # The letter grades and there literal critical values (Allows up to 30% regression).
+    LETTER_RANKS = [
 
-    LETTER_GRADES = [
+        {"boundary": 2.50, "letter": "S"},  # < ± 1% regression
+        {"boundary": 6.00, "letter": "A"},  # ± 1 to 5% regression
+        {"boundary": 8.00, "letter": "B"},  # ± 5 to 8% regression
+        {"boundary": 15.0, "letter": "C"},  # ± 8 to 10% regression
+        {"boundary": 20.0, "letter": "D"},  # ± 10 to 17% regression
+        {"boundary": 25.0, "letter": "E"},  # ± 17 to 25% regression
+        {"boundary": 30.0, "letter": "F"},  # > ± 25% regression
 
-        {"threshold": 2.50, "letter": "A"},
-        {"threshold": 3.00, "letter": "B"},
-        {"threshold": 4.00, "letter": "C"},
-        {"threshold": 6.00, "letter": "D"},
-        {"threshold": 8.00, "letter": "E"},
-        {"threshold": 10.0, "letter": "F"},
+    ]
+    # Used to score the c-value from 0 to 100 (Values smaller then 0.100 are considered insignificant.)
+    SCORING_MATRIX = [
+
+        {"boundary": 0.100, "punishment": 0.00210437},
+        {"boundary": 0.125, "punishment": 0.00217105},
+        {"boundary": 0.150, "punishment": 0.00787242},
+        {"boundary": 0.175, "punishment": 0.00791472},
+        {"boundary": 0.200, "punishment": 0.00814541},
+        {"boundary": 0.225, "punishment": 0.00884361},
+        {"boundary": 0.250, "punishment": 0.00907313},
+        {"boundary": 0.275, "punishment": 0.01296521},
+        {"boundary": 0.300, "punishment": 0.01383224},
+        {"boundary": 0.325, "punishment": 0.01443168},
+        {"boundary": 0.350, "punishment": 0.01624729},
+        {"boundary": 0.375, "punishment": 0.01760769},
+        {"boundary": 0.400, "punishment": 0.01886994},
+        {"boundary": 0.425, "punishment": 0.02218302},
+        {"boundary": 0.450, "punishment": 0.02376578},
+        {"boundary": 0.475, "punishment": 0.02734606},
+        {"boundary": 0.500, "punishment": 0.03823586},
+        {"boundary": 0.525, "punishment": 0.03894435},
+        {"boundary": 0.550, "punishment": 0.04147971},
+        {"boundary": 0.575, "punishment": 0.04562214},
+        {"boundary": 0.600, "punishment": 0.04700291},
+        {"boundary": 0.625, "punishment": 0.04833569},
+        {"boundary": 0.650, "punishment": 0.06287215},
+        {"boundary": 0.675, "punishment": 0.06680662},
+        {"boundary": 0.700, "punishment": 0.07658837},
+        {"boundary": 0.725, "punishment": 0.08191112},
+        {"boundary": 0.750, "punishment": 0.08290606},
+        {"boundary": 0.775, "punishment": 0.15592140},
 
     ]
 
     def __init__(self, group_a: list, group_b: list) -> None:
         """
-        Will construct the class and calculate a list of percentiles for both group A and B.
-        The list of percentiles used range from 5th to 95th.
+        Will construct the class and calculate all the required statistics.
 
         :param group_a: An list of floats of the A population (baseline).
         :param group_b: An list of floats of the B population (benchmark).
@@ -61,12 +99,13 @@ class DivergenceTest:
         self.group_a = self.bin_into_percentiles_ranges(group_a)
         self.group_b = self.bin_into_percentiles_ranges(group_b)
         self.c_value, self.absolute_change = self._estimate_c_value()
-        self.grade = self._letter_grade_comparison()
+        self.grade = self._letter_rank_c_value()
+        self.score = self._score_c_value_from_0_to_100()
 
-    def bin_into_percentiles_ranges(self, data):
+    def bin_into_percentiles_ranges(self, data: list) -> list:
         """
-
-        :return:
+        Will calculate the required percentile range for each slice of data.
+        :return: An array containing the calculated percentiles.
         """
         percentile_ranges = []
         for belt in self.DISTRIBUTION:
@@ -81,31 +120,49 @@ class DivergenceTest:
     def _calculate_percentile(array: list, percentile: int) -> float:
         """
         Used to calculate the percentile over the given array.
-        :return: a float number of the requested percentile
+        :return: the requested percentile as a float
         """
         return float(np.percentile(array, percentile))
 
     @staticmethod
-    def _calculate_kl_divergence(p, q):
+    def _calculate_kl_divergence(p: list, q: list) -> float:
         """
+        the Kullback–Leibler divergence is used to represent a measure of
+        distance between a percentile range from A to B.
+        More info about the equation can be found here:
 
-        :param p:
-        :param q:
-        :return:
+        https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
+
+        :param p: The true distribution (Baseline)
+        :param q: Is the approximate distribution Q (Benchmark)
+        :return: The estimated distance from P to Q
+        :except: ValueError or ZeroDivisionError: When a negative number is inside the
+        log function or a zero value, a forced output of 100 will be given to represent
+        the large change.
         """
-        return sum(p[i] * log2(p[i] / q[i]) for i in range(len(p)))
+        try:
+            return sum(p[i] * log2(p[i] / q[i]) for i in range(len(p)))
+
+        except (ValueError, ZeroDivisionError):
+            # Possible negative number inside log function or a zero value -
+            # this is only possible at extreme differences on the negative axis.
+            return 100
 
     def _estimate_c_value(self) -> tuple:
         """
-        Will find out what the difference in percentage is between each percentile.
-        It will than feed that percentage through a matrix to find out
-        how much positive or negative change exists.
+        Will estimate the change value from A to B using the
+        Kullback–Leibler divergence.
 
-        After that the array of scores gets computed into a score taking the
-        standard deviation in account. This is done to verify if the change is
-        across all of the percentiles or just within certain areas.
+        This value can be considered as the absolute distance between
+        2 probability distributions representing 2 raw data sets.
+        This value can then be interpret in a number of way like
+        the following features this class supports:
 
-        :return: A float which represent the probability value
+        - Letter rank the c-value from S to F.
+        - Score the c-value from 0 - 100.
+
+        :return: A float which represent the change from A to B
+        and a list of change per percentile range
         """
         divergence_per_percentile_range = []
         for A, B in zip(self.group_a, self.group_b):
@@ -115,46 +172,44 @@ class DivergenceTest:
         c = sum(divergence_per_percentile_range) + np.std(divergence_per_percentile_range)
         return c, divergence_per_percentile_range
 
-    def _letter_grade_comparison(self):
+    def _letter_rank_c_value(self) -> str:
         """
+        Will give the letter grade to the C value score.
+        Below a rough estimate how much regression in
+        percentage each letter grade represents:
 
-        :return:
+        Do keep in mind that these values are based
+        on randomly generated test data on one seed.
+        These values are a rough estimate and you
+        very well could need to tweak these to your context
+        to get a better estimate.
+
+        :return: The letter rank in the form as string ranging from S to F
         """
-        for grade in self.LETTER_GRADES:
-            if self.c_value < grade["threshold"]:
+        for grade in self.LETTER_RANKS:
+            if self.c_value < grade["boundary"]:
                 return grade["letter"]
             else:
                 continue
         return "F"
 
+    def _score_c_value_from_0_to_100(self) -> float:
+        """
+        Will use a change matrix to score every
+        Kullback–Leibler divergence statistics
+        grading it from 0 to 1.
 
+        :return: returns a float representing the
+        change in a logical score.
+        """
+        scored_ranges = []
+        for change in self.absolute_change:
+            score = 1
+            for row in self.SCORING_MATRIX:
+                if change > row["boundary"]:
+                    score -= row["punishment"]
+                else:
+                    continue
+            scored_ranges.append(score)
+        return round(sum(scored_ranges) / len(scored_ranges) * 100, 2)
 
-print("real world data")
-from data import response_times_prod
-
-sample_order = [
-    {"data": ["RID-1", "RID-2"]},
-    {"data": ["RID-2", "RID-3"]},
-    {"data": ["RID-3", "RID-4"]},
-    {"data": ["RID-4", "RID-5"]},
-    {"data": ["RID-5", "RID-6"]},
-    {"data": ["RID-1", "RID-6"]},
-]
-
-for samples in sample_order:
-    print("----------------------------")
-    print(samples["data"])
-    print(
-        DivergenceTest(
-            group_a=response_times_prod[samples["data"][0]]["response_times"],
-            group_b=response_times_prod[samples["data"][1]]["response_times"]
-        ).grade
-    )
-    print(
-        DivergenceTest(
-            group_a=response_times_prod[samples["data"][0]]["response_times"],
-            group_b=response_times_prod[samples["data"][1]]["response_times"]
-        ).c_value
-    )
-
-    print("----------------------------")

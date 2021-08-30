@@ -136,22 +136,5 @@ class ConvertCsvResultsIntoJson:
                 self.data[runid]["response_times"].append(response_time)
                 self.data[runid]["timestamps"].append(timestamp)
                 self.data[runid]["actions"].append(action)
-"""
-from heuristic_algorithms.performance_analysis_hypothesis_test import DivergenceTest
 
-seeds = []
-for _ in range(0, 10000):
-    seeds.append(random.randint(152100, 1000001521654651))
-
-scores = []
-for seed in seeds:
-    random.seed(seed)  # <-- Used to make test runs consistent
-    scenario = CreateFictitiousScenario(increase=0)
-    c_value = DivergenceTest(
-        group_a=scenario.baseline_y,
-        group_b=scenario.benchmark_y
-    ).c_value
-    with open('scores.txt', 'a') as f:
-        f.write(f"{str(c_value)}\n")
-"""
 
