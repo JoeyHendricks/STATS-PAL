@@ -2,7 +2,7 @@ import numpy as np
 from math import log2
 
 
-class DivergenceTest:
+class HendricksEquivalenceTest:
     """
     A equivalence test to determine how much regression there
     is between sample A and B.

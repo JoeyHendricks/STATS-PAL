@@ -1,29 +1,17 @@
-from heuristic_algorithms.performance_analysis_hypothesis_test import DivergenceTest
-from utilities.helpers import CreateFictitiousScenario
+from heuristic_comparisons_algorithms.equivalence_hypothesis_testing import DivergenceTest
+from utilities.data import CreateFictitiousScenario
 from data import response_times_prod
 import random
 
 SEEDS = [random.randint(152100, 1000001521654651) for _ in range(0, 1000)]
-"""
-scores = []
-for seed in SEEDS:
-    random.seed(152100)  # <-- Used to make test runs consistent
-    scenario = CreateFictitiousScenario(increase=1)
-    c_value = DivergenceTest(
-        group_a=scenario.baseline_y,
-        group_b=scenario.benchmark_y
-    ).c_value
-    print(c_value)
-    exit()
-"""
 
 
-def consistently_increase_or_decrease_benchmark(seed=2205):
+def consistently_increase_and_decrease_benchmark(seed=21021995):
     """
 
     :return:
     """
-    for delta in range(0, 31):
+    for delta in range(0, 150):
         random.seed(seed)
         scenario_increased = CreateFictitiousScenario(increase=delta)
         scenario_decreased = CreateFictitiousScenario(decrease=delta)
@@ -86,5 +74,5 @@ def verify_against_real_world_data():
         print("----------------------------")
 
 
-verify_against_real_world_data()
+
 

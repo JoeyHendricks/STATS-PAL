@@ -1,27 +1,7 @@
 import pandas as pd
-import numpy as np
 import string
 import random
 import json
-
-random.seed(513513251)  # <-- Used to make test runs consistent
-# 1541561651354842310231651651321321654
-
-
-def calculate_percentile(array: list, percentile: int) -> float:
-    """
-    Used to calculate the percentile over the given array.
-    :return: a float number of the requested percentile
-    """
-    return float(np.percentile(array, percentile))
-
-
-def normalize_distribution(raw):
-    """
-
-    :return:
-    """
-    return [float(i)/sum(raw) for i in raw]
 
 
 class CreateFictitiousScenario:
