@@ -1,6 +1,6 @@
 <!-- LOGO -->
 <p align="center">
-  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fbayesian-statistics-bell-curve-2889576%2F&psig=AOvVaw1c3jr1ss8rnUM37Exqdft7&ust=1630619392758000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLCemOPg3vICFQAAAAAdAAAAABAJ"/>
+  <img src="https://github.com/JoeyHendricks/QuickPotato/blob/master/images/banner-wide-with-text.jpg"/>
 </p>
 
 <!-- TAG LINE -->
