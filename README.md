@@ -12,3 +12,8 @@
 </p>
 <br>
 
+Continuous performance testing is nothing new, but one of the biggest pitfalls of a reliable automated performance 
+test is the analysis of its results. 
+
+Automatically deciding if there is a significant change in behavior between your baseline and benchmark run goes 
+beyond just verifying only simple metrics around your response time.
