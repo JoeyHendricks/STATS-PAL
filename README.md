@@ -12,6 +12,8 @@
 </p>
 <br>
 
+## In a nutshell what is this project is all about?
+
 Continuous performance testing is nothing new, but one of the biggest pitfalls of a reliable automated performance 
 test is the analysis of its results. 
 
