@@ -21,17 +21,27 @@ comparison analysis in an automated fashion.
 ## Start using the raw format of your performance test results
 
 The calculations behind this project rely heavily on having every single measurement from your performance 
-test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data) why this raw format 
-is so powerful can be best seen in the animation below. 
+test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data). 
+
+> It could be that you are unfamiliar with this term within the performance testing context. 
+> I would recommend you to read through some of my mentor [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
+> [articles](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) that cover this topic in great detail.
+
+Why this raw format is so powerful can be best seen in the graph animation below. 
 
 <!-- Raw Data Vs Averages animation -->
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/averages-vs-raw-data.gif?raw=true"/>
 </p>
 
-> It could be that you are unfamiliar with this term within the performance testing context. 
-> I would recommend you to read through some of my mentor [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
-> [articles](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) that cover this topic in great detail.
+The first view that is shown in the animation is the average response time over a time axis. 
+In this view, we can see that the response time patterns of the system are relatively stable, 
+but once the overlay switches to the raw data scatter plot.
+We can see a completely different picture of a system that is not quite as stable as the average 
+line graph would have us believe. 
+
+As can be seen in this example is that the aggregation of data hides the actual performance of 
+our system under test and gives us a false understanding of whatever is going on.
 
 ___
 <!-- FOOTER -->
