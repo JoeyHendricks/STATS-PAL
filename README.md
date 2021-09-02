@@ -21,10 +21,16 @@ comparison analysis in an automated fashion.
 ## Start using the raw format of your performance test results
 
 The calculations behind this project rely heavily on having every single measurement from your performance 
-test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data). 
+test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data) why this raw format 
+is so powerful can be best seen in the animation below. 
+
+<!-- Raw Data Vs Averages animation -->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/averages-vs-raw-data.gif?raw=true"/>
+</p>
 
 > It could be that you are unfamiliar with this term within the performance testing context. 
-> I would recommend you to read through some of my mentors [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
+> I would recommend you to read through some of my mentor [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
 > [articles](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) that cover this topic in great detail.
 
 ___
