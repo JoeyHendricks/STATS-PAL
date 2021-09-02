@@ -43,6 +43,9 @@ line graph would have us believe.
 As can be seen in this example is that the aggregation of data hides the actual performance of 
 our system under test and gives us a false understanding of whatever is going on.
 
+Because this project is based on the raw data philosophy from Stijn Schepers we base our automated analysis, 
+not on a single metric like the average or the median, but we look into discovering change throughout the 
+entire raw data set.
 ___
 <!-- FOOTER -->
 <p align="center">
