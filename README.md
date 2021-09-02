@@ -44,11 +44,14 @@ As can be seen in this example is that the aggregation of data hides the actual 
 our system under test and gives us a false understanding of whatever is going on.
 Because this project is based on this raw data philosophy from [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) we base our automated analysis, 
 not on a single metric like the average or the median, but we look into discovering change throughout the 
-entire raw data set.
+entire raw data set, **that is why using raw data is prerequisite for being able to use this comparison algorithm**.
+
+## How does the math behind this automated comparison work?
+
 ___
 <!-- FOOTER -->
 <p align="center">
-    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">Report Bug or Request Feature</a> -
+    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">- Report Bug or Request Feature</a> -
     <a href="https://events.tricentis.com/pac/home">Made for the Performance Advisory Council </a> -
     <a href="https://www.linkedin.com/in/joey-hendricks/">Follow me on Linkedin </a> -
 </p>
