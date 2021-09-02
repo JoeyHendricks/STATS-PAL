@@ -44,7 +44,8 @@ As can be seen in this example is that the aggregation of data hides the actual 
 our system under test and gives us a false understanding of whatever is going on.
 Because this project is based on this raw data philosophy from [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) we base our automated analysis, 
 not on a single metric like the average or the median, but we look into discovering change throughout the 
-entire raw data set, **that is why using raw data is prerequisite for being able to use this comparison algorithm**.
+entire raw data set, ***that is why using raw data is a prerequisite for being able to use this comparison algorithm 
+without it, it makes less sense to use this solution.***.
 
 ## How does the math behind this automated comparison work?
 
