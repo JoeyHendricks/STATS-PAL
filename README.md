@@ -16,7 +16,16 @@ focus on more pressing matters.
 
 This project hopes to bring a helping hand to performance engineers around the globe by providing them with a 
 solution that can be embedded in their testing process to reliably perform complicated 
-analysis in an automated fashion. 
+comparison analysis in an automated fashion. 
+
+## Start using the raw format of your performance test results
+
+The calculations behind this project rely heavily on having every single measurement from your performance 
+test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data). 
+
+> It could be that you are unfamiliar with this term within the performance testing context. 
+> I would recommend you to read through some of my mentors [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
+> [articles](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) that cover this topic in great detail.
 
 ___
 <!-- FOOTER -->
@@ -25,3 +34,4 @@ ___
     <a href="https://events.tricentis.com/pac/home">Made for the Performance Advisory Council </a> -
     <a href="https://www.linkedin.com/in/joey-hendricks/">Follow me on Linkedin </a> -
 </p>
+
