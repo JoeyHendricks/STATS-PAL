@@ -53,7 +53,13 @@ The main goal behind this project is to form a single metric that we can use to 
 between our baseline and benchmark with a [heuristic model](https://en.wikipedia.org/wiki/Heuristic) in which we can define what we consider to be too much.
 
 To produce a concise metric we start with generating a [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) for our baseline and benchmark 
-raw test results using [percentiles](https://en.wikipedia.org/wiki/Percentile) ranging from 0 to 95 as a graph this distribution will look like this: 
+raw test results using [percentiles](https://en.wikipedia.org/wiki/Percentile) ranging from 0 to 95 as a graph 
+this distribution will look like this as an exponential curve: 
+
+<!-- Exponential Curve -->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/expontial-percentile-curve.png?raw=true"/>
+</p>
 
 ___
 <!-- FOOTER -->
