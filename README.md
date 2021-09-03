@@ -47,7 +47,7 @@ not on a single metric like the average or the median, but we look into discover
 entire raw data set, ***that is why using raw data is a prerequisite for being able to use this comparison algorithm 
 without it, it makes less sense to use this solution.***.
 
-## How do calculations in this algorithm work?
+## How do the calculations used in this algorithm work?
 
 The main goal behind this project is to form a single metric that we can use to interpret the amount of regression 
 between our baseline and benchmark with a [heuristic model](https://en.wikipedia.org/wiki/Heuristic) in which we can define what we consider to be too much.
