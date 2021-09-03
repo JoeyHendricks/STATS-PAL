@@ -36,7 +36,7 @@ Why this raw format of your test results is so powerful can be best seen in the 
 
 The first view that is shown in the animation is the average response time over a time axis. 
 In this view, we can see that the response time patterns of the system are relatively stable, 
-but once the overlay switches to the raw data scatter plot.
+but once the overlay switches to the raw data scatter plot (Keep in mind that both views are the same test.).
 We can see a completely different picture of a system that is not quite as stable as the average 
 line graph would have us believe. 
 
