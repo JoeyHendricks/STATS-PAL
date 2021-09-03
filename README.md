@@ -10,9 +10,9 @@ Continuous performance testing is nothing new, but one of the biggest pitfalls o
 is the manual analysis of its results. This manual intervention slows down the pace required to keep up with our ever 
 more demanding online world. 
 
-By verifying automatically if there's a significant change in behavior between your baseline and benchmark 
-we can speed up our testing effort, reduce our time to market and liberate a performance engineer to 
-focus on more pressing matters.
+By verifying automatically if there's a significant change in behavior and producing a metric to represent the change 
+between your baseline and benchmark we can speed up our testing effort, reduce our time to market and liberate a 
+performance engineer to focus on more pressing matters.
 
 This project hopes to bring a helping hand to performance engineers around the globe by providing them with a 
 solution that can be embedded in their testing process to reliably perform complicated 
@@ -47,7 +47,13 @@ not on a single metric like the average or the median, but we look into discover
 entire raw data set, ***that is why using raw data is a prerequisite for being able to use this comparison algorithm 
 without it, it makes less sense to use this solution.***.
 
-## How does the math behind this automated comparison work?
+## How do calculations in this algorithm work?
+
+The main goal behind this project is to form a single metric that we can use to interpret the amount of regression 
+between our baseline and benchmark with a [heuristic model](https://en.wikipedia.org/wiki/Heuristic) in which we can define what we consider to be too much.
+
+To produce a concise metric we start with generating a [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) for our baseline and benchmark 
+raw test results using [percentiles](https://en.wikipedia.org/wiki/Percentile) ranging from 0 to 95 as a graph this distribution will look like this: 
 
 ___
 <!-- FOOTER -->
