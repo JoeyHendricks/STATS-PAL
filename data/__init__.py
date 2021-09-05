@@ -6,3 +6,6 @@ prod = "C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\raw_d
 response_times_prod = ConvertCsvResultsIntoJson(
     prod
 ).data
+response_times_acc = ConvertCsvResultsIntoJson(
+    ACC
+).data

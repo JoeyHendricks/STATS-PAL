@@ -2,9 +2,9 @@ import numpy as np
 from math import log2
 
 
-class HendricksEquivalenceTest:
+class DivergenceTest:
     """
-    A equivalence test to determine how much regression there
+    A equivalence test to determine how much divergence there
     is between sample A and B.
 
     To determine how much regression is to much this class uses boundaries
@@ -55,7 +55,7 @@ class HendricksEquivalenceTest:
         {"boundary": 30.0, "letter": "F"},  # > ± 25% regression
 
     ]
-    # Used to score the c-value from 0 to 100 (Values smaller then 0.100 are considered insignificant.)
+    # Used to score the d-value from 0 to 100 (Values smaller then 0.100 are considered insignificant.)
     SCORING_MATRIX = [
 
         {"boundary": 0.100, "punishment": 0.00210437},
@@ -89,20 +89,20 @@ class HendricksEquivalenceTest:
 
     ]
 
-    def __init__(self, group_a: list, group_b: list) -> None:
+    def __init__(self, population_a: list, population_b: list) -> None:
         """
         Will construct the class and calculate all the required statistics.
 
-        :param group_a: An list of floats of the A population (baseline).
-        :param group_b: An list of floats of the B population (benchmark).
+        :param population_a: An list of floats of the A population (baseline).
+        :param population_b: An list of floats of the B population (benchmark).
         """
-        self.group_a = self.bin_into_percentiles_ranges(group_a)
-        self.group_b = self.bin_into_percentiles_ranges(group_b)
-        self.c_value, self.absolute_change = self._estimate_c_value()
-        self.grade = self._letter_rank_c_value()
+        self.sample_a = self._discretely_approximate_the_probability_distribution(population_a)
+        self.sample_b = self._discretely_approximate_the_probability_distribution(population_b)
+        self.d_value, self.absolute_change = self._estimate_d_value()
+        self.rank = self._letter_rank_d_value()
         self.score = self._score_c_value_from_0_to_100()
 
-    def bin_into_percentiles_ranges(self, data: list) -> list:
+    def _discretely_approximate_the_probability_distribution(self, data: list) -> list:
         """
         Will calculate the required percentile range for each slice of data.
         :return: An array containing the calculated percentiles.
@@ -148,7 +148,7 @@ class HendricksEquivalenceTest:
             # this is only possible at extreme differences on the negative axis.
             return 100
 
-    def _estimate_c_value(self) -> tuple:
+    def _estimate_d_value(self) -> tuple:
         """
         Will estimate the change value from A to B using the
         Kullback–Leibler divergence.
@@ -158,23 +158,23 @@ class HendricksEquivalenceTest:
         This value can then be interpret in a number of way like
         the following features this class supports:
 
-        - Letter rank the c-value from S to F.
-        - Score the c-value from 0 - 100.
+        - Letter rank the d-value from S to F.
+        - Score the d-value from 0 - 100.
 
         :return: A float which represent the change from A to B
         and a list of change per percentile range
         """
         divergence_per_percentile_range = []
-        for A, B in zip(self.group_a, self.group_b):
+        for A, B in zip(self.sample_a, self.sample_b):
             divergence_per_percentile_range.append(
                 abs(self._calculate_kl_divergence(A, B))
             )
         c = sum(divergence_per_percentile_range) + np.std(divergence_per_percentile_range)
         return c, divergence_per_percentile_range
 
-    def _letter_rank_c_value(self) -> str:
+    def _letter_rank_d_value(self) -> str:
         """
-        Will give the letter grade to the C value score.
+        Will give the letter grade to the D value score.
         Below a rough estimate how much regression in
         percentage each letter grade represents:
 
@@ -187,7 +187,7 @@ class HendricksEquivalenceTest:
         :return: The letter rank in the form as string ranging from S to F
         """
         for grade in self.LETTER_RANKS:
-            if self.c_value < grade["boundary"]:
+            if self.d_value < grade["boundary"]:
                 return grade["letter"]
             else:
                 continue
@@ -212,4 +212,3 @@ class HendricksEquivalenceTest:
                     continue
             scored_ranges.append(score)
         return round(sum(scored_ranges) / len(scored_ranges) * 100, 2)
-
