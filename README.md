@@ -1,6 +1,6 @@
 <!-- LOGO -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/QuickPotato/blob/master/images/banner-wide-with-text.jpg"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/banner.jpg?raw=true"/>
 </p>
 
 <!-- INTRO -->
@@ -58,7 +58,7 @@ this distribution will look like this as an exponential curve:
 
 <!-- Exponential Curve -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/banner.jpg?raw=true"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/expontial-percentile-curve.png?raw=true"/>
 </p>
 
 ___
