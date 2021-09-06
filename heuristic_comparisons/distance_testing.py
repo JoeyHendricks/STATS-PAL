@@ -34,13 +34,13 @@ class DistanceTest:
     # The letter ranks that interpret the KS distance statistic.
     LETTER_RANKS = [
 
-        {"boundary": 0.025, "letter": "S"},
-        {"boundary": 0.055, "letter": "A"},
-        {"boundary": 0.070, "letter": "B"},
-        {"boundary": 0.100, "letter": "C"},
-        {"boundary": 0.200, "letter": "D"},
-        {"boundary": 0.300, "letter": "E"},
-        {"boundary": 0.400, "letter": "F"},
+        {"boundary": 0.020, "letter": "S"},
+        {"boundary": 0.040, "letter": "A"},
+        {"boundary": 0.060, "letter": "B"},
+        {"boundary": 0.080, "letter": "C"},
+        {"boundary": 0.100, "letter": "D"},
+        {"boundary": 0.120, "letter": "E"},
+        {"boundary": 0.140, "letter": "F"},
 
     ]
 

@@ -10,23 +10,25 @@ class CreateFictitiousScenario:
 
         self.transaction_specifications = {
 
-            "TR-001": {"start": 0.010, "end": 0.060, "throughput": 800},
+            "TR-001": {"start": 0.010, "end": 0.060, "throughput": 8000},
             "TR-002": {"start": 0.050, "end": 0.100, "throughput": 1500},
-            "TR-003": {"start": 0.600, "end": 0.800, "throughput": 1000},
+            "TR-003": {"start": 0.600, "end": 0.800, "throughput": 1200},
             "TR-004": {"start": 0.300, "end": 1.400, "throughput": 1600},
             "TR-005": {"start": 0.100, "end": 0.200, "throughput": 1000},
             "TR-006": {"start": 2.000, "end": 8.000, "throughput": 1200},
-            "TR-007": {"start": 1.500, "end": 3.000, "throughput": 800},
-            "TR-008": {"start": 0.100, "end": 0.500, "throughput": 900},
-            "TR-009": {"start": 0.010, "end": 0.100, "throughput": 750},
+            "TR-007": {"start": 1.500, "end": 3.000, "throughput": 1000},
+            "TR-008": {"start": 0.100, "end": 0.500, "throughput": 4000},
+            "TR-009": {"start": 0.010, "end": 0.100, "throughput": 2500},
             "TR-010": {"start": 0.800, "end": 1.000, "throughput": 1000},
         }
 
         self.baseline_test_id = self._generate_random_string()
         self.benchmark_test_id = self._generate_random_string()
+        self.baseline_x, self.baseline_y = self._create_fictitious_population()
+        self.benchmark_x, self.benchmark_y = self._create_fictitious_population()
 
-        self.baseline_x, self.baseline_y = self._create_fictitious_sample()
-        self.benchmark_x, self.benchmark_y = self._create_fictitious_sample(increase=increase, decrease=decrease)
+        if increase != 0 or decrease != 0:
+            self.benchmark_y = self._increase_or_decrease_population(self.benchmark_y, increase, decrease)
 
     @staticmethod
     def _generate_random_string():
@@ -36,11 +38,10 @@ class CreateFictitiousScenario:
         """
         return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12))
 
-    def _create_fictitious_sample(self, increase=0, decrease=0):
+    def _create_fictitious_population(self):
         """
 
-        :param increase:
-        :param decrease:
+
         """
         y = []
         x = []
@@ -50,17 +51,30 @@ class CreateFictitiousScenario:
                     self.transaction_specifications[transaction]["start"],
                     self.transaction_specifications[transaction]["end"],
                 )
-                if increase > 0:
-                    measurement += measurement / 100 * increase
-
-                elif decrease > 0:
-                    measurement -= measurement / 100 * decrease
-
                 y.append(measurement)
         for offset in range(0, len(y)):
             x.append(offset)
 
         return x, y
+
+    @staticmethod
+    def _increase_or_decrease_population(population, increase=0, decrease=0):
+        """
+
+        :param increase:
+        :param decrease:
+        :return:
+        """
+        changed_population = []
+        for measurement in population:
+            if increase > 0:
+                measurement += measurement / 100 * increase
+
+            elif decrease > 0:
+                measurement -= measurement / 100 * decrease
+            changed_population.append(measurement)
+
+        return changed_population
 
 
 class ConvertCsvResultsIntoJson:

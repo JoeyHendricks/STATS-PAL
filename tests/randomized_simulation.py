@@ -1,34 +1,36 @@
 from heuristic_comparisons.distance_testing import DistanceTest
 from heuristic_comparisons.divergence_testing import DivergenceTest
 from utilities.data import CreateFictitiousScenario
+from utilities.visuals import show_scatter_plot
 from data import response_times_acc
 import random
 
 SEEDS = [random.randint(152100, 1000001521654651) for _ in range(0, 1000)]
 
 
-def consistently_increase_and_decrease_benchmark(seed=21021995):
+def consistently_increase_and_decrease_benchmark(seed=152100):
     """
 
     :return:
     """
     for delta in range(0, 150):
         random.seed(seed)
-        scenario_increased = CreateFictitiousScenario(increase=delta)
-        scenario_decreased = CreateFictitiousScenario(decrease=delta)
+        scenario = CreateFictitiousScenario(increase=delta)
         d_test_increased = DistanceTest(
-            population_a=scenario_increased.baseline_y,
-            population_b=scenario_increased.benchmark_y
+            population_a=scenario.baseline_y,
+            population_b=scenario.benchmark_y
         )
-        d_test_decreased = DistanceTest(
-            population_a=scenario_decreased.baseline_y,
-            population_b=scenario_decreased.benchmark_y
-        )
-
         rank = d_test_increased.rank
         score = d_test_increased.score
         distance = d_test_increased.d_value
+
         print(f"rank: {rank} - score: {score} - distance: {distance} - delta: {delta}")
+        show_scatter_plot(
+            baseline_x_axis=scenario.baseline_x,
+            baseline_y_axis=scenario.baseline_y,
+            benchmark_x_axis=scenario.benchmark_x,
+            benchmark_y_axis=scenario.benchmark_y
+        )
 
 
 def verify_against_real_world_data():
@@ -59,8 +61,8 @@ def verify_against_real_world_data():
 
 
 
-#consistently_increase_and_decrease_benchmark()
-verify_against_real_world_data()
+consistently_increase_and_decrease_benchmark()
+#verify_against_real_world_data()
 
 """
 A
