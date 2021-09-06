@@ -34,8 +34,8 @@ class DistanceTest:
     # The letter ranks that interpret the KS distance statistic.
     LETTER_RANKS = [
 
-        {"boundary": 0.020, "letter": "S"},
-        {"boundary": 0.040, "letter": "A"},
+        {"boundary": 0.015, "letter": "S"},
+        {"boundary": 0.030, "letter": "A"},
         {"boundary": 0.060, "letter": "B"},
         {"boundary": 0.080, "letter": "C"},
         {"boundary": 0.100, "letter": "D"},
@@ -57,7 +57,7 @@ class DistanceTest:
         self.sample_size = min([len(population_a), len(population_b)])
         self.sample_a = self._calculate_empirical_cumulative_distribution_function(population_a)
         self.sample_b = self._calculate_empirical_cumulative_distribution_function(population_b)
-        self.d_value, self.p_value, self.score = self._calculate_kolmogorov_smirnov_statistics()
+        self.d_value, self.p_value = self._calculate_kolmogorov_smirnov_statistics()
         self.rank = self._letter_rank_kolmogorov_smirnov_distance_statistic()
 
     def _calculate_empirical_cumulative_distribution_function(self, population: list) -> object:
@@ -103,8 +103,7 @@ class DistanceTest:
             self.sample_a["measure"].values,
             self.sample_b["measure"].values
         )
-        score = 100 - (distance * 100)
-        return distance, probability, score
+        return distance, probability
 
     def _letter_rank_kolmogorov_smirnov_distance_statistic(self) -> str:
         """
@@ -112,13 +111,22 @@ class DistanceTest:
         between our distributions. This rank is based on the Japanese letter
         ranking system the letters can be interpreted the following way:
 
-        S =
-        A =
-        B =
-        C =
-        D =
-        E =
-        F =
+
+        |  Rank |        Severity       |             Action              |
+        |-------|-----------------------|---------------------------------|
+        |   S   | Almost None           | Automated release to production |
+        |   A   | Very low              | Automated release to production |
+        |   B   | Low                   | Pending impact analysis needed  |
+        |   C   | Medium                | Halt create minor defect        |
+        |   D   | High                  | Halt create medium defect       |
+        |   E   | Very High             | Halt create major defect        |
+        |   F   | Significant change    | Halt create Priority defect     |
+        |-------|-----------------------|---------------------------------|
+
+        Depending on your situation it is fine to also automatically release
+        to production when a B rank is produced as the impact is low.
+        If you choose to do that I would recommend to also create a defect
+        to document the automated release with an low performance risk.
 
         :return: The letter rank in the form as string ranging from S to F
         """

@@ -6,20 +6,20 @@ import json
 
 class CreateFictitiousScenario:
 
-    def __init__(self, increase=0, decrease=0):
+    def __init__(self, percentage=0, delta=0):
 
         self.transaction_specifications = {
 
-            "TR-001": {"start": 0.010, "end": 0.060, "throughput": 8000},
-            "TR-002": {"start": 0.050, "end": 0.100, "throughput": 1500},
-            "TR-003": {"start": 0.600, "end": 0.800, "throughput": 1200},
-            "TR-004": {"start": 0.300, "end": 1.400, "throughput": 1600},
-            "TR-005": {"start": 0.100, "end": 0.200, "throughput": 1000},
-            "TR-006": {"start": 2.000, "end": 8.000, "throughput": 1200},
-            "TR-007": {"start": 1.500, "end": 3.000, "throughput": 1000},
-            "TR-008": {"start": 0.100, "end": 0.500, "throughput": 4000},
-            "TR-009": {"start": 0.010, "end": 0.100, "throughput": 2500},
-            "TR-010": {"start": 0.800, "end": 1.000, "throughput": 1000},
+            "TR-001": {"start": 10, "end": 60, "throughput": 8000},
+            "TR-002": {"start": 50, "end": 100, "throughput": 1500},
+            "TR-003": {"start": 600, "end": 800, "throughput": 1200},
+            "TR-004": {"start": 300, "end": 1400, "throughput": 1600},
+            "TR-005": {"start": 100, "end": 200, "throughput": 1000},
+            "TR-006": {"start": 2.000, "end": 8000, "throughput": 1200},
+            "TR-007": {"start": 1500, "end": 3000, "throughput": 1000},
+            "TR-008": {"start": 100, "end": 500, "throughput": 4000},
+            "TR-009": {"start": 10, "end": 100, "throughput": 2500},
+            "TR-010": {"start": 800, "end": 1000, "throughput": 1000},
         }
 
         self.baseline_test_id = self._generate_random_string()
@@ -27,8 +27,11 @@ class CreateFictitiousScenario:
         self.baseline_x, self.baseline_y = self._create_fictitious_population()
         self.benchmark_x, self.benchmark_y = self._create_fictitious_population()
 
-        if increase != 0 or decrease != 0:
-            self.benchmark_y = self._increase_or_decrease_population(self.benchmark_y, increase, decrease)
+        self.benchmark_y = self.randomly_decrease_or_increase_part_of_the_population(
+            population=self.benchmark_y,
+            percentage=percentage,
+            delta=delta,
+        )
 
     @staticmethod
     def _generate_random_string():
@@ -37,6 +40,29 @@ class CreateFictitiousScenario:
         :return:
         """
         return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12))
+
+    @staticmethod
+    def randomly_decrease_or_increase_part_of_the_population(population, percentage=0, delta=0,
+                                                             increase=True):
+        """
+
+        :param delta:
+        :param population:
+        :param percentage:
+        :param increase:
+        :return:
+        """
+        for _ in range(0, int(len(population) / 100 * percentage)):
+            rand_index = random.randint(0, len(population))
+            if increase is True:
+                change = float(population[rand_index] / 100 * delta)
+                current = population[rand_index]
+                new = current + change
+                population[rand_index] = new
+
+            else:
+                continue
+        return population
 
     def _create_fictitious_population(self):
         """
@@ -55,26 +81,7 @@ class CreateFictitiousScenario:
         for offset in range(0, len(y)):
             x.append(offset)
 
-        return x, y
-
-    @staticmethod
-    def _increase_or_decrease_population(population, increase=0, decrease=0):
-        """
-
-        :param increase:
-        :param decrease:
-        :return:
-        """
-        changed_population = []
-        for measurement in population:
-            if increase > 0:
-                measurement += measurement / 100 * increase
-
-            elif decrease > 0:
-                measurement -= measurement / 100 * decrease
-            changed_population.append(measurement)
-
-        return changed_population
+        return x, [random.choice(y) for _ in y]
 
 
 class ConvertCsvResultsIntoJson:
@@ -131,4 +138,16 @@ class ConvertCsvResultsIntoJson:
                 self.data[runid]["timestamps"].append(timestamp)
                 self.data[runid]["actions"].append(action)
 
+
+def equalize_smaller_population_to_larger(desired_size, population):
+    """
+
+    :param desired_size:
+    :param population:
+    :return:
+    """
+    difference = desired_size - len(population)
+    for _ in range(0, difference):
+        population.append(random.choice(population))
+    return population
 
