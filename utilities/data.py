@@ -115,5 +115,5 @@ def generate_delta_array():
     delta = 0
     while delta <= 99:
         array.append(round(delta, 3))
-        delta = delta + 0.1
+        delta = delta + 1
     return array

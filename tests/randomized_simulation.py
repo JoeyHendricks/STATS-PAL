@@ -1,6 +1,6 @@
 from heuristic_comparisons.wasserstein_distance_testing import StatisticalDistanceTest
 from utilities.data import CreateFictitiousScenario, generate_delta_array
-from utilities.visuals import LineGraph
+from utilities.visuals import LineGraph, Animation
 from data import response_times_prod, response_times_dummy
 import random
 
@@ -15,26 +15,31 @@ def consistently_increase_and_decrease_benchmark(seed=65981):
     scores = []
     percentage_increase = []
     for delta in generate_delta_array():
-        for foo in range(0, 10):
-            random.seed(seed)
-            scenario = CreateFictitiousScenario(percentage=100, delta=delta)
-            distance_test = StatisticalDistanceTest(
-                population_a=scenario.baseline_y,
-                population_b=scenario.benchmark_y
-            )
-            scores.append(distance_test.wasserstein_d_value)
-            percentage_increase.append(delta)
-            print(f"{delta} -- {distance_test.ks_d_value}")
-            LineGraph(
-                baseline=distance_test.sample_a,
-                benchmark=distance_test.sample_b,
-                wasserstein_distance=distance_test.ks_d_value,
-                rank=distance_test.rank,
-                change=delta
-            ).save(
-                folder="C:\\temp\\change", filename=f"{delta}_{foo}"
-            )
+        #for foo in range(0, 10):
+        random.seed(seed)
+        scenario = CreateFictitiousScenario(percentage=100, delta=delta)
+        distance_test = StatisticalDistanceTest(
+            population_a=scenario.baseline_y,
+            population_b=scenario.benchmark_y
+        )
+        scores.append(distance_test.wasserstein_d_value)
+        percentage_increase.append(delta)
+        print(f"{delta} -- ks-d {distance_test.ks_d_value} -- ws {distance_test.wasserstein_d_value} -- Rank: {distance_test.rank}")
+        LineGraph(
+            baseline=distance_test.sample_a,
+            benchmark=distance_test.sample_b,
+            wasserstein_distance=distance_test.wasserstein_d_value,
+            kolmogorov_smirnov_distance=distance_test.ks_d_value,
+            rank=distance_test.rank,
+            change=delta
+        ).save_frame(
+            folder="C:\\temp\\change", filename=f"{delta}_"
+        )
 
+    Animation.render_frames_in_target_directory_to_gif(
+        target_folder="C:\\temp\\change",
+        export_folder="C:\\temp"
+    )
 
 
 def verify_against_real_world_data_prod():

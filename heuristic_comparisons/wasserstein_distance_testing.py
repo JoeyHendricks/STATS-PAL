@@ -34,13 +34,13 @@ class StatisticalDistanceTest:
     # The letter rank that interprets the wasserstein & kolmogorov smirnov distance
     LETTER_RANKS = [
 
-        {"wasserstein_boundary": 0.025, "kolmogorov_smirnov_boundary": 0.05, "rank": "S"},
-        {"wasserstein_boundary": 0.050, "kolmogorov_smirnov_boundary": 0.10, "rank": "A"},
-        {"wasserstein_boundary": 0.090, "kolmogorov_smirnov_boundary": 0.20, "rank": "B"},
-        {"wasserstein_boundary": 0.100, "kolmogorov_smirnov_boundary": 0.30, "rank": "C"},
-        {"wasserstein_boundary": 0.150, "kolmogorov_smirnov_boundary": 0.40, "rank": "D"},
-        {"wasserstein_boundary": 0.200, "kolmogorov_smirnov_boundary": 0.50, "rank": "E"},
-        {"wasserstein_boundary": 0.250, "kolmogorov_smirnov_boundary": 0.60, "rank": "F"},
+        {"wasserstein_boundary": 0.030, "kolmogorov_smirnov_boundary": 0.080, "rank": "S"},
+        {"wasserstein_boundary": 0.060, "kolmogorov_smirnov_boundary": 0.150, "rank": "A"},
+        {"wasserstein_boundary": 0.100, "kolmogorov_smirnov_boundary": 0.170, "rank": "B"},
+        {"wasserstein_boundary": 0.125, "kolmogorov_smirnov_boundary": 0.220, "rank": "C"},
+        {"wasserstein_boundary": 0.150, "kolmogorov_smirnov_boundary": 0.260, "rank": "D"},
+        {"wasserstein_boundary": 0.200, "kolmogorov_smirnov_boundary": 0.300, "rank": "E"},
+        {"wasserstein_boundary": 0.250, "kolmogorov_smirnov_boundary": 0.340, "rank": "F"},
 
     ]
 
@@ -129,7 +129,7 @@ class StatisticalDistanceTest:
             self.sample_a["measure"].values,
             self.sample_b["measure"].values
         )
-        return kolmogorov_smirnov_distance, kolmogorov_smirnov_probability
+        return round(kolmogorov_smirnov_distance, 3), kolmogorov_smirnov_probability
 
     def _letter_rank_distance_statistics(self) -> str:
         """
@@ -156,9 +156,10 @@ class StatisticalDistanceTest:
 
         :return: The letter rank in the form as string ranging from S to F
         """
-        print(self.ks_d_value)
         for grade in self.LETTER_RANKS:
-            if self.wasserstein_d_value < grade["wasserstein_boundary"]:
+            ks_critical_grade = grade["kolmogorov_smirnov_boundary"]
+            wasserstein_critical_grade = grade["wasserstein_boundary"]
+            if self.wasserstein_d_value < wasserstein_critical_grade and self.ks_d_value < ks_critical_grade:
                 return grade["rank"]
             else:
                 continue

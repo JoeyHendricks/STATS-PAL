@@ -1,39 +1,45 @@
+from os.path import isfile, join
+from os import listdir
 import plotly.express as px
 import pandas as pd
+import imageio
 import os
 
 
 class LineGraph:
 
-    def __init__(self, benchmark, baseline, wasserstein_distance, rank, change):
+    def __init__(self, benchmark, baseline, wasserstein_distance, kolmogorov_smirnov_distance, rank, change):
         """
-
+        Will build the image.
         :param benchmark:
         :param baseline:
         """
         benchmark["type"] = ["benchmark" for _ in range(0, len(benchmark["measure"]))]
         baseline["type"] = ["baseline" for _ in range(0, len(baseline["measure"]))]
         self.wasserstein_distance = wasserstein_distance
+        self.kolmogorov_smirnov_distance = kolmogorov_smirnov_distance
         self.rank = rank
+        self.change = change
         self.dataframe = pd.concat([baseline, benchmark])
-        self.message = f"Wasserstein Distance <b>{self.wasserstein_distance}</b>, " \
-                       f"Estimated Rank: <b>{self.rank}</b>, % randomly introduced distance: <b>{change}</b>"
+        self.message_versus_simulation = f"Wasserstein d-value <b>{self.wasserstein_distance}</b>, " \
+                                         f"KS d-value: <b>{self.kolmogorov_smirnov_distance}</b>"
+        self.message_estimated_rank_simulation = f"Estimated rank: <b>{self.rank}</b>"
 
     def _render_figure(self):
         """
-        Will render the line plot into a figure.
+        Will render the data into a figure.
         :return:
         """
         figure = px.line(self.dataframe, x="probability", y="measure", color='type')
         figure.add_annotation(
             dict(
                 font=dict(color='black', size=15),
-                x=1,
+                x=0.5,
                 y=-0.12,
                 showarrow=False,
-                text=self.message,
+                text=self.message_estimated_rank_simulation,
                 textangle=0,
-                align="left",
+                align="center",
                 xref="paper",
                 yref="paper")
         )
@@ -41,7 +47,8 @@ class LineGraph:
             height=800,
             width=800,
             yaxis_range=[-1.1, 2.1],
-            title_text='Benchmark Vs Baseline cumulative distribution function'
+            title_text=f'Benchmark Vs Baseline randomly introduced distance: <b>{self.change}</b>',
+            title_x=0.5
         )
         return figure
 
@@ -52,7 +59,7 @@ class LineGraph:
         figure = self._render_figure()
         figure.show()
 
-    def save(self, folder: str, filename: str, image_format=".png") -> None:
+    def save_frame(self, folder: str, filename: str, image_format=".png") -> None:
         """
         Saving image using the orca engine the default
         kaleido engine was not working for me.
@@ -69,3 +76,21 @@ class LineGraph:
             format=image_format.strip("."),
             engine="orca"
         )
+
+
+class Animation:
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def render_frames_in_target_directory_to_gif(target_folder: str, export_folder: str):
+        """
+        Will create gif.
+        :return:
+        """
+        images = []
+        files_in_target_folder = [f for f in listdir(target_folder) if isfile(join(target_folder, f))]
+        for file_name in files_in_target_folder:
+            images.append(imageio.imread(f"{target_folder}\\{file_name}"))
+        imageio.mimsave(f"{export_folder}\\out.gif", images)
