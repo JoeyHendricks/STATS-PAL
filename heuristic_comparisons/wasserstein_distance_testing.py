@@ -1,9 +1,9 @@
-from scipy.stats import ks_2samp
+from scipy.stats import wasserstein_distance, ks_2samp
 import pandas as pd
 import numpy as np
 
 
-class DistanceTest:
+class StatisticalDistanceTest:
     """
     This class is an algorithm that uses the kolmogorov smirnov statistics
     to define how much distance there is between a baseline and a benchmark
@@ -31,20 +31,20 @@ class DistanceTest:
     which can be adjusted to fit your own need.
     """
 
-    # The letter ranks that interpret the KS distance statistic.
+    # The letter rank that interprets the wasserstein & kolmogorov smirnov distance
     LETTER_RANKS = [
 
-        {"boundary": 0.015, "letter": "S"},
-        {"boundary": 0.030, "letter": "A"},
-        {"boundary": 0.060, "letter": "B"},
-        {"boundary": 0.080, "letter": "C"},
-        {"boundary": 0.100, "letter": "D"},
-        {"boundary": 0.120, "letter": "E"},
-        {"boundary": 0.140, "letter": "F"},
+        {"wasserstein_boundary": 0.025, "kolmogorov_smirnov_boundary": 0.05, "rank": "S"},
+        {"wasserstein_boundary": 0.050, "kolmogorov_smirnov_boundary": 0.10, "rank": "A"},
+        {"wasserstein_boundary": 0.090, "kolmogorov_smirnov_boundary": 0.20, "rank": "B"},
+        {"wasserstein_boundary": 0.100, "kolmogorov_smirnov_boundary": 0.30, "rank": "C"},
+        {"wasserstein_boundary": 0.150, "kolmogorov_smirnov_boundary": 0.40, "rank": "D"},
+        {"wasserstein_boundary": 0.200, "kolmogorov_smirnov_boundary": 0.50, "rank": "E"},
+        {"wasserstein_boundary": 0.250, "kolmogorov_smirnov_boundary": 0.60, "rank": "F"},
 
     ]
 
-    def __init__(self, population_a: list, population_b: list, filter_outliers=True) -> None:
+    def __init__(self, population_a: list, population_b: list) -> None:
         """
         Will construct the class and calculate all the required statistics.
         After all of the computation have been completed the following information can then
@@ -53,12 +53,20 @@ class DistanceTest:
         :param population_a: An list of floats of the A population (baseline).
         :param population_b: An list of floats of the B population (benchmark).
         """
-        self.filter_outliers = filter_outliers
         self.sample_size = min([len(population_a), len(population_b)])
         self.sample_a = self._calculate_empirical_cumulative_distribution_function(population_a)
         self.sample_b = self._calculate_empirical_cumulative_distribution_function(population_b)
-        self.d_value, self.p_value = self._calculate_kolmogorov_smirnov_statistics()
-        self.rank = self._letter_rank_kolmogorov_smirnov_distance_statistic()
+        self.wasserstein_d_value = self._calculate_wasserstein_distance_statistics()
+        self.ks_d_value, self.ks_p_value = self._calculate_kolmogorov_smirnov_distance_statistics()
+        self.rank = self._letter_rank_distance_statistics()
+
+    @staticmethod
+    def normalize_raw_data(raw_data: object) -> list:
+        """
+        Will normalize a given raw distribution to its maximum.
+        :return:
+        """
+        return (np.array(raw_data) - np.array(raw_data).mean()) / np.array(raw_data).std()
 
     def _calculate_empirical_cumulative_distribution_function(self, population: list) -> object:
         """
@@ -76,36 +84,54 @@ class DistanceTest:
         :param population: The provided measurements from one collected population.
         :return: The empirical cumulative distribution function (outliers filtered or not filtered)
         """
-        raw_sample = np.random.choice(population, self.sample_size)
+        raw_data = np.random.choice(population, self.sample_size)
+        normalized_sample = self.normalize_raw_data(raw_data)
         sample = pd.DataFrame(
             {
-                'measure': np.sort(raw_sample),
-                'probability': np.arange(len(raw_sample)) / float(len(raw_sample)),
+                'measure': np.sort(normalized_sample),
+                'probability': np.arange(len(normalized_sample)) / float(len(normalized_sample)),
             }
         )
-        if self.filter_outliers is True:
-            # Removing irrelevant low and high outliers
-            sample = sample[~(sample['probability'] <= 0.05)]
-            sample = sample[~(sample['probability'] >= 0.95)]
+        sample = sample[~(sample['probability'] >= 0.96)]
         return sample
 
-    def _calculate_kolmogorov_smirnov_statistics(self) -> tuple:
+    def _calculate_wasserstein_distance_statistics(self) -> float:
         """
-        Will use the kolmogorov smirnov statistical test to calculate the
-        distance between two ECDF distributions.
+        Computes the Wasserstein distance or Kantorovich–Rubinstein metric also known
+        as the Earth mover's distance. This metric represents how much effort is needed
+        to move the benchmark distribution towards the baseline.
 
-        :return: Will return three metrics a the absolute distance between
-        our distributions as "distance", It will return the probability value
-        from the KS-Test and it will output a score based on the distance to
-        represent the change in the form of simple score.
+        More information about this metric can be found here:
+
+        https://en.wikipedia.org/wiki/Wasserstein_metric
+
+        :return: Will return the Wasserstein metric as a float from a normalized distribution.
         """
-        distance, probability = ks_2samp(
+        wasserstein = wasserstein_distance(
             self.sample_a["measure"].values,
             self.sample_b["measure"].values
         )
-        return distance, probability
+        return round(wasserstein, 3)
 
-    def _letter_rank_kolmogorov_smirnov_distance_statistic(self) -> str:
+    def _calculate_kolmogorov_smirnov_distance_statistics(self) -> tuple:
+        """
+        Will use the kolmogorov smirnov statistical test to calculate the
+        distance between two ECDF distributions. The KS test measures how
+        significant the change is between the 2 largest points.
+
+        More information about this metric can be found here:
+
+        https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
+
+        :return: Gives back the KS-test D-value & the P-Value
+        """
+        kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
+            self.sample_a["measure"].values,
+            self.sample_b["measure"].values
+        )
+        return kolmogorov_smirnov_distance, kolmogorov_smirnov_probability
+
+    def _letter_rank_distance_statistics(self) -> str:
         """
         An heuristic that will estimate a rank of what the amount of change is
         between our distributions. This rank is based on the Japanese letter
@@ -130,9 +156,10 @@ class DistanceTest:
 
         :return: The letter rank in the form as string ranging from S to F
         """
+        print(self.ks_d_value)
         for grade in self.LETTER_RANKS:
-            if self.d_value < grade["boundary"]:
-                return grade["letter"]
+            if self.wasserstein_d_value < grade["wasserstein_boundary"]:
+                return grade["rank"]
             else:
                 continue
         return "F"

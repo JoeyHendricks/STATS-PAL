@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn import preprocessing
 
 
 def calculate_percentile(array: list, percentile: int) -> float:
@@ -14,4 +15,6 @@ def normalize_distribution(raw: list) -> list:
     Will normalize a given distribution,
     :return:
     """
-    return [float(i)/sum(raw) for i in raw]
+    maximum = max(raw)
+    norm = [np.divide(i, maximum) for i in raw]
+    return norm

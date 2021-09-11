@@ -4,86 +4,6 @@ import random
 import json
 
 
-class CreateFictitiousScenario:
-
-    def __init__(self, percentage=0, delta=0):
-
-        self.transaction_specifications = {
-
-            "TR-001": {"start": 10, "end": 60, "throughput": 8000},
-            "TR-002": {"start": 50, "end": 100, "throughput": 1500},
-            "TR-003": {"start": 600, "end": 800, "throughput": 1200},
-            "TR-004": {"start": 300, "end": 1400, "throughput": 1600},
-            "TR-005": {"start": 100, "end": 200, "throughput": 1000},
-            "TR-006": {"start": 2.000, "end": 8000, "throughput": 1200},
-            "TR-007": {"start": 1500, "end": 3000, "throughput": 1000},
-            "TR-008": {"start": 100, "end": 500, "throughput": 4000},
-            "TR-009": {"start": 10, "end": 100, "throughput": 2500},
-            "TR-010": {"start": 800, "end": 1000, "throughput": 1000},
-        }
-
-        self.baseline_test_id = self._generate_random_string()
-        self.benchmark_test_id = self._generate_random_string()
-        self.baseline_x, self.baseline_y = self._create_fictitious_population()
-        self.benchmark_x, self.benchmark_y = self._create_fictitious_population()
-
-        self.benchmark_y = self.randomly_decrease_or_increase_part_of_the_population(
-            population=self.benchmark_y,
-            percentage=percentage,
-            delta=delta,
-        )
-
-    @staticmethod
-    def _generate_random_string():
-        """
-        will generate a random identifier
-        :return:
-        """
-        return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12))
-
-    @staticmethod
-    def randomly_decrease_or_increase_part_of_the_population(population, percentage=0, delta=0,
-                                                             increase=True):
-        """
-
-        :param delta:
-        :param population:
-        :param percentage:
-        :param increase:
-        :return:
-        """
-        for _ in range(0, int(len(population) / 100 * percentage)):
-            rand_index = random.randint(0, len(population))
-            if increase is True:
-                change = float(population[rand_index] / 100 * delta)
-                current = population[rand_index]
-                new = current + change
-                population[rand_index] = new
-
-            else:
-                continue
-        return population
-
-    def _create_fictitious_population(self):
-        """
-
-
-        """
-        y = []
-        x = []
-        for transaction in self.transaction_specifications:
-            for _ in range(0, self.transaction_specifications[transaction]["throughput"]):
-                measurement = random.uniform(
-                    self.transaction_specifications[transaction]["start"],
-                    self.transaction_specifications[transaction]["end"],
-                )
-                y.append(measurement)
-        for offset in range(0, len(y)):
-            x.append(offset)
-
-        return x, [random.choice(y) for _ in y]
-
-
 class ConvertCsvResultsIntoJson:
 
     def __init__(self, path: str) -> None:
@@ -139,15 +59,61 @@ class ConvertCsvResultsIntoJson:
                 self.data[runid]["actions"].append(action)
 
 
-def equalize_smaller_population_to_larger(desired_size, population):
+class CreateFictitiousScenario:
+
+    def __init__(self, percentage=0, delta=0, baseline_scenario_id="RID-3", benchmark_scenario_id="RID-4"):
+        """
+
+        :param percentage:
+        :param delta:
+        :param baseline_scenario_id:
+        :param benchmark_scenario_id:
+        """
+        scenarios = ConvertCsvResultsIntoJson(
+            "C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\raw_data_prod_anoniem.csv"
+        ).data
+
+        self.baseline_x = scenarios[baseline_scenario_id]["timestamps"]
+        self.baseline_y = scenarios[baseline_scenario_id]["response_times"]
+        self.benchmark_y = scenarios[benchmark_scenario_id]["response_times"]
+        self.benchmark_x = scenarios[benchmark_scenario_id]["timestamps"]
+
+        self.baseline_test_id = baseline_scenario_id
+        self.benchmark_test_id = benchmark_scenario_id
+
+        self.benchmark_y = self.randomly_decrease_or_increase_part_of_the_population(
+            population=self.benchmark_y,
+            percentage=percentage,
+            delta=delta,
+        )
+
+    @staticmethod
+    def randomly_decrease_or_increase_part_of_the_population(population, percentage=0, delta=0):
+        """
+
+        :param delta:
+        :param population:
+        :param percentage:
+        :return:
+        """
+        for _ in range(0, int(len(population) / 100 * percentage)):
+            rand_index = abs(random.randint(0, len(population) - 1))
+            change = float(population[rand_index] / 100 * delta)
+            current = population[rand_index]
+            new = current + change
+            population[rand_index] = new
+
+        return population
+
+
+def generate_delta_array():
     """
 
-    :param desired_size:
-    :param population:
     :return:
     """
-    difference = desired_size - len(population)
-    for _ in range(0, difference):
-        population.append(random.choice(population))
-    return population
-
+    array = []
+    delta = 0
+    while delta <= 99:
+        array.append(round(delta, 3))
+        delta = delta + 0.1
+    return array
