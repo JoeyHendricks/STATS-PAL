@@ -48,7 +48,7 @@ print(stats_distance_test.rank)                         # >> C
 ```
 That is it you are all set now to embed advanced statistical analyse into your CID/CD pipeline, so you can make better
 automated decisions when to continue the pipeline or halt it and raise a defect. As this comparison is not without 
-its pitfalls and complexity **I would recommend continuing to read below** on how this comparison works and how you can 
+its pitfalls and complexity ***I would recommend continuing to read below*** on how this comparison works and how you can 
 best interpret its powerful information.
 
 ## Start using the raw format of your performance test results.
@@ -76,14 +76,42 @@ line graph would have us believe.
 As can be seen in this example is that the aggregation of data hides the actual performance of 
 our system under test and gives us a false understanding of what the real patterns are.
 
-Because of this reason, this project is based on this raw data philosophy from [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) we base our automated analysis, 
-not on a single simple metric like the average or the median, but we look into discovering change throughout the 
-entire raw data set using more advanced statistical methods to verify how much the change between to tests is. 
+Because of this reason, this project is based on this raw data philosophy from [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) 
+that is why we base our automated analysis, not on a single simple metric like the average or the median, but we look 
+into discovering change throughout the entire raw data set using more advanced statistical methods to 
+verify how much the change between to tests is. 
 
 ***That is why using raw data is a prerequisite for being able to use the [heuristic](https://en.wikipedia.org/wiki/Heuristic) 
-that is developed without raw data, it makes less sense to use this solution as aggregation could have "poisoned" our data.***.
+that is developed without raw data, it makes less sense to use this solution as aggregation could have "poisoned" our 
+data and make it harder to give an accurate assessment.***.
 
 ## Statistical Distance
+
+When automating performance testing and its analysis into a CI/CD pipeline we only would like to be notified if 
+our results contain an interesting change in performance or behavior. In other words, we would only like to view our 
+results when the [distance](https://en.wikipedia.org/wiki/Statistical_distance) between our baseline, and our benchmark 
+increases or decreases. When this happens we can create a defect and start doing some research on why it is different.
+But to do this we would need to find out how much "distance" there is between our tests.
+
+When talking about measuring the distance between our benchmark and baseline tests I am talking about finding the
+[statistical distance](https://en.wikipedia.org/wiki/Statistical_distance) between them. Within the field of statistics
+there are a couple of interesting distance statistics we could consider, these are:
+
+## Kolmogorov-Smirnov Distance
+
+The Kolmogorov-Smirnov Distance is a distance metric that is calculated when using the very well known  
+[Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
+This distance is very interesting as it represents the largest absolute difference between the two 
+[cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
+
+
+https://upload.wikimedia.org/wikipedia/commons/c/cf/KS_Example.png
+
+
+- [Kolmogorov-Smirnov Distance](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) 
+- [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric)
+
+
 
 The main goal behind this project is to form a single metric that we can use to interpret the amount of regression 
 between our baseline and benchmark with a [heuristic model](https://en.wikipedia.org/wiki/Heuristic) in which we can define what we consider to be too much.
