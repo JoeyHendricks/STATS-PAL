@@ -3,7 +3,7 @@ import random
 import json
 
 
-class ConvertCsvResultsIntoJson:
+class ConvertCsvResultsIntoDictionary:
 
     def __init__(self, path: str) -> None:
         """
@@ -68,7 +68,7 @@ class CreateFictitiousScenario:
         :param baseline_id:
         :param benchmark_id:
         """
-        scenarios = ConvertCsvResultsIntoJson(data_set_location).data
+        scenarios = ConvertCsvResultsIntoDictionary(data_set_location).data
 
         self.baseline_x = scenarios[baseline_id]["timestamps"]
         self.baseline_y = scenarios[baseline_id]["response_times"]
