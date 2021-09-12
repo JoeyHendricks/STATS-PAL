@@ -101,7 +101,7 @@ calculated from our raw data.
 ## Kolmogorov-Smirnov Distance
 
 The Kolmogorov-Smirnov Distance is a distance metric that is calculated when using the very well known  
-[Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
+[Two Sample Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
 This distance is very interesting as it represents the largest absolute difference between two 
 [cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
 
@@ -113,26 +113,41 @@ This distance is very interesting as it represents the largest absolute differen
 > This distance metric is very interesting for us performance engineers as it allows us to understand what the 
 > absolute distance is between our baseline tests, and our benchmark tests.
 
-
-
-
-
+## Wasserstein Distance
 
 - [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric)
 
 
-
-The main goal behind this project is to form a single metric that we can use to interpret the amount of regression 
-between our baseline and benchmark with a [heuristic model](https://en.wikipedia.org/wiki/Heuristic) in which we can define what we consider to be too much.
-
-To produce a concise metric we start with generating a [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) for our baseline and benchmark 
-raw test results using [percentiles](https://en.wikipedia.org/wiki/Percentile) ranging from 0 to 95 as a graph 
-this distribution will look like this as an exponential curve: 
+# Computing the Wasserstein & Kolmogorov-Smirnov Distance out of raw data
 
 <!-- ECDF Curve -->
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
 </p>
+
+The above animation has been generated using the following Python code:
+
+```python
+from simulations.simulators import SimulateFictitiousScenario
+
+# Will create the fictitious scenario object from my default example data
+scenario = SimulateFictitiousScenario(
+    baseline_id="RID-3",
+    benchmark_id="RID-4",
+    data_set_location="your/path/here/raw-performance-test-data-001.csv"
+)
+
+# will run the scenario and randomly increase 100 from 0% to 99%.
+scenario.run_consistently_increase_benchmark_scenario(
+    percent_of_data=100,
+    save_image=False,
+    show_image=False,  # <-- Watch out will spam your browser full
+    repeats=0  # <-- amount of repeats per increase (increases are randomly distributed.)
+)
+
+```
+
+
 
 ___
 <!-- FOOTER -->
