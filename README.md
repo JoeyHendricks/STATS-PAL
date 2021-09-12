@@ -63,7 +63,7 @@ test available. This is commonly known as [raw data](https://en.wikipedia.org/wi
 Why this raw format of your test results is so powerful can be best seen in the graph animation below. 
 
 <!-- Raw Data Vs Averages animation -->
-<p align="center">
+<p align="left">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/averages-vs-raw-data.gif?raw=true"/>
 </p>
 
