@@ -1,4 +1,4 @@
-﻿ResponseTime;RunID;CF_DateTime;TransactionName
+﻿ResponseTime;RunID;Time;TransactionName
 0,007;RID-1;22-6-2021 18:35:51;TR_015
 0,007;RID-1;22-6-2021 18:35:43;TR_015
 0,009;RID-1;22-6-2021 18:35:39;TR_015

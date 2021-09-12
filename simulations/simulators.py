@@ -1,7 +1,6 @@
-from heuristic_comparisons.wasserstein_distance_testing import StatisticalDistanceTest
-from utilities.data import CreateFictitiousScenario
-from utilities.visuals import LineGraph, Animation
-from data import response_times_prod, response_times_dummy
+from heuristic_comparisons.kolmogorov_smirnov_and_wasserstein_distance_testing import StatisticalDistanceTest
+from data.wranglers import CreateFictitiousScenario
+from data.visuals import LineGraph
 import random
 
 
@@ -116,7 +115,7 @@ class SimulateFictitiousScenario:
         else:
             del graph
 
-    def consistently_increase_benchmark(self, percent_of_data_set, save_image, show_image, repeats=0) -> None:
+    def run_consistently_increase_benchmark_scenario(self, percent_of_data_set, save_image, show_image, repeats=0) -> None:
         """
         A simulation where the benchmark is consistently randomly increased.
         This will generate a ever increasing benchmark that can help us find the correct critical values.
@@ -192,16 +191,3 @@ def verify_against_real_world_data_dummy():
         print(
             f"-- ks-d {distance_test._ks_d_value} -- ws {distance_test._ws_d_value} -- Rank: {distance_test.rank} -- Score: {distance_test.score}")
         print("----------------------------")
-
-
-scenario = SimulateFictitiousScenario(
-    baseline_id="RID-3",
-    benchmark_id="RID-4",
-    data_set_location="C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\raw_data_prod_anoniem.csv"
-)
-scenario.consistently_increase_benchmark(
-    percent_of_data_set=100,
-    save_image=False,
-    show_image=False,
-    repeats=0
-)

@@ -78,14 +78,14 @@ class CreateFictitiousScenario:
         self.baseline_test_id = baseline_id
         self.benchmark_test_id = benchmark_id
 
-        self.benchmark_y = self.randomly_decrease_or_increase_part_of_the_population(
+        self.benchmark_y = self.randomly_decrease_increase_part_of_the_population(
             population=self.benchmark_y,
             percentage=percentage,
             delta=delta,
         )
 
     @staticmethod
-    def randomly_decrease_or_increase_part_of_the_population(population, percentage=0, delta=0):
+    def randomly_decrease_increase_part_of_the_population(population, percentage=0, delta=0):
         """
 
         :param delta:
@@ -101,16 +101,3 @@ class CreateFictitiousScenario:
             population[rand_index] = new
 
         return population
-
-
-def generate_delta_array():
-    """
-
-    :return:
-    """
-    array = []
-    delta = 0
-    while delta <= 99:
-        array.append(round(delta, 3))
-        delta = delta + 1
-    return array

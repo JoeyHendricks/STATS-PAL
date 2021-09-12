@@ -1,4 +1,4 @@
-﻿ResponseTime;RunID;Epoch;TransactionName
+﻿ResponseTime;RunID;Time;TransactionName
 0,005;RID-1;1610087537;TR_015
 0,004;RID-1;1610087534;TR_015
 0,003;RID-1;1610087529;TR_015
