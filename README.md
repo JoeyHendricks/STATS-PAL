@@ -63,9 +63,8 @@ test available. This is commonly known as [raw data](https://en.wikipedia.org/wi
 Why this raw format of your test results is so powerful can be best seen in the graph animation below. 
 
 <!-- Raw Data Vs Averages animation -->
-<p align="left">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/averages-vs-raw-data.gif?raw=true"/>
-</p>
+<img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/averages-vs-raw-data.gif?raw=true"/>
+
 
 The first view that is shown in the animation is the average response time over a time axis. 
 In this view, we can see that the response time patterns of the system are relatively stable, 
