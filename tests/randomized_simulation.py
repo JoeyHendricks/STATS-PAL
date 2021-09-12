@@ -118,7 +118,7 @@ class SimulateFictitiousScenario:
         else:
             del graph
 
-    def consistently_increase_decrease_benchmark(self, percent_of_data_set, save_image, show_image, repeats=0) -> None:
+    def consistently_increase_benchmark(self, percent_of_data_set, save_image, show_image, repeats=0) -> None:
         """
         A simulation where the benchmark is consistently randomly increased.
         This will generate a ever increasing benchmark that can help us find the correct critical values.
@@ -201,8 +201,8 @@ scenario = SimulateFictitiousScenario(
     benchmark_id="RID-4",
     data_set_location="C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\raw_data_prod_anoniem.csv"
 )
-scenario.consistently_increase_and_decrease_benchmark(
-    percentage_of_data_set=100,
+scenario.consistently_increase_benchmark(
+    percent_of_data_set=100,
     save_image=False,
     show_image=False,
     repeats=0
