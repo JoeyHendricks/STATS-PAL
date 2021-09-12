@@ -70,7 +70,7 @@ The first view that is shown in the animation is the average response time over 
 In this view, we can see that the response time patterns of the system are relatively stable, 
 but once the overlay switches to the raw data scatter plot (Keep in mind that both views are the same test.).
 We can see a completely different picture of a system that is not quite as stable as the average 
-line graph would have us believe. 
+line graph would have us believe.
 
 As can be seen in this example is that the aggregation of data hides the actual performance of 
 our system under test and gives us a false understanding of what the real patterns are.
@@ -83,6 +83,17 @@ verify how much the change between to tests is.
 ***That is why using raw data is a prerequisite for being able to use the [heuristic](https://en.wikipedia.org/wiki/Heuristic) 
 that is developed without raw data, it makes less sense to use this solution as aggregation could have "poisoned" our 
 data and make it harder to give an accurate assessment.***.
+
+For this project, I have chosen one of my own raw data test sets to verify if the heuristic which is 
+created in the project is working as expected. This data in its raw format looks the following way in a 
+simple scatter plot:
+
+<!-- Example raw data scatter plot -->
+<img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-001.png?raw=true"/>
+
+> To briefly explain this graph each differently coloured point in the scatter plot is a different action 
+> in my test. On the X axis the epoch timestamps are plotted from left to right and on the Y axis I have plotted 
+> the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
 
 ## Statistical Distance
 
