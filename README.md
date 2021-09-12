@@ -107,7 +107,7 @@ This distance is very interesting as it represents the largest absolute differen
 
 <!-- Wikipedia KS distance example -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-wikipedia-example.png?raw=true"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-absolute-distance-example.png?raw=true"/>
 </p>
 
 > This distance metric is very interesting for us performance engineers as it allows us to understand what the 
