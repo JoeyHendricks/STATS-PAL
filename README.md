@@ -90,25 +90,35 @@ data and make it harder to give an accurate assessment.***.
 When automating performance testing and its analysis into a CI/CD pipeline we only would like to be notified if 
 our results contain an interesting change in performance or behavior. In other words, we would only like to view our 
 results when the [distance](https://en.wikipedia.org/wiki/Statistical_distance) between our baseline, and our benchmark 
-increases or decreases. When this happens we can create a defect and start doing some research on why it is different.
-But to do this we would need to find out how much "distance" there is between our tests.
+increases or decreases. 
 
+When this happens we can create a defect and start doing some research on why it is different
+and to do this we would need to find out how much "distance" there is between our tests.
 When talking about measuring the distance between our benchmark and baseline tests I am talking about finding the
-[statistical distance](https://en.wikipedia.org/wiki/Statistical_distance) between them. Within the field of statistics
-there are a couple of interesting distance statistics we could consider, these are:
+[statistical distance](https://en.wikipedia.org/wiki/Statistical_distance) between two [normalized](https://en.wikipedia.org/wiki/Normalization_(statistics)) 
+[cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function) which we have 
+calculated from our raw data.
 
 ## Kolmogorov-Smirnov Distance
 
 The Kolmogorov-Smirnov Distance is a distance metric that is calculated when using the very well known  
 [Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
-This distance is very interesting as it represents the largest absolute difference between the two 
+This distance is very interesting as it represents the largest absolute difference between two 
 [cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
 
+<!-- Wikipedia KS distance example -->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-wikipedia-example.png?raw=true"/>
+</p>
 
-https://upload.wikimedia.org/wikipedia/commons/c/cf/KS_Example.png
+> This distance metric is very interesting for us performance engineers as it allows us to understand what the 
+> absolute distance is between our baseline tests, and our benchmark tests.
 
 
-- [Kolmogorov-Smirnov Distance](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) 
+
+
+
+
 - [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric)
 
 
