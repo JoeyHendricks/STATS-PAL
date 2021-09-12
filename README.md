@@ -137,7 +137,8 @@ scenario = SimulateFictitiousScenario(
     data_set_location="your/path/here/raw-performance-test-data-001.csv"
 )
 
-# will run the scenario and randomly increase 100 from 0% to 99%.
+# will run the scenario and randomly increase 100% of the data by 0% to 99%. 
+# (increasing in percentage every simulation)
 scenario.run_consistently_increase_benchmark_scenario(
     percent_of_data=100,
     save_image=False,
