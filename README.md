@@ -21,7 +21,7 @@ comparison analysis in an automated fashion.
 ## Start using the raw format of your performance test results
 
 The calculations behind this project rely heavily on having every single measurement from your performance 
-test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data). 
+test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data) in statistics. 
 
 > It could be that you are unfamiliar with this term within the performance testing context and its philosophy within our industry. 
 > I would recommend you to read through some of my mentor [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
@@ -44,7 +44,7 @@ As can be seen in this example is that the aggregation of data hides the actual 
 our system under test and gives us a false understanding of whatever is going on.
 Because this project is based on this raw data philosophy from [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) we base our automated analysis, 
 not on a single metric like the average or the median, but we look into discovering change throughout the 
-entire raw data set, ***that is why using raw data is a prerequisite for being able to use this comparison algorithm 
+entire raw data set, ***that is why using raw data is a prerequisite for being able to use this [heuristic](https://en.wikipedia.org/wiki/Heuristic) 
 without it, it makes less sense to use this solution.***.
 
 ## How do the calculations used in this algorithm work?
