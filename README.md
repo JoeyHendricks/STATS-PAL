@@ -46,7 +46,7 @@ print(stats_distance_test.score)                        # >> 89.70
 print(stats_distance_test.rank)                         # >> C
 
 ```
-That is it you are good to go to embed advanced statistical analyse into your CID/CD pipeline, so you can make better
+That is it you are all set now to embed advanced statistical analyse into your CID/CD pipeline, so you can make better
 automated decisions when to continue the pipeline or halt it and raise a defect. As this comparison is not without 
 its pitfalls and complexity **I would recommend continuing to read below** on how this comparison works and how you can 
 best interpret its powerful information.
