@@ -115,12 +115,12 @@ class SimulateFictitiousScenario:
         else:
             del graph
 
-    def run_consistently_increase_benchmark_scenario(self, percent_of_data_set, save_image, show_image, repeats=0) -> None:
+    def run_consistently_increase_benchmark_scenario(self, percent_of_data, save_image, show_image, repeats=0) -> None:
         """
         A simulation where the benchmark is consistently randomly increased.
         This will generate a ever increasing benchmark that can help us find the correct critical values.
 
-        :param percent_of_data_set: The amount in percentage of the
+        :param percent_of_data: The amount in percentage of the
         data set that needs to be changed.
         :param save_image: If you want to save the image
         :param show_image: If you want to view the image in your browser
@@ -137,12 +137,23 @@ class SimulateFictitiousScenario:
             repeats = 1 if repeats == 0 else repeats
             for repeat_id in range(0, repeats):
                 self._simulate_scenario(
-                    percent_of_data_set=percent_of_data_set,
+                    percent_of_data_set=percent_of_data,
                     delta=random_amount_of_increase,
                     c_id=repeat_id,
                     save_image=save_image,
                     show_image=show_image
                 )
+
+
+class SimulateAgainstRealWorldData:
+
+    def __init__(self, scenario_simulation_order: dict):
+        """
+
+        :param scenario_simulation_order:
+        """
+        self.scenario_simulation_order = scenario_simulation_order
+
 
 
 def verify_against_real_world_data_prod():

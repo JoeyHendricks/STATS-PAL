@@ -10,7 +10,7 @@ scenario = SimulateFictitiousScenario(
 
 # will run the scenario
 scenario.run_consistently_increase_benchmark_scenario(
-    percent_of_data_set=100,
+    percent_of_data=100,
     save_image=False,
     show_image=False,
     repeats=0
