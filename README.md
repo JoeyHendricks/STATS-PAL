@@ -1,6 +1,6 @@
 <!-- LOGO -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/banner.jpg?raw=true"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.jpg?raw=true"/>
 </p>
 
 <!-- INTRO -->
@@ -31,7 +31,7 @@ Why this raw format of your test results is so powerful can be best seen in the 
 
 <!-- Raw Data Vs Averages animation -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/averages-vs-raw-data.gif?raw=true"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/averages-vs-raw-data.gif?raw=true"/>
 </p>
 
 The first view that is shown in the animation is the average response time over a time axis. 
@@ -56,9 +56,9 @@ To produce a concise metric we start with generating a [probability distribution
 raw test results using [percentiles](https://en.wikipedia.org/wiki/Percentile) ranging from 0 to 95 as a graph 
 this distribution will look like this as an exponential curve: 
 
-<!-- Exponential Curve -->
+<!-- ECDF Curve -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/images/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
 </p>
 
 ___
