@@ -1,10 +1,8 @@
 from heuristic_comparisons.wasserstein_distance_testing import StatisticalDistanceTest
-from utilities.data import CreateFictitiousScenario, generate_delta_array
+from utilities.data import CreateFictitiousScenario
 from utilities.visuals import LineGraph, Animation
 from data import response_times_prod, response_times_dummy
 import random
-
-SEEDS = [random.randint(152100, 1000001521654651) for _ in range(0, 1000)]
 
 
 class SimulateFictitiousScenario:
