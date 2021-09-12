@@ -118,7 +118,7 @@ This distance is very interesting as it represents the largest absolute differen
 - [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric)
 
 
-## Computing the Wasserstein & Kolmogorov-Smirnov Distance out of raw data
+## Computing the Wasserstein & Kolmogorov-Smirnov Distance from raw data
 
 <!-- ECDF Curve -->
 <p align="center">
