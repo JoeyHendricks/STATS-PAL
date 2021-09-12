@@ -60,25 +60,23 @@ class ConvertCsvResultsIntoJson:
 
 class CreateFictitiousScenario:
 
-    def __init__(self, percentage=0, delta=0, baseline_scenario_id="RID-3", benchmark_scenario_id="RID-4"):
+    def __init__(self, data_set_location, percentage=0, delta=0, baseline_id="RID-3", benchmark_id="RID-4"):
         """
 
         :param percentage:
         :param delta:
-        :param baseline_scenario_id:
-        :param benchmark_scenario_id:
+        :param baseline_id:
+        :param benchmark_id:
         """
-        scenarios = ConvertCsvResultsIntoJson(
-            "C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest\\data\\raw_data_prod_anoniem.csv"
-        ).data
+        scenarios = ConvertCsvResultsIntoJson(data_set_location).data
 
-        self.baseline_x = scenarios[baseline_scenario_id]["timestamps"]
-        self.baseline_y = scenarios[baseline_scenario_id]["response_times"]
-        self.benchmark_y = scenarios[benchmark_scenario_id]["response_times"]
-        self.benchmark_x = scenarios[benchmark_scenario_id]["timestamps"]
+        self.baseline_x = scenarios[baseline_id]["timestamps"]
+        self.baseline_y = scenarios[baseline_id]["response_times"]
+        self.benchmark_y = scenarios[benchmark_id]["response_times"]
+        self.benchmark_x = scenarios[benchmark_id]["timestamps"]
 
-        self.baseline_test_id = baseline_scenario_id
-        self.benchmark_test_id = benchmark_scenario_id
+        self.baseline_test_id = baseline_id
+        self.benchmark_test_id = benchmark_id
 
         self.benchmark_y = self.randomly_decrease_or_increase_part_of_the_population(
             population=self.benchmark_y,
