@@ -110,9 +110,6 @@ This distance is very interesting as it represents the largest absolute differen
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-absolute-distance-example.png?raw=true"/>
 </p>
 
-> This distance metric is very interesting for us performance engineers as it allows us to understand what the 
-> absolute distance is between our baseline tests, and our benchmark tests.
-
 ## Wasserstein Distance
 
 - [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric)
