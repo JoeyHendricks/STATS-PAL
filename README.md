@@ -21,7 +21,7 @@ comparison analysis in an automated fashion.
 ## Quickly get started comparing the results of two performance tests.
 
 How you can get started using the code written in this project is easy first download the source code specifically the
-[StatisticalDistanceTest](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/heuristic_test_result_comparisons/kolmogorov_smirnov_and_wasserstein_distance_testing.py) 
+[StatisticalDistanceTest](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/heuristic_test_result_comparisons/kolmogorov_smirnov_and_wasserstein.py) 
 class from this repository after you have done that. You can give this class two arrays of raw response time 
 measurements and compute the relevant statistics this can be done in the following manner:
 
