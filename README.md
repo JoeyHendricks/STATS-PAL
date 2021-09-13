@@ -124,14 +124,14 @@ required to create two equally sized piles of dirt is this is the Wasserstein di
 To find out how these metrics react to a continuously deteriorating benchmark I have performed the following experiment 
 to figure out how these metrics react when distance is randomly introduced into a stable test.
 
-> Below you can see the results in the top right corner above the legend you can see the ***amount of distance introduced 
-> in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
-> can view the increasing Wasserstein and Kolmogorov-Smirnov Distance metrics.
-
 <!-- ECDF Curve Animation-->
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
 </p>
+
+> Above you can see the results in the top right corner above the legend you can see the ***amount of distance introduced 
+> in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
+> can view the increasing Wasserstein and Kolmogorov-Smirnov Distance metrics.
 
 If you want to execute the above experiment for yourself you can do that by executing the following code in this
 project:
