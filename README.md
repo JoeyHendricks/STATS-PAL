@@ -113,19 +113,28 @@ This distance is very interesting as it represents the largest absolute differen
 
 The [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric), also known as the 
 [Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance) is formally quite difficult to 
-understand it but by using its physical interpretation it is very easy to wrap your head around it. Consider your 
-baseline as a pile of dirt, and your benchmark as a pile of dirt the goal is to match the height of the pile of dirt 
-from the baseline to the benchmark. The energy or in other words the amount of dirt required to create two equally 
-sized piles of dirt is the Wasserstein distance.
+understand it but by using its physical interpretation it is very easy to wrap your head around it. 
+
+Consider your baseline as a pile of dirt, and your benchmark as a pile of dirt the goal is to match the height of 
+the pile of dirt from the baseline to the benchmark. The energy or in other words the minimum amount of dirt or work 
+required to create two equally sized piles of dirt is this is the Wasserstein distance.
 
 ## Computing the Wasserstein & Kolmogorov-Smirnov Distance from raw data
 
-<!-- ECDF Curve -->
+To find out how these metrics react to a continuously deteriorating benchmark I have performed the following experiment 
+to figure out how these metrics react when distance is randomly introduced into a stable test.
+
+> Below you can see the results in the top right corner above the legend you can see the ***amount of distance introduced 
+> in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
+> can view the increasing Wasserstein and Kolmogorov-Smirnov Distance metrics.
+
+<!-- ECDF Curve Animation-->
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
 </p>
 
-The above animation has been generated using the following Python code:
+If you want to execute the above experiment for yourself you can do that by executing the following code in this
+project:
 
 ```python
 from simulations.simulators import SimulateFictitiousScenario
