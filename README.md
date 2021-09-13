@@ -171,7 +171,9 @@ simple scatter plot:
 > in my test. On the X axis the epoch timestamps are plotted from left to right and on the Y axis I have plotted 
 > the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
 
+## Resources I found when learning about this topic
 
+- [An article from data dog about selecting statistical distance for machine learning.](https://www.datadoghq.com/blog/engineering/robust-statistical-distances-for-machine-learning/)
 
 ___
 <!-- FOOTER -->
