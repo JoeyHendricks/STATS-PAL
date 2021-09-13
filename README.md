@@ -4,7 +4,7 @@
 </p>
 
 <!-- INTRO -->
-## In a nutshell what is this project is all about?
+## In a nutshell what is this project all about?
 
 Continuous performance testing is nothing new, but one of the biggest pitfalls of a reliable automated performance test 
 is the manual analysis of its results. This manual intervention slows down the pace required to keep up with our ever 
@@ -65,7 +65,6 @@ Why this raw format of your test results is so powerful can be best seen in the 
 <!-- Raw Data Vs Averages animation -->
 <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/averages-vs-raw-data.gif?raw=true"/>
 
-
 The first view that is shown in the animation is the average response time over a time axis. 
 In this view, we can see that the response time patterns of the system are relatively stable, 
 but once the overlay switches to the raw data scatter plot (Keep in mind that both views are the same test.).
@@ -112,8 +111,12 @@ This distance is very interesting as it represents the largest absolute differen
 
 ## Wasserstein Distance
 
-- [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric)
-
+The [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric), also known as the 
+[Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance) is formally quite difficult to 
+understand it but by using its physical interpretation it is very easy to wrap your head around it. Consider your 
+baseline as a pile of dirt, and your benchmark as a pile of dirt the goal is to match the height of the pile of dirt 
+from the baseline to the benchmark. The energy or in other words the amount of dirt required to create two equally 
+sized piles of dirt is the Wasserstein distance.
 
 ## Computing the Wasserstein & Kolmogorov-Smirnov Distance from raw data
 
