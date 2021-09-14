@@ -104,10 +104,14 @@ The Kolmogorov-Smirnov Distance is a distance metric that is calculated when usi
 This distance is very interesting as it represents the largest absolute difference between two 
 [cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
 
+In the case below between the baseline and benchmark test we can see 
+
 <!-- Wikipedia KS distance example -->
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-absolute-distance-example.png?raw=true"/>
 </p>
+
+
 
 ## Wasserstein Distance
 
