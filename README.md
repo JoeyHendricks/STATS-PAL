@@ -108,7 +108,7 @@ In the case below between the baseline and benchmark test we can see
 
 <!-- Wikipedia KS distance example -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-distance-example.png.png?raw=true"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-distance-example.png?raw=true"/>
 </p>
 
 
