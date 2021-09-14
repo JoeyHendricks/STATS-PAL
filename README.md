@@ -103,10 +103,11 @@ The Kolmogorov-Smirnov Distance is a distance metric that is calculated when usi
 [Two Sample Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
 This distance is very interesting as it represents the largest absolute difference between two 
 [cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
-Why this is interesting is clear when know the exact amount of maximum distance between two performance test
-we could quantify how much is distance is too much and pass or fail a build based on that metric, we can call this
-number a metric as it meets the formal four conditions to be considered a 
-[metric](https://en.wikipedia.org/wiki/Statistical_distance).
+
+Why this is an interesting number because it tells us the exact amount of maximum distance between two performance test
+with the max amount quantify we can go and define how much is distance is too much and pass or fail a build based on 
+that one metric, keep in mind that we can call this number a metric as it meets the [formal four conditions to be 
+considered a metric](https://en.wikipedia.org/wiki/Statistical_distance).
 
 In the case below we can verify that between the baseline and benchmark test largest distance between our 
 two distributions is **0.207**:
@@ -143,13 +144,42 @@ kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
 
 ## Wasserstein Distance
 
-The [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric), also known as the 
-[Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance) is formally quite difficult to 
-understand it but by using its physical interpretation it is very easy to wrap your head around it. 
+Another great metric is the [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric), also known as the 
+[Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance) it is formally quite difficult to 
+understand as you can tell from just glancing at its Wikipedia article makes you believe it is written in elvish, but 
+by using its physical interpretation it is very easy to wrap your head around it and understand what it does. 
 
-Consider your baseline as a pile of dirt, and your benchmark as a pile of dirt the goal is to match the height of 
-the pile of dirt from the baseline to the benchmark. The energy or in other words the minimum amount of dirt or work 
-required to create two equally sized piles of dirt is this is the Wasserstein distance.
+Consider this, both your baseline and benchmark test results as a piles of dirt, your boss asks you to make the 
+benchmark pile of dirt as large as the baseline pile. The amount of work or in other words the amount of dirt required 
+to make both piles the same size is the Wasserstein Distance that is why it is also known as the Earth Mover’s distance.
+
+For us performance engineers this metric is awesome as it quantifies how much difference there is between two tests.
+Understanding that this metric stand for the work required to change one test into another we can also use this metric
+to drive decisions making in a CI/CD pipeline.
+
+The formal equation to calculate the Wasserstein Distance is as follows:
+
+<p style="float: left;">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/wasserstein_distance_equation.png"/>
+</p>
+
+Similarly to Kolmogorov-Smirnov Distance we can automate this formula by 
+using Python's [scipy](https://www.scipy.org/) package with the following code:
+
+```python
+from scipy.stats import wasserstein_distance
+
+# An example array
+baseline_cumulative_distribution_function = [1, 2, 3, 4]
+benchmark_cumulative_distribution_function = [1, 2, 3, 4]
+
+# Finding the Wasserstein distance
+wasserstein = wasserstein_distance(
+    baseline_cumulative_distribution_function,
+    benchmark_cumulative_distribution_function
+)
+
+```
 
 ## Computing the Wasserstein & Kolmogorov-Smirnov Distance from raw data
 
