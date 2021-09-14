@@ -192,7 +192,7 @@ wasserstein = wasserstein_distance(
 
 ```
 
-## Determining our critical values for the Wasserstein & Kolmogorov-Smirnov Distances
+## Personally Determining our critical values for our distance metrics
 
 We can very well understand that Wasserstein & Kolmogorov-Smirnov Distance are excellent metric that we can use
 to define how much distance there is between two distributions, but I believe when both distance metrics would 
@@ -237,9 +237,9 @@ showcase how a continuously deteriorating benchmark faces up to a stable baselin
 > in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
 > can view the increasing Wasserstein and Kolmogorov-Smirnov Distances.
 
-From the information I obtained from running the above I can determine for myself what I quantify as too much distance 
+From the information obtained from running the above I can determine for myself what I quantify as too much distance 
 between two performance test. With this information I have created a table of critical values that I can use to
-categorize tests.
+categorize tests and start making automated decisions based on these measurements.
 
 | Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
 |-----------|------|--------------------------------------|-------------------------------|-----------------|
@@ -250,6 +250,8 @@ categorize tests.
 | High | D | 0.260 | 0.150 | Halt and create defect |
 | Very High | E | 0.300 | 0.200 | Halt and create defect |
 | Ultra | F | 0.340 | 0.250 | Halt and create defect |
+
+
 
 ## Ranking and scoring performance test results
 
