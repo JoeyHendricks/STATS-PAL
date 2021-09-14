@@ -210,6 +210,7 @@ test results sets out of my primary example data set.
 <p align="center">
     <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-001.png?raw=true"/>
 </p>
+
 > To briefly explain this graph each differently coloured point in the scatter plot is a different action 
 > in my test. On the X axis the epoch timestamps are plotted from left to right and on the Y axis I have plotted 
 > the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
