@@ -115,15 +115,17 @@ two distributions is **0.207**:
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-absolute-distance-example.png"/>
 </p>
-The equation for the Kolmogorov-Smirnov distance is as follows:
 
+If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance below you can find 
+an image that shows the exact formula for more information I would recommend reading the excellent 
+[Wikipedia article](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) on the subject.
 
 <p style="float: left;">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov_smirnov_distance_equation.png"/>
 </p>
 
-When using Python you can calculate the Kolmogorov-Smirnov Distance in the following way using the 
-[scipy](https://www.scipy.org/) package.
+To automate this equation we can use the amazing Python package [scipy](https://www.scipy.org/) to calculate 
+in the Kolmogorov-Smirnov Distance in the following way using an example distribution:
 
 ```python
 from scipy.stats import ks_2samp
@@ -138,8 +140,6 @@ kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
     benchmark_cumulative_distribution_function
 )
 ```
-> More information on the Kolmogorov-Smirnov Distance can be found 
-> [here](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) on Wikipedia
 
 ## Wasserstein Distance
 
