@@ -192,7 +192,7 @@ wasserstein = wasserstein_distance(
 
 ```
 
-## Personally Determining our critical values for our distance metrics
+## Personally Determining our critical values for the distance metrics
 
 We can very well understand that Wasserstein & Kolmogorov-Smirnov Distance are excellent metric that we can use
 to define how much distance there is between two distributions, but I believe when both distance metrics would 
