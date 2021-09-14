@@ -97,6 +97,17 @@ When talking about measuring the distance between our benchmark and baseline tes
 [cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function) which we have 
 calculated from our raw data.
 
+These CDF's sound difficult, but they really aren't they are quite easy to understand once you see how they and
+information they are displaying. These graphs just show what the probability is that certain percentage is under
+a certain value.
+
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/empirical-cumulative-distribution-function-example.jpg"/>
+</p>
+
+> A very good explanation that helped me understand how to read CDF's can be best found John DeJesus article on this 
+> topic you can find this article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480)
+
 ## Kolmogorov-Smirnov Distance
 
 The Kolmogorov-Smirnov Distance is a distance metric that is calculated when using the very well known  
@@ -182,6 +193,15 @@ wasserstein = wasserstein_distance(
 ```
 
 ## Computing the Wasserstein & Kolmogorov-Smirnov Distance from raw data
+
+We can very well understand that Wasserstein & Kolmogorov-Smirnov Distance are excellent metric that we can use
+to define how much distance there is between two distributions, but I believe when both distance metrics would 
+be included into a [heuristic](https://en.wikipedia.org/wiki/Heuristic) where we define boundaries that would outline
+what we would consider how much distance we would tolerate.
+
+To find out what these critical values are for us we would need to an experiment where we take two stable performance 
+test and keep introducing more and more change to them. That way we can quickly see what values we would consider to 
+be too much.
 
 We would like to see how these two distance metrics react when keep changing the benchmark distribution from 
 the baseline distribution before we can do this we would need to understand how we can calculate these two numbers 
@@ -276,7 +296,7 @@ simple scatter plot:
 ## Resources I found while learning about this topic
 
 - [An article from data dog about selecting statistical distance for machine learning.](https://www.datadoghq.com/blog/engineering/robust-statistical-distances-for-machine-learning/)
-
+- [How to read empirical cumulative distribution function.](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480)
 ___
 <!-- FOOTER -->
 <p align="center">
