@@ -117,6 +117,7 @@ two distributions is **0.207**:
 </p>
 The equation for the Kolmogorov-Smirnov distance is as follows:
 
+
 <p style="float: left;">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov_smirnov_distance_equation.png"/>
 </p>
