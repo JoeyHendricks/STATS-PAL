@@ -103,6 +103,10 @@ The Kolmogorov-Smirnov Distance is a distance metric that is calculated when usi
 [Two Sample Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
 This distance is very interesting as it represents the largest absolute difference between two 
 [cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
+Why this is interesting is clear when know the exact amount of maximum distance between two performance test
+we could quantify how much is distance is too much and pass or fail a build based on that metric, we can call this
+number a metric as it meets the formal four conditions to be considered a 
+[metric](https://en.wikipedia.org/wiki/Statistical_distance).
 
 In the case below we can verify that between the baseline and benchmark test largest distance between our 
 two distributions is **0.207**:
@@ -111,13 +115,30 @@ two distributions is **0.207**:
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-absolute-distance-example.png"/>
 </p>
-
-The equation Kolmogorov-Smirnov distance is as follows:
+The equation for the Kolmogorov-Smirnov distance is as follows:
 
 <p style="float: left;">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov_smirnov_distance_equation.png"/>
 </p>
 
+When using Python you can calculate the Kolmogorov-Smirnov Distance in the following way using the 
+[scipy](https://www.scipy.org/) package.
+
+```python
+from scipy.stats import ks_2samp
+
+# An example array
+baseline_cumulative_distribution_function = [1, 2, 3, 4]
+benchmark_cumulative_distribution_function = [1, 2, 3, 4]
+
+# Running a two sample Kolmogorov-Smirnov test and extracting the KS distance from it.
+kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
+    baseline_cumulative_distribution_function,
+    benchmark_cumulative_distribution_function
+)
+```
+> More information on the Kolmogorov-Smirnov Distance can be found 
+> [here](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) on Wikipedia
 
 ## Wasserstein Distance
 
