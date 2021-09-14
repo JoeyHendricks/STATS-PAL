@@ -253,9 +253,12 @@ showcase how a continuously deteriorating benchmark faces up to a stable baselin
 > in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
 > can view the increasing Wasserstein and Kolmogorov-Smirnov Distances.
 
-From the information obtained from running the above I can determine for myself what I quantify as too much distance 
-between two performance test. With this information I have created a table of critical values that I can use to
-categorize tests and start making automated decisions based on these measurements.
+## Ranking and scoring our distance metrics
+
+From the information obtained from running our simple experiment we can determine for ourselves what we quantify as 
+too much distance between two performance test. With this information we can then created a table of critical values 
+that we can use to Rank our tests with a letter ranging from S to F based on these ranks we can start making automated 
+decisions in a CI/CD pipeline.
 
 | Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
 |-----------|------|--------------------------------------|-------------------------------|-----------------|
@@ -267,13 +270,11 @@ categorize tests and start making automated decisions based on these measurement
 | Very High | E | 0.300 | 0.200 | Halt and create defect |
 | Ultra | F | 0.340 | 0.250 | Halt and create defect |
 
--- ADD stable scoring to this
+For myself I have defined these critical values in the table above as they work nicely for my own data I am presuming
+that is plausible that they will also work for most other applications as the amount of distance will always stay 
+the same, but you could be tolerating more or less distance than me depending on your context. 
 
-
-## Scoring distance metrics from 0 to 100
-
-blah blah
-
+-- ADD stable and stable runs to this scoring to this
 
 ## Contribute to this project 
 
