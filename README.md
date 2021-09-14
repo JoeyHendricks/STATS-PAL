@@ -108,7 +108,7 @@ a certain value.
 > A very good explanation that helped me understand how to read CDF's can be best found John DeJesus article on this 
 > topic you can find this article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
 
-## Kolmogorov-Smirnov Distance
+## Computing the Kolmogorov-Smirnov Distance
 
 The Kolmogorov-Smirnov Distance is a distance metric that is calculated when using the very well known  
 [Two Sample Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
@@ -153,7 +153,7 @@ kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
 )
 ```
 
-## Wasserstein Distance
+## Computing the Wasserstein Distance
 
 Another great metric is the [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric), also known as the 
 [Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance) it is formally quite difficult to 
@@ -192,7 +192,7 @@ wasserstein = wasserstein_distance(
 
 ```
 
-## Computing the Wasserstein & Kolmogorov-Smirnov Distance from raw data
+## Finding our critical values for the Wasserstein & Kolmogorov-Smirnov Distances
 
 We can very well understand that Wasserstein & Kolmogorov-Smirnov Distance are excellent metric that we can use
 to define how much distance there is between two distributions, but I believe when both distance metrics would 
@@ -226,7 +226,7 @@ scenario.run_consistently_increase_benchmark_scenario(
 ```
 
 Out of the statistics, and the graphs that this code produces I have generated the following animation to
-show you how and continuously deteriorating benchmark faces up to a stable baseline:
+showcase how a continuously deteriorating benchmark faces up to a stable baseline:
 
 <!-- ECDF Curve Animation-->
 <p align="center">
@@ -236,6 +236,20 @@ show you how and continuously deteriorating benchmark faces up to a stable basel
 > Above you can see the results in the top right corner above the legend you can see the ***amount of distance introduced 
 > in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
 > can view the increasing Wasserstein and Kolmogorov-Smirnov Distances.
+
+From the information I obtained from running the above I can determine for myself what I quantify as too much distance 
+between two performance test. With this information I have created a table of critical values that I can use to
+categorize tests.
+
+| Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
+|-----------|------|--------------------------------------|-------------------------------|-----------------|
+| Almost None | S | 0.080 | 0.030 | No action required |
+| Negligible difference | A | 0.150 | 0.060 | No action required |
+| Low | B | 0.180 | 0.100 | Go to release create minor defect (or halt) |
+| Medium | C | 0.220 | 0.125 | Halt create and defect |
+| High | D | 0.260 | 0.150 | Halt create and defect |
+| Very High | E | 0.300 | 0.200 | Halt create and defect |
+| Ultra | F | 0.340 | 0.250 | Halt and create defect |
 
 ## Ranking and scoring performance test results
 
