@@ -246,9 +246,9 @@ categorize tests.
 | Almost None | S | 0.080 | 0.030 | No action required |
 | Negligible difference | A | 0.150 | 0.060 | No action required |
 | Low | B | 0.180 | 0.100 | Go to release create minor defect (or halt) |
-| Medium | C | 0.220 | 0.125 | Halt create and defect |
-| High | D | 0.260 | 0.150 | Halt create and defect |
-| Very High | E | 0.300 | 0.200 | Halt create and defect |
+| Medium | C | 0.220 | 0.125 | Halt and create defect |
+| High | D | 0.260 | 0.150 | Halt and create defect |
+| Very High | E | 0.300 | 0.200 | Halt and create defect |
 | Ultra | F | 0.340 | 0.250 | Halt and create defect |
 
 ## Ranking and scoring performance test results
