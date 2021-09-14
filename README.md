@@ -126,7 +126,8 @@ the baseline distribution before we can do this we would need to understand how 
 from a normalized CDF. 
 
 Luckily the [scipy](https://www.scipy.org/) package for Python has us covered you can calculate the 
-first distance metric the Kolmogorov-Smirnov Distance the following way in Python:
+first distance metric the [Kolmogorov-Smirnov Distance](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) 
+the following way in Python:
 
 ```python
 from scipy.stats import ks_2samp
