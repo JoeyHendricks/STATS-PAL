@@ -216,9 +216,8 @@ test results sets out of my primary example data set.
 > the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
 
 Above you can find the raw scatter plot of my favorite example data set you might have noticed that the 
-two most stable tests out of this set are RID-3 & RID-4. That is why for this experiment we will take RID-3 
-as our baseline and RID-4 as our benchmark. 
-
+two most stable tests out of this set are **RID-2 & RID-3**. That is why for this experiment we will take **RID-3 
+as our baseline and RID-4 as our benchmark**. 
 
 The code needed to execute this experiment is as follows:
 
@@ -268,20 +267,27 @@ categorize tests and start making automated decisions based on these measurement
 | Very High | E | 0.300 | 0.200 | Halt and create defect |
 | Ultra | F | 0.340 | 0.250 | Halt and create defect |
 
+-- ADD stable scoring to this
 
 
-## Ranking and scoring performance test results
+## Scoring distance metrics from 0 to 100
+
+blah blah
 
 
-For this project, I have chosen one of my own raw data test sets to verify if the heuristic which is 
-created in the project is working as expected. This data in its raw format looks the following way in a 
-simple scatter plot:
+## Contribute to this project 
 
+Help me to make result analysis easier for more performance engineers around the globe by donating your 
+expertise and knowledge or anonymized test data to make this project smarter and more robust!
+
+Feel free to open up an issue if you have any questions or are experiencing issues. 
+**Want to contribute?** Then shoot in a pull request with your changes or test data, so we can continue 
+to make improvements to this project. 
 
 ## Resources I found while learning about this topic
 
 - [An article from data dog about selecting statistical distance for machine learning.](https://www.datadoghq.com/blog/engineering/robust-statistical-distances-for-machine-learning/)
-- [How to read empirical cumulative distribution function.](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480)
+- [How to read empirical cumulative distribution functions.](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480)
 ___
 <!-- FOOTER -->
 <p align="center">
