@@ -106,7 +106,7 @@ a certain value.
 </p>
 
 > A very good explanation that helped me understand how to read CDF's can be best found John DeJesus article on this 
-> topic you can find this article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480)
+> topic you can find this article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
 
 ## Kolmogorov-Smirnov Distance
 
@@ -120,13 +120,13 @@ with the max amount quantify we can go and define how much is distance is too mu
 that one metric, keep in mind that we can call this number a metric as it meets the [formal four conditions to be 
 considered a metric](https://en.wikipedia.org/wiki/Statistical_distance).
 
-In the case below we can verify that between the baseline and benchmark test largest distance between our 
-two distributions is **0.207**:
-
 <!-- KS distance example -->
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-absolute-distance-example.png"/>
 </p>
+
+In this case we can verify that between the baseline and benchmark test largest distance between our 
+two distributions is **0.207** as can be seen in the graph.
 
 If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance below you can find 
 an image that shows the exact formula for more information I would recommend reading the excellent 
@@ -199,64 +199,11 @@ to define how much distance there is between two distributions, but I believe wh
 be included into a [heuristic](https://en.wikipedia.org/wiki/Heuristic) where we define boundaries that would outline
 what we would consider how much distance we would tolerate.
 
-To find out what these critical values are for us we would need to an experiment where we take two stable performance 
-test and keep introducing more and more change to them. That way we can quickly see what values we would consider to 
-be too much.
+To find out what these critical values are for us we would need to do an experiment where we take two stable 
+performance tests and keep introducing more and more changes to them. That way we can quickly see what values 
+we would consider being too much.
 
-We would like to see how these two distance metrics react when keep changing the benchmark distribution from 
-the baseline distribution before we can do this we would need to understand how we can calculate these two numbers 
-from a normalized CDF. 
-
-Luckily the [scipy](https://www.scipy.org/) package for Python has us covered you can calculate the 
-first distance metric the [Kolmogorov-Smirnov Distance](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) 
-the following way in Python:
-
-```python
-from scipy.stats import ks_2samp
-
-# An example array
-baseline_cumulative_distribution_function = [1, 2, 3, 4]
-benchmark_cumulative_distribution_function = [1, 2, 3, 4]
-
-# Running a two sample Kolmogorov-Smirnov test and extracting the KS distance from it.
-kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
-    baseline_cumulative_distribution_function,
-    benchmark_cumulative_distribution_function
-)
-
-```
-
-The [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric) can also be calculated similarly:
-
-```python
-from scipy.stats import wasserstein_distance
-
-# An example array
-baseline_cumulative_distribution_function = [1, 2, 3, 4]
-benchmark_cumulative_distribution_function = [1, 2, 3, 4]
-
-# Finding the Wasserstein distance
-wasserstein = wasserstein_distance(
-    baseline_cumulative_distribution_function,
-    benchmark_cumulative_distribution_function
-)
-
-```
-
-To find out how these metrics react to a continuously deteriorating benchmark I have performed the following experiment 
-to see how these metrics react when distance is randomly introduced into two similar test.
-
-<!-- ECDF Curve Animation-->
-<p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
-</p>
-
-> Above you can see the results in the top right corner above the legend you can see the ***amount of distance introduced 
-> in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
-> can view the increasing Wasserstein and Kolmogorov-Smirnov Distance metrics.
-
-If you want to execute the above experiment for yourself you can do that by executing the following code in this
-project:
+The code needed to execute this experiment is as follows:
 
 ```python
 from simulations.simulators import SimulateFictitiousScenario
@@ -276,8 +223,19 @@ scenario.run_consistently_increase_benchmark_scenario(
     show_image=False,  # <-- Watch out will spam your browser full
     repeats=0  # <-- amount of repeats per increase (increases are randomly distributed.)
 )
-
 ```
+
+Out of the statistics, and the graphs that this code produces I have generated the following animation to
+show you how and continuously deteriorating benchmark faces up to a stable baseline:
+
+<!-- ECDF Curve Animation-->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
+</p>
+
+> Above you can see the results in the top right corner above the legend you can see the ***amount of distance introduced 
+> in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
+> can view the increasing Wasserstein and Kolmogorov-Smirnov Distances.
 
 ## Ranking and scoring performance test results
 
