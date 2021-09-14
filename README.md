@@ -121,8 +121,47 @@ required to create two equally sized piles of dirt is this is the Wasserstein di
 
 ## Computing the Wasserstein & Kolmogorov-Smirnov Distance from raw data
 
+We would like to see how these two distance metrics react when keep changing the benchmark distribution from 
+the baseline distribution before we can do this we would need to understand how we can calculate these two numbers 
+from a normalized CDF. 
+
+Luckily the [scipy](https://www.scipy.org/) package for Python has us covered you can calculate the 
+first distance metric the Kolmogorov-Smirnov Distance the following way in Python:
+
+```python
+from scipy.stats import ks_2samp
+
+# An example array
+baseline_cumulative_distribution_function = [1, 2, 3, 4]
+benchmark_cumulative_distribution_function = [1, 2, 3, 4]
+
+# Running a two sample Kolmogorov-Smirnov test and extracting the KS distance from it.
+kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
+    baseline_cumulative_distribution_function,
+    benchmark_cumulative_distribution_function
+)
+
+```
+
+The [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric) can also be calculated similarly:
+
+```python
+from scipy.stats import wasserstein_distance
+
+# An example array
+baseline_cumulative_distribution_function = [1, 2, 3, 4]
+benchmark_cumulative_distribution_function = [1, 2, 3, 4]
+
+# Finding the Wasserstein distance
+wasserstein = wasserstein_distance(
+    baseline_cumulative_distribution_function,
+    benchmark_cumulative_distribution_function
+)
+
+```
+
 To find out how these metrics react to a continuously deteriorating benchmark I have performed the following experiment 
-to figure out how these metrics react when distance is randomly introduced into a stable test.
+to see how these metrics react when distance is randomly introduced into two similar test.
 
 <!-- ECDF Curve Animation-->
 <p align="center">
@@ -171,7 +210,7 @@ simple scatter plot:
 > in my test. On the X axis the epoch timestamps are plotted from left to right and on the Y axis I have plotted 
 > the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
 
-## Resources I found when learning about this topic
+## Resources I found while learning about this topic
 
 - [An article from data dog about selecting statistical distance for machine learning.](https://www.datadoghq.com/blog/engineering/robust-statistical-distances-for-machine-learning/)
 
