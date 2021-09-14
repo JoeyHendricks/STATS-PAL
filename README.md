@@ -201,7 +201,23 @@ what we would consider how much distance we would tolerate.
 
 To find out what these critical values are for us we would need to do an experiment where we take two stable 
 performance tests and keep introducing more and more changes to them. That way we can quickly see what values 
-we would consider being too much.
+we would consider being too much. 
+
+Before it is possible to experiment we would need to select two very similar performance 
+test results sets out of my primary example data set. 
+
+<!-- Example raw data scatter plot -->
+<p align="center">
+    <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-001.png?raw=true"/>
+</p>
+> To briefly explain this graph each differently coloured point in the scatter plot is a different action 
+> in my test. On the X axis the epoch timestamps are plotted from left to right and on the Y axis I have plotted 
+> the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
+
+Above you can find the raw scatter plot of my favorite example data set you might have noticed that the 
+two most stable tests out of this set are RID-3 & RID-4. That is why for this experiment we will take RID-3 
+as our baseline and RID-4 as our benchmark. 
+
 
 The code needed to execute this experiment is as follows:
 
@@ -260,12 +276,6 @@ For this project, I have chosen one of my own raw data test sets to verify if th
 created in the project is working as expected. This data in its raw format looks the following way in a 
 simple scatter plot:
 
-<!-- Example raw data scatter plot -->
-<img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-001.png?raw=true"/>
-
-> To briefly explain this graph each differently coloured point in the scatter plot is a different action 
-> in my test. On the X axis the epoch timestamps are plotted from left to right and on the Y axis I have plotted 
-> the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
 
 ## Resources I found while learning about this topic
 
