@@ -222,10 +222,10 @@ as our baseline and RID-4 as our benchmark**.
 The code needed to execute this experiment is as follows:
 
 ```python
-from simulations.simulators import SimulateFictitiousScenario
+from simulations.simulators import SimulateScenario
 
 # Will create the fictitious scenario object from my default example data
-scenario = SimulateFictitiousScenario(
+scenario = SimulateScenario(
     baseline_id="RID-3",
     benchmark_id="RID-4",
     data_set_location="your/path/here/raw-performance-test-data-001.csv"
@@ -233,7 +233,7 @@ scenario = SimulateFictitiousScenario(
 
 # will run the scenario and randomly increase 100% of the data by 0% to 99%. 
 # (increasing in percentage every simulation)
-scenario.run_consistently_increase_benchmark_scenario(
+scenario.run_consistently_increase_benchmark_fictitious_scenario(
     percent_of_data=100,
     save_image=False,
     show_image=False,  # <-- Watch out will spam your browser full
@@ -253,12 +253,12 @@ showcase how a continuously deteriorating benchmark faces up to a stable baselin
 > in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
 > can view the increasing Wasserstein and Kolmogorov-Smirnov Distances.
 
-## Ranking and scoring our distance metrics
+## Ranking our distance metrics
 
 From the information obtained from running our simple experiment we can determine for ourselves what we quantify as 
 too much distance between two performance test. With this information we can then created a table of critical values 
-that we can use to Rank our tests with a letter ranging from S to F based on these ranks we can start making automated 
-decisions in a CI/CD pipeline.
+that we can use to Rank our tests with a letter ranging from S to F (Japanese letter grading system like 
+you used to see in old Sega video games.) based on these ranks we can start making automated decisions in a CI/CD pipeline.
 
 | Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
 |-----------|------|--------------------------------------|-------------------------------|-----------------|
@@ -274,7 +274,10 @@ For myself I have defined these critical values in the table above as they work 
 that is plausible that they will also work for most other applications as the amount of distance will always stay 
 the same, but you could be tolerating more or less distance than me depending on your context. 
 
--- ADD stable and stable runs to this scoring to this
+When running the same experiment but this time ranking our performance test results from S to F would yield the 
+following results:
+
+
 
 ## Contribute to this project 
 

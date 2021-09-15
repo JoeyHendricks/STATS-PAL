@@ -1,7 +1,7 @@
-from simulations.simulators import SimulateFictitiousScenario
+from simulations.simulators import SimulateScenario
 
 # will create the fictitious scenario object
-scenario = SimulateFictitiousScenario(
+scenario = SimulateScenario(
     baseline_id="RID-3",
     benchmark_id="RID-4",
     data_set_location="C:\\Users\\joeyh\\PycharmProjects\\PercentileHypothesisTest"
@@ -9,9 +9,9 @@ scenario = SimulateFictitiousScenario(
 )
 
 # will run the scenario
-scenario.run_consistently_increase_benchmark_scenario(
+scenario.run_consistently_increase_benchmark_fictitious_scenario(
     percent_of_data=100,
-    save_image=False,
+    save_image=True,
     show_image=False,
     repeats=0
 )

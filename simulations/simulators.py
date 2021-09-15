@@ -1,17 +1,17 @@
 from heuristic_test_result_comparisons.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
-from data.wranglers import CreateFictitiousScenario
+from data.wranglers import CreateFictitiousScenario, ConvertCsvResultsIntoDictionary
 from data.visuals import LineGraph
 import random
 
 
-class SimulateFictitiousScenario:
+class SimulateScenario:
     """
     Creates a simulated scenario based on real scenario from my
     test data.
     """
     SEED = 65981
 
-    def __init__(self, benchmark_id, baseline_id, data_set_location):
+    def __init__(self, data_set_location, benchmark_id=None, baseline_id=None):
         """
         Will construct the simulation object and provide a few attributes
         which can be changed.
@@ -44,7 +44,7 @@ class SimulateFictitiousScenario:
             data_set_location=self.data_set_location
         )
 
-    def _execute_statistical_distance_test(self, percent_of_data_set, delta) -> object:
+    def _execute_statistical_distance_test_on_fictitious_data(self, percent_of_data_set, delta) -> object:
         """
         Will compare the scenario using the distance test and returning the metrics.
         :param percent_of_data_set: The amount in percentage of the
@@ -88,20 +88,20 @@ class SimulateFictitiousScenario:
         :param save_image: If you want to save the image.
         :param show_image: If you want to view the image in your browser/
         """
-        statistical_distance_test = self._execute_statistical_distance_test(
+        statistical_distance_test = self._execute_statistical_distance_test_on_fictitious_data(
             percent_of_data_set=percent_of_data_set,
             delta=delta
         )
         statistics = {
-                "percentage_of_data_set": percent_of_data_set,
-                "delta": delta,
-                "kolmogorov_smirnov_distance": statistical_distance_test.kolmogorov_smirnov_distance,
-                "kolmogorov_smirnov_probability": statistical_distance_test.kolmogorov_smirnov_probability,
-                "wasserstein_distance": statistical_distance_test.wasserstein_distance,
-                "score": statistical_distance_test.score,
-                "rank": statistical_distance_test.rank,
-                "sample_size": statistical_distance_test.sample_size,
-            }
+            "percentage_of_data_set": percent_of_data_set,
+            "delta": delta,
+            "kolmogorov_smirnov_distance": statistical_distance_test.kolmogorov_smirnov_distance,
+            "kolmogorov_smirnov_probability": statistical_distance_test.kolmogorov_smirnov_probability,
+            "wasserstein_distance": statistical_distance_test.wasserstein_distance,
+            "score": statistical_distance_test.score,
+            "rank": statistical_distance_test.rank,
+            "sample_size": statistical_distance_test.sample_size,
+        }
         self._computed_statistics.append(statistics)
         print(statistics)  # <-- Log to the terminal
 
@@ -115,7 +115,8 @@ class SimulateFictitiousScenario:
         else:
             del graph
 
-    def run_consistently_increase_benchmark_scenario(self, percent_of_data, save_image, show_image, repeats=0) -> None:
+    def run_consistently_increase_benchmark_fictitious_scenario(self, percent_of_data, save_image, show_image,
+                                                                repeats=0) -> None:
         """
         A simulation where the benchmark is consistently randomly increased.
         This will generate a ever increasing benchmark that can help us find the correct critical values.
@@ -143,6 +144,35 @@ class SimulateFictitiousScenario:
                     save_image=save_image,
                     show_image=show_image
                 )
+
+    def run_original_scenario(self, order_of_comparison: list) -> None:
+        """
+
+        :return:
+        """
+
+        for simulation in order_of_comparison:
+            instructions = simulation["instructions"]
+            raw_data = ConvertCsvResultsIntoDictionary(self.data_set_location).data
+            baseline_response_times = raw_data[instructions[0]]["response_times"]
+            benchmark_response_times = raw_data[instructions[1]]["response_times"]
+
+            statistical_distance_test = StatisticalDistanceTest(
+                population_a=baseline_response_times,
+                population_b=benchmark_response_times
+            )
+            statistics = {
+                "baseline-runid": instructions[0],
+                "benchmark-runid": instructions[1],
+                "kolmogorov_smirnov_distance": statistical_distance_test.kolmogorov_smirnov_distance,
+                "kolmogorov_smirnov_probability": statistical_distance_test.kolmogorov_smirnov_probability,
+                "wasserstein_distance": statistical_distance_test.wasserstein_distance,
+                "score": statistical_distance_test.score,
+                "rank": statistical_distance_test.rank,
+                "sample_size": statistical_distance_test.sample_size,
+            }
+            self._computed_statistics.append(statistics)
+            print(statistics)  # <-- Log to the terminal
 
 
 class SimulateAgainstRealWorldData:
