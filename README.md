@@ -306,34 +306,30 @@ mechanism we would get the following results:
 | RID-8 | RID-9 | S | 0.021 | 0.022 |
 | RID-9 | RID-10 | A | 0.067 | 0.033 |
 
-You can run this experiment also for yourself by executing the following code:
+> You can run this experiment also for yourself by executing the following 
+> [script from this project](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/simulations/simulate__with_always_stable_tests_results_no_regression.py).
 
-```python
-from simulations.simulators import SimulateScenario
+In the previous example we tested test results that contain change but how our ranking mechanism would react to 
+change can also be tested similarly for this we could use my favorite data set that contains a lot of different 
+situations. You can interpret these results as different release moments where the release had a positive impact,
+a negative impact and no impact below you can see the data set:
 
-# will create the fictitious scenario object
-scenario = SimulateScenario(
-    baseline_id="RID-3",
-    benchmark_id="RID-4",
-    data_set_location="your/path/here/raw-performance-test-data-004.csv"
-)
+<!-- Example raw data scatter plot -->
+<p align="center">
+    <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-001.png?raw=true"/>
+</p>
 
-# will run the scenario
-scenario.run_original_scenario(
-    order_of_comparison=[
+When we also automatically analyze this data using our ranking mechanism we are left with the following results:
 
-        {"instructions": ["RID-1", "RID-2"]},
-        {"instructions": ["RID-2", "RID-3"]},
-        {"instructions": ["RID-3", "RID-4"]},
-        {"instructions": ["RID-4", "RID-5"]},
-        {"instructions": ["RID-5", "RID-6"]},
-        {"instructions": ["RID-6", "RID-7"]},
-        {"instructions": ["RID-8", "RID-9"]},
-        {"instructions": ["RID-9", "RID-10"]}
-    ]
-)
+| Baseline RunID | Benchmark RunID | Rank | Kolmogorov-Smirnov Distance | Wasserstein Distance |
+|----------------|-----------------|------|-----------------------------|----------------------|
+| RID-1 | RID-2 | C | 0.142 | 0.120 |
+| RID-2 | RID-3 | S | 0.062 | 0.025 |
+| RID-3 | RID-4 | A | 0.091 | 0.040 |
+| RID-4 | RID-5 | A | 0.057 | 0.055 |
+| RID-5 | RID-6 | F | 0.283 | 0.255 |
 
-```
+
 
 ## Contribute to this project 
 
