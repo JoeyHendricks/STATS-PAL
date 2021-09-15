@@ -262,8 +262,8 @@ you used to see in old Sega video games.) based on these ranks we can start maki
 
 | Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
 |-----------|------|--------------------------------------|-------------------------------|-----------------|
-| Almost None | S | 0.080 | 0.030 | No action required |
-| Negligible difference | A | 0.150 | 0.060 | No action required |
+| Negligible difference | S | 0.080 | 0.030 | No action required |
+| Very Low | A | 0.150 | 0.060 | No action required |
 | Low | B | 0.180 | 0.100 | Go to release create minor defect (or halt) |
 | Medium | C | 0.220 | 0.125 | Halt and create defect |
 | High | D | 0.260 | 0.150 | Halt and create defect |
