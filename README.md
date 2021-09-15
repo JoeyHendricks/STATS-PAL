@@ -260,7 +260,7 @@ too much distance between two performance test. With this information we can the
 that we can use to Rank our tests with a letter ranging from S to F (Japanese letter grading system like 
 you used to see in old Sega video games.) based on these ranks we can start making automated decisions in a CI/CD pipeline.
 
-| Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
+| Impact Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
 |-----------|------|--------------------------------------|-------------------------------|-----------------|
 | Negligible difference | S | 0.080 | 0.030 | No action required |
 | Very Low | A | 0.150 | 0.060 | No action required |
