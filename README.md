@@ -270,6 +270,9 @@ you used to see in old Sega video games.) based on these ranks we can start maki
 | Very High | E | 0.300 | 0.200 | Halt and create defect |
 | Ultra | F | 0.340 | 0.250 | Halt and create defect |
 
+> When reading this table keep in mind that both statistics need fall in the same category if this is not the case
+> the lowest category is selected.
+
 For myself I have defined these critical values in the table above as they work nicely for my own data I am presuming
 that is plausible that they will also work for most other applications as the amount of distance will always stay 
 the same, but you could be tolerating more or less distance than me depending on your context. 
@@ -277,7 +280,60 @@ the same, but you could be tolerating more or less distance than me depending on
 When running the same experiment but this time ranking our performance test results from S to F would yield the 
 following results:
 
+ANIMATION HERE
 
+It is interesting to see that this ranking mechanism can filter out test that are different from the baseline but what 
+happens when there is no interesting change between two runs? For that we would need a couple of very stable 
+test results sets which we can compare for this reason I have created the following ten example tests that contain
+a normal amount of difference to each other as you can tell from the image below:
+
+<!-- Stable test runs -->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-004.png?raw=true"/>
+</p>
+
+When these test are compared in the following order and pulled through our ranking 
+mechanism we would get the following results:
+
+| Baseline RunID | Benchmark RunID | Rank | Kolmogorov-Smirnov Distance | Wasserstein Distance |
+|----------------|-----------------|------|-----------------------------|----------------------|
+| RID-1 | RID-2 | S | 0.042 | 0.018 |
+| RID-2 | RID-3 | S | 0.027 | 0.019 |
+| RID-3 | RID-4 | S | 0.061 | 0.029 |
+| RID-4 | RID-5 | S | 0.025 | 0.011 |
+| RID-5 | RID-6 | S | 0.078 | 0.027 |
+| RID-6 | RID-7 | S | 0.066 | 0.022 |
+| RID-8 | RID-9 | S | 0.021 | 0.022 |
+| RID-9 | RID-10 | A | 0.067 | 0.033 |
+
+You can run this experiment also for yourself by executing the following code:
+
+```python
+from simulations.simulators import SimulateScenario
+
+# will create the fictitious scenario object
+scenario = SimulateScenario(
+    baseline_id="RID-3",
+    benchmark_id="RID-4",
+    data_set_location="your/path/here/raw-performance-test-data-004.csv"
+)
+
+# will run the scenario
+scenario.run_original_scenario(
+    order_of_comparison=[
+
+        {"instructions": ["RID-1", "RID-2"]},
+        {"instructions": ["RID-2", "RID-3"]},
+        {"instructions": ["RID-3", "RID-4"]},
+        {"instructions": ["RID-4", "RID-5"]},
+        {"instructions": ["RID-5", "RID-6"]},
+        {"instructions": ["RID-6", "RID-7"]},
+        {"instructions": ["RID-8", "RID-9"]},
+        {"instructions": ["RID-9", "RID-10"]}
+    ]
+)
+
+```
 
 ## Contribute to this project 
 
