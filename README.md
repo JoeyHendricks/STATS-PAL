@@ -277,8 +277,10 @@ For myself I have defined these critical values in the table above as they work 
 that is plausible that they will also work for most other applications as the amount of distance will always stay 
 the same, but you could be tolerating more or less distance than me depending on your context. 
 
-When running the same experiment but this time ranking our performance test results from S to F would yield the 
-following results:
+In practice this would mean that you could be accepting lower ranks as good, or you would only accept the highest rank
+this all depends on your preference when you want to fail your build. When running the same experiment we used to 
+determine our critical values but this time we are ranking our performance test results from S to F using our 
+heuristic would yield the following results:
 
 ANIMATION HERE
 
@@ -332,11 +334,15 @@ When we also automatically analyze this data using our ranking mechanism we are 
 > You can find the source code for this experiment also in the following 
 > [file in the project](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/simulations/simulate__with_always_unstable_tests_results_release_situation.py).
 
+When correlating the estimated rank to what we see in our scatter plot we can determine that each score justified as 
+RID-2 to RID-5 are very similar in performance but have a low amount of difference one could accept as the amount of
+distance is small it would therefore not directly impact our end users.
 
 ## Contribute to this project 
 
 Help me to make result analysis easier for more performance engineers around the globe by donating your 
-expertise and knowledge or anonymized test data to make this project smarter and more robust!
+expertise and knowledge, anonymized test data or just by sharing this project on your socials together we 
+can make this project smarter and more robust!
 
 Feel free to open up an issue if you have any questions or are experiencing issues. 
 **Want to contribute?** Then shoot in a pull request with your changes or test data, so we can continue 
