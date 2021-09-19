@@ -137,15 +137,14 @@ considered a metric](https://en.wikipedia.org/wiki/Statistical_distance).
 </p>
 
 In the case above, we have compared the two distributions (the red and blue line) against each other and calculated 
-Kolmogorov-Smirnov distance which is 0.207. As can be observed in the graph this number represents the absolute max 
-distance between these two lines.
-
-If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance:
+Kolmogorov-Smirnov distance which is **0.207**. As can be observed in the graph this number represents the absolute max 
+distance between these two lines. The formula to calculate the Kolmogorov-Smirnov distance is as follows:
 
 <p style="float: left;">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov_smirnov_distance_equation.png"/>
 </p>
 
+If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance.
 You can find an image that shows the exact formula for more information I would recommend reading this great Wikipedia 
 article [Wikipedia article](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
 
