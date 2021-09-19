@@ -282,7 +282,10 @@ this all depends on your preference when you want to fail your build. When runni
 determine our critical values but this time we are ranking our performance test results from S to F using our 
 heuristic would yield the following results:
 
-ANIMATION HERE
+<!-- Ranking Animation-->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/ranking_simulation.gif?raw=true"/>
+</p>
 
 It is interesting to see that this ranking mechanism can filter out test that are different from the baseline but what 
 happens when there is no interesting change between two runs? For that we would need a couple of very stable 
