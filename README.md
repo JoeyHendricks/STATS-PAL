@@ -104,7 +104,7 @@ talking about measuring the [distance](https://en.wikipedia.org/wiki/Statistical
 baseline tests I am talking about finding the [statistical distance](https://en.wikipedia.org/wiki/Statistical_distance).
 
 We could then convert our raw data into a [normalized](https://en.wikipedia.org/wiki/Normalization_(statistics)) 
-[cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function) and compare them 
+[cumulative distribution functions (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function) and compare them 
 using statistical methods. CDF's sound difficult, but they really aren't they are quite easy to 
 understand once you see how they portray, the information they are displaying. In a nutshell, 
 a CDF just shows what the probability is that a certain percentage is under a certain value.
@@ -114,18 +114,21 @@ a CDF just shows what the probability is that a certain percentage is under a ce
 </p>
 
 > A very good explanation that helped me understand how to read CDF's can be best found on John DeJesus excellent 
-> article on this exact topic you can find his article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
+> article on this exact topic, you can find his article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
 
 ## Computing the Kolmogorov-Smirnov Distance
 
-The Kolmogorov-Smirnov Distance is a distance metric that is calculated when using the very well known  
-[Two Sample Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
-This distance is very interesting as it represents the largest absolute difference between two 
-[cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
+The Kolmogorov-Smirnov Distance is a distance metric that is calculated when using the very well-known 
+[Two-Sample Kolmogorov-Smirnov Hypothesis Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). 
+This distance is fascinating as it represents the largest absolute difference between two 
+[cumulative distribution functions (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function).
 
-Why this is an interesting number because it tells us the exact amount of maximum distance between two performance test
-with the max amount quantify we can go and define how much is distance is too much and pass or fail a build based on 
-that one metric, keep in mind that we can call this number a metric as it meets the [formal four conditions to be 
+Why this is an interesting metric for performance engineers is that it quantifies what the maximum amount of distance 
+is between two tests. Knowing how significant this distance is can help us interpret if this metric lies within a 
+certain degree of normalcy or if it has changed too much to be considered normal. The Kolmogorov-Smirnov distance
+is an excellent metric that can help us figure out if our tests contain an unusual difference or not.
+
+> Keep in mind that we can call this number a metric as it meets the [formal four conditions to be 
 considered a metric](https://en.wikipedia.org/wiki/Statistical_distance).
 
 <!-- KS distance example -->
@@ -133,19 +136,21 @@ considered a metric](https://en.wikipedia.org/wiki/Statistical_distance).
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov-smirnov-absolute-distance-example.png"/>
 </p>
 
-In this case we can verify that between the baseline and benchmark test largest distance between our 
-two distributions is **0.207** as can be seen in the graph.
+In the case above, we have compared the two distributions (the red and blue line) against each other and calculated 
+Kolmogorov-Smirnov distance which is 0.207. As can be observed in the graph this number represents the absolute max 
+distance between these two lines.
 
-If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance below you can find 
-an image that shows the exact formula for more information I would recommend reading the excellent 
-[Wikipedia article](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) on the subject.
+If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance:
 
 <p style="float: left;">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov_smirnov_distance_equation.png"/>
 </p>
 
+You can find an image that shows the exact formula for more information I would recommend reading this great Wikipedia 
+article [Wikipedia article](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
+
 To automate this equation we can use the amazing Python package [scipy](https://www.scipy.org/) to calculate 
-in the Kolmogorov-Smirnov Distance in the following way using an example distribution:
+the Kolmogorov-Smirnov Distance in the following way using an example distribution:
 
 ```python
 from scipy.stats import ks_2samp
