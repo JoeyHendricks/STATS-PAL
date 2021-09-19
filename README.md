@@ -106,7 +106,7 @@ baseline tests I am talking about finding the [statistical distance](https://en.
 We could then convert our raw data into a [normalized](https://en.wikipedia.org/wiki/Normalization_(statistics)) 
 [cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function) and compare them 
 using statistical methods. CDF's sound difficult, but they really aren't they are quite easy to 
-understand once you see how they, and the information they are displaying looks like. In a nutshell, 
+understand once you see how they portray, the information they are displaying. In a nutshell, 
 a CDF just shows what the probability is that a certain percentage is under a certain value.
 
 <p align="center">
