@@ -90,27 +90,31 @@ much the change between the two tests results is.
 ## Statistical Distance
 
 When automating performance testing and its analysis into a CI/CD pipeline we only would like to be notified if 
-our results contain an interesting change in performance or behavior. In other words, we would only like to view our 
-results when the [distance](https://en.wikipedia.org/wiki/Statistical_distance) between our baseline, and our benchmark 
-increases or decreases. 
+our results contain an interesting shift in performance or behavior. 
 
-When this happens we can create a defect and start doing some research on why it is different
-and to do this we would need to find out how much "distance" there is between our tests.
-When talking about measuring the distance between our benchmark and baseline tests I am talking about finding the
-[statistical distance](https://en.wikipedia.org/wiki/Statistical_distance) between two [normalized](https://en.wikipedia.org/wiki/Normalization_(statistics)) 
-[cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function) which we have 
-calculated from our raw data.
+In other words, we would only like to view our results when the [distance](https://en.wikipedia.org/wiki/Statistical_distance) 
+between our baseline, and our benchmark has increased or decreased beyond a point that we could consider normal. 
+When this happens, and an interesting difference has been introduced human intervention and follow-up analysis will 
+be required therefore a defect can be created, and the pipeline halted.
 
-These CDF's sound difficult, but they really aren't they are quite easy to understand once you see how they and
-information they are displaying. These graphs just show what the probability is that certain percentage is under
-a certain value.
+To be able to halt a pipeline when two tests are significantly different from each other we would need to find a 
+good way to measure how much "[distance](https://en.wikipedia.org/wiki/Statistical_distance)" there is between two 
+tests. But what does [distance](https://en.wikipedia.org/wiki/Statistical_distance) mean? Well when 
+talking about measuring the [distance](https://en.wikipedia.org/wiki/Statistical_distance) between our benchmark and 
+baseline tests I am talking about finding the [statistical distance](https://en.wikipedia.org/wiki/Statistical_distance).
+
+We could then convert our raw data into a [normalized](https://en.wikipedia.org/wiki/Normalization_(statistics)) 
+[cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function) and compare them 
+using statistical methods. CDF's sound difficult, but they really aren't they are quite easy to 
+understand once you see how they, and the information they are displaying looks like. In a nutshell, 
+a CDF just shows what the probability is that a certain percentage is under a certain value.
 
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/empirical-cumulative-distribution-function-example.jpg"/>
 </p>
 
-> A very good explanation that helped me understand how to read CDF's can be best found John DeJesus article on this 
-> topic you can find this article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
+> A very good explanation that helped me understand how to read CDF's can be best found John DeJesus article 
+> you can find his article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
 
 ## Computing the Kolmogorov-Smirnov Distance
 
