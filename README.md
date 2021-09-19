@@ -208,29 +208,30 @@ wasserstein = wasserstein_distance(
 
 ## Determining our critical values for distance metrics
 
-We can very well understand that Wasserstein & Kolmogorov-Smirnov Distance are excellent metric that we can use
-to define how much distance there is between two distributions, but I believe when both distance metrics would 
-be included into a [heuristic](https://en.wikipedia.org/wiki/Heuristic) where we define boundaries that would outline
-what we would consider how much distance we would tolerate.
+Knowing that the Wasserstein & Kolmogorov-Smirnov Distance exists and understanding that these are excellent metrics 
+that we can use to define how much distance there is between two distributions. Armed with this knowledge we can 
+start thinking about creating a [heuristic](https://en.wikipedia.org/wiki/Heuristic) that can interpret these 
+two complex numbers and come up with a score or rank, so we can categorize our results.
 
-To find out what these critical values are for us we would need to do an experiment where we take two stable 
-performance tests and keep introducing more and more changes to them. That way we can quickly see what values 
-we would consider being too much. 
+To do this we define boundaries for our heuristic that would outline how much distance we could tolerate between tests. 
+To find these critical values we would need to do a simple experiment where we take two stable performance tests and 
+keep introducing an increasing amount of change into them. That way we can immediately see what values we could consider 
+as being too much.
 
-Before it is possible to experiment we would need to select two very similar performance 
-test results sets out of my primary example data set. 
+Before it is possible to experiment we would need to select two very similar performance test results sets out of one 
+of my example data set.
 
 <!-- Example raw data scatter plot -->
 <p align="center">
     <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-001.png?raw=true"/>
 </p>
 
-> To briefly explain this graph each differently coloured point in the scatter plot is a different action 
-> in my test. On the X axis the epoch timestamps are plotted from left to right and on the Y axis I have plotted 
-> the response time in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
+> To briefly explain this graph each differently colored point in the scatter plot is a different action in my test. 
+> On the X-axis the epoch timestamps are plotted from left to right and on the Y-axis I have plotted the response time 
+> in seconds on a logarithmic scale, for reference I have also plotted an average line for each panel.
 
 Above you can find the raw scatter plot of my favorite example data set you might have noticed that the 
-two most stable tests out of this set are **RID-2 & RID-3**. That is why for this experiment we will take **RID-3 
+two most stable tests out of this set are **RID-3 & RID-4**. That is why for this experiment we will take **RID-3 
 as our baseline and RID-4 as our benchmark**. 
 
 The code needed to execute this experiment is as follows:
@@ -264,48 +265,53 @@ showcase how a continuously deteriorating benchmark faces up to a stable baselin
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/wasserstein_and_kolmogorov_smirnov_simulation.gif?raw=true"/>
 </p>
 
-> Above you can see the results in the top right corner above the legend you can see the ***amount of distance introduced 
-> in percentage*** this amount change is then spread out over 100% of the data set. At the bottom of this animation you 
-> can view the increasing Wasserstein and Kolmogorov-Smirnov Distances.
+> Above you can see the results in the top right corner above the legend in the title, you can see the amount of 
+> distance introduced as a percentage this amount of change is then spread out over 100% of the data set. Furthermore, 
+> at the bottom of this animation, you can view the increasing Wasserstein and Kolmogorov-Smirnov Distances for 
+> reference.
 
 ## Ranking our distance metrics
 
-From the information obtained from running our simple experiment we can determine for ourselves what we quantify as 
-too much distance between two performance test. With this information we can then created a table of critical values 
-that we can use to Rank our tests with a letter ranging from S to F (Japanese letter grading system like 
-you used to see in old Sega video games.) based on these ranks we can start making automated decisions in a CI/CD pipeline.
+From the information obtained from running our simple experiment, we can determine for ourselves what we quantify 
+as too much distance between two performance tests. 
+
+When we have this information we can then create a table of critical values. Within this table, we can then categorize 
+our values into a Japanese letter rank ranging from S to F. (Just like you used to see in older video games).
+
+Using these values in a heuristic we could estimate the letter rank and use that rank to pass or fail a pipeline.
+In my case, these values are the following I believe that these values could be relevant for a lot of applications 
+but there might be some exotic applications out there that would require their own assessment of what its critical 
+values are.
 
 | Impact Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
 |-----------|------|--------------------------------------|-------------------------------|-----------------|
 | Negligible difference | S | 0.080 | 0.030 | No action required |
 | Very Low | A | 0.150 | 0.060 | No action required |
-| Low | B | 0.180 | 0.100 | Go to release create minor defect (or halt) |
-| Medium | C | 0.220 | 0.125 | Halt and create defect |
-| High | D | 0.260 | 0.150 | Halt and create defect |
-| Very High | E | 0.300 | 0.200 | Halt and create defect |
-| Ultra | F | 0.340 | 0.250 | Halt and create defect |
+| Low | B | 0.180 | 0.100 | Go for release create minor defect (or halt) |
+| Medium | C | 0.220 | 0.125 | Halt release and create defect |
+| High | D | 0.260 | 0.150 | Halt release and create defect |
+| Very High | E | 0.300 | 0.200 | Halt release and create defect |
+| Ultra | F | 0.340 | 0.250 | Halt release and create defect |
 
 > When reading this table keep in mind that both statistics need fall in the same category if this is not the case
 > the lowest category is selected.
 
-For myself I have defined these critical values in the table above as they work nicely for my own data I am presuming
-that is plausible that they will also work for most other applications as the amount of distance will always stay 
-the same, but you could be tolerating more or less distance than me depending on your context. 
+For myself, I would only want an automated release to happen when the values the rank at least comes back as an **A** 
+but this is my preference your organization could also want to for example release automatically on a **B** rank and 
+figure out later what the problem is accepting the risk that a low-performance degradation will happen in production.
 
-In practice this would mean that you could be accepting lower ranks as good, or you would only accept the highest rank
-this all depends on your preference when you want to fail your build. When running the same experiment we used to 
-determine our critical values but this time we are ranking our performance test results from S to F using our 
-heuristic would yield the following results:
+To see how drastically the CDF curves need to change for a rank to change you can view the animation below to get 
+a better understanding of what the rank would roll out of our heuristic:
 
 <!-- Ranking Animation-->
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/ranking_simulation.gif?raw=true"/>
 </p>
 
-It is interesting to see that this ranking mechanism can filter out test that are different from the baseline but what 
-happens when there is no interesting change between two runs? For that we would need a couple of very stable 
-test results sets which we can compare for this reason I have created the following ten example tests that contain
-a normal amount of difference to each other as you can tell from the image below:
+It is interesting to see that this ranking heuristic can filter out a test that is different from the baseline but what 
+happens when there is no interesting change between two runs? For that, we would need a couple of constant 
+test results sets which we can compare. For this reason, I have created the following ten example tests that contain a 
+normal amount of difference to each other as you can tell from the image below:
 
 <!-- Stable test runs -->
 <p align="center">
@@ -313,7 +319,7 @@ a normal amount of difference to each other as you can tell from the image below
 </p>
 
 When these test are compared in the following order and pulled through our ranking 
-mechanism we would get the following results:
+heuristic we would get the following results:
 
 | Baseline RunID | Benchmark RunID | Rank | Kolmogorov-Smirnov Distance | Wasserstein Distance |
 |----------------|-----------------|------|-----------------------------|----------------------|
@@ -329,17 +335,17 @@ mechanism we would get the following results:
 > You can run this experiment also for yourself by executing the following 
 > [script from this project](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/simulations/simulate__with_always_stable_tests_results_no_regression.py).
 
-In the previous example we tested test results that contain change but how our ranking mechanism would react to 
-change can also be tested similarly for this we could use my favorite data set that contains a lot of different 
-situations. You can interpret these results as different release moments where the release had a positive impact,
-a negative impact and no impact below you can see the data set:
+In the previous example we tested test results that contain no change but how our ranking heuristic would react to a 
+more drastic change can also be tested similarly. For this, we could use my favorite data set that contains a lot of 
+different scenarios. You can interpret these results as different release moments where the release had a positive 
+impact, a negative impact, and no impact below you can see the data set:
 
 <!-- Example raw data scatter plot -->
 <p align="center">
     <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/raw-data-scatter-plot_raw-performance-test-data-001.png?raw=true"/>
 </p>
 
-When we also automatically analyze this data using our ranking mechanism we are left with the following results:
+When we also automatically analyze this data using our ranking heuristic we are left with the following results:
 
 | Baseline RunID | Benchmark RunID | Rank | Kolmogorov-Smirnov Distance | Wasserstein Distance |
 |----------------|-----------------|------|-----------------------------|----------------------|
@@ -352,19 +358,18 @@ When we also automatically analyze this data using our ranking mechanism we are 
 > You can find the source code for this experiment also in the following 
 > [file in the project](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/simulations/simulate__with_always_unstable_tests_results_release_situation.py).
 
-When correlating the estimated rank to what we see in our scatter plot we can determine that each score justified as 
+When correlating the determined rank to what we see in our scatter plot we can determine that each score justified as 
 RID-2 to RID-5 are very similar in performance but have a low amount of difference one could accept as the amount of
-distance is small it would therefore not directly impact our end users.
+distance is small it would therefore not directly impact our user experience.
 
 ## Contribute to this project 
 
 Help me to make result analysis easier for more performance engineers around the globe by donating your 
-expertise and knowledge, anonymized test data or just by sharing this project on your socials together we 
+expertise and knowledge, anonymized test data, or just by sharing this project on your socials together we 
 can make this project smarter and more robust!
 
-Feel free to open up an issue if you have any questions or are experiencing issues. 
-**Want to contribute?** Then shoot in a pull request with your changes or test data, so we can continue 
-to make improvements to this project. 
+Feel free to open up an issue if you have any questions or are experiencing issues. **Want to contribute?** Then 
+shoot in a pull request with your changes or test data, so we can continue to make improvements to this project. 
 
 ## Resources I found while learning about this topic
 
