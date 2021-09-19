@@ -358,8 +358,8 @@ When we also automatically analyze this data using our ranking heuristic we are 
 > You can find the source code for this experiment also in the following 
 > [file in the project](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/simulations/simulate__with_always_unstable_tests_results_release_situation.py).
 
-When correlating the determined rank to what we see in our scatter plot we can determine that each score justified as 
-RID-2 to RID-5 are very similar in performance but have a low amount of difference one could accept as the amount of
+When correlating the  rank to what we see in our scatter plot we can determine that each score justified as 
+**RID-2 to RID-5** are very similar in performance but have a low amount of difference one could accept as the amount of
 distance is small it would therefore not directly impact our user experience.
 
 ## Contribute to this project 
