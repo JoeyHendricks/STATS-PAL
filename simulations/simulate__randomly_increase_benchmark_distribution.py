@@ -9,9 +9,10 @@ scenario = SimulateScenario(
 )
 
 # will run the scenario
-scenario.run_consistently_increase_benchmark_fictitious_scenario(
+scenario.run_consistently_changing_benchmark_fictitious_scenario(
     percent_of_data=100,
     save_image=True,
     show_image=False,
-    repeats=0
+    repeats=0,
+    positive=True  # consistently increase
 )

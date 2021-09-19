@@ -233,7 +233,7 @@ scenario = SimulateScenario(
 
 # will run the scenario and randomly increase 100% of the data by 0% to 99%. 
 # (increasing in percentage every simulation)
-scenario.run_consistently_increase_benchmark_fictitious_scenario(
+scenario.run_consistently_changing_benchmark_fictitious_scenario(
     percent_of_data=100,
     save_image=False,
     show_image=False,  # <-- Watch out will spam your browser full

@@ -60,13 +60,15 @@ class ConvertCsvResultsIntoDictionary:
 
 class CreateFictitiousScenario:
 
-    def __init__(self, data_set_location, percentage=0, delta=0, baseline_id="RID-3", benchmark_id="RID-4"):
+    def __init__(self, data_set_location, positive, percentage=0, delta=0, baseline_id="RID-3", benchmark_id="RID-4", ):
         """
 
         :param percentage:
         :param delta:
         :param baseline_id:
         :param benchmark_id:
+        :param positive: True when the change the delta needs to increase on false delta will be used
+        to decrease response time
         """
         scenarios = ConvertCsvResultsIntoDictionary(data_set_location).data
 
@@ -77,27 +79,33 @@ class CreateFictitiousScenario:
 
         self.baseline_test_id = baseline_id
         self.benchmark_test_id = benchmark_id
-
-        self.benchmark_y = self.randomly_decrease_increase_part_of_the_population(
+        self.benchmark_y = self.randomly_decrease_or_increase_part_of_the_population(
             population=self.benchmark_y,
             percentage=percentage,
             delta=delta,
+            positive=positive
         )
 
     @staticmethod
-    def randomly_decrease_increase_part_of_the_population(population, percentage=0, delta=0):
+    def randomly_decrease_or_increase_part_of_the_population(population, positive, percentage=0, delta=0):
         """
 
         :param delta:
         :param population:
         :param percentage:
+        :param positive: True when the change the delta needs to increase on false delta will be used
+        to decrease response time
         :return:
         """
         for _ in range(0, int(len(population) / 100 * percentage)):
             rand_index = abs(random.randint(0, len(population) - 1))
             change = float(population[rand_index] / 100 * delta)
             current = population[rand_index]
-            new = current + change
+            if positive:
+                new = current + change
+            else:
+                new = abs(current - change)
+
             population[rand_index] = new
 
         return population

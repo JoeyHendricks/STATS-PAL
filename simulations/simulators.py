@@ -27,34 +27,40 @@ class SimulateScenario:
         self.image_export_folder = "C:\\temp\\change"
         self._computed_statistics = []
 
-    def _create_scenario(self, percent_of_data_set, delta) -> object:
+    def _create_scenario(self, percent_of_data_set, delta, positive) -> object:
         """
         Will create a scenario based on the scenario information.
         :param percent_of_data_set: The amount in percentage of the
         data set that needs to be changed.
         :param delta: The amount of change.
+        :param positive: True when the change the delta needs to increase on false delta will be used
+        to decrease response time.
         :return: The scenario.
         """
         random.seed(self.SEED)
         return CreateFictitiousScenario(
             percentage=percent_of_data_set,
             delta=delta,
+            positive=positive,
             baseline_id=self.baseline_scenario_id,
             benchmark_id=self.benchmark_scenario_id,
             data_set_location=self.data_set_location
         )
 
-    def _execute_statistical_distance_test_on_fictitious_data(self, percent_of_data_set, delta) -> object:
+    def _execute_statistical_distance_test_on_fictitious_data(self, percent_of_data_set, delta, positive) -> object:
         """
         Will compare the scenario using the distance test and returning the metrics.
         :param percent_of_data_set: The amount in percentage of the
         data set that needs to be changed.
         :param delta: The amount of change.
+        :param positive: True when the change the delta needs to increase on false delta will be used
+        to decrease response time.
         :return: All of the statistics that have been computed.
         """
         scenario = self._create_scenario(
             percent_of_data_set=percent_of_data_set,
-            delta=delta
+            delta=delta,
+            positive=positive
         )
         return StatisticalDistanceTest(
             population_a=scenario.baseline_y,
@@ -77,7 +83,7 @@ class SimulateScenario:
         )
         return graph
 
-    def _simulate_scenario(self, percent_of_data_set, delta, c_id, save_image=False, show_image=False) -> None:
+    def _simulate_scenario(self, percent_of_data_set, delta, c_id, positive, save_image=False, show_image=False) -> None:
         """
         Will run a simulation.
         :param percent_of_data_set: The amount in percentage of the
@@ -86,11 +92,14 @@ class SimulateScenario:
         :param c_id: an unique id that can be added to the file name
         to make sure that each file name is unique. (Normally only used when repeating simulations)
         :param save_image: If you want to save the image.
-        :param show_image: If you want to view the image in your browser/
+        :param show_image: If you want to view the image in your browser
+        :param positive: True when the change the delta needs to increase on false delta will be used
+        to decrease response time.
         """
         statistical_distance_test = self._execute_statistical_distance_test_on_fictitious_data(
             percent_of_data_set=percent_of_data_set,
-            delta=delta
+            delta=delta,
+            positive=positive
         )
         statistics = {
             "percentage_of_data_set": percent_of_data_set,
@@ -115,11 +124,11 @@ class SimulateScenario:
         else:
             del graph
 
-    def run_consistently_increase_benchmark_fictitious_scenario(self, percent_of_data, save_image, show_image,
-                                                                repeats=0) -> None:
+    def run_consistently_changing_benchmark_fictitious_scenario(self, percent_of_data, save_image, positive,
+                                                                show_image, repeats=0) -> None:
         """
         A simulation where the benchmark is consistently randomly increased.
-        This will generate a ever increasing benchmark that can help us find the correct critical values.
+        This will generate an ever changing benchmark that can help us find the correct critical values.
 
         :param percent_of_data: The amount in percentage of the
         data set that needs to be changed.
@@ -127,6 +136,8 @@ class SimulateScenario:
         :param show_image: If you want to view the image in your browser
         :param repeats: Amount of repeats per simulation. (each simulation randomly spreads
         the change over the data set. more repeats will give you more perspectives on how your data sets changes.)
+        :param positive: True when the change the delta needs to increase on false delta will be used
+        to decrease response time
         """
         delta_array = []
         delta = 0
@@ -142,7 +153,8 @@ class SimulateScenario:
                     delta=random_amount_of_increase,
                     c_id=repeat_id,
                     save_image=save_image,
-                    show_image=show_image
+                    show_image=show_image,
+                    positive=positive
                 )
 
     def run_original_scenario(self, order_of_comparison: list) -> None:
