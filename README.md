@@ -144,10 +144,8 @@ distance between these two lines. The formula to calculate the Kolmogorov-Smirno
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/kolmogorov_smirnov_distance_equation.png"/>
 </p>
 
-If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance.
-You can find an image that shows the exact formula for more information I would recommend reading this great Wikipedia 
-article [Wikipedia article](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
-
+If you are interested in understanding the equation behind the Kolmogorov-Smirnov distance
+I would recommend reading this great Wikipedia article [Wikipedia article](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
 To automate this equation we can use the amazing Python package [scipy](https://www.scipy.org/) to calculate 
 the Kolmogorov-Smirnov Distance in the following way using an example distribution:
 
@@ -169,16 +167,20 @@ kolmogorov_smirnov_distance, kolmogorov_smirnov_probability = ks_2samp(
 
 Another great metric is the [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric), also known as the 
 [Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance) it is formally quite difficult to 
-understand as you can tell from just glancing at its Wikipedia article makes you believe it is written in elvish, but 
-by using its physical interpretation it is very easy to wrap your head around it and understand what it does. 
+understand this metric as you can tell from just glancing at its Wikipedia article which makes you believe it is written
+in elvish. 
 
-Consider this, both your baseline and benchmark test results as a piles of dirt, your boss asks you to make the 
-benchmark pile of dirt as large as the baseline pile. The amount of work or in other words the amount of dirt required 
-to make both piles the same size is the Wasserstein Distance that is why it is also known as the Earth Mover’s distance.
+However, by using its physical interpretation it is easy to wrap your head around it and understand what it does:
 
-For us performance engineers this metric is awesome as it quantifies how much difference there is between two tests.
-Understanding that this metric stand for the work required to change one test into another we can also use this metric
-to drive decisions making in a CI/CD pipeline.
+*Consider this, both your baseline and benchmark test results are piles of dirt. Your boss asks you to make the 
+benchmark pile of dirt as large as the baseline pile. The amount of work or in other words the amount of dirt 
+required to make both piles the same size is the Wasserstein Distance which is why it is also known as the Earth 
+Mover’s distance.*
+
+Below you can see this concept in a graphical form the orange part between the red and blue line is the amount of
+work required to change the red line into the blue one:
+
+IMAGE HERE ONCE DONE.
 
 The formal equation to calculate the Wasserstein Distance is as follows:
 
