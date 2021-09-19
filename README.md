@@ -10,9 +10,9 @@ Continuous performance testing is nothing new, but one of the biggest pitfalls o
 is the manual analysis of its results. This manual intervention slows down the pace required to keep up with our ever 
 more demanding online world. 
 
-By verifying automatically if there's a significant change in behavior and producing a metric to represent the change 
-between your baseline and benchmark we can speed up our testing effort, reduce our time to market and liberate a 
-performance engineer to focus on more pressing matters.
+By verifying automatically if there's a significant change in behavior and producing a rank or score to represent 
+the difference between your baseline and benchmark we can speed up our testing effort, reduce our time to market and 
+liberate a performance engineer to focus on more pressing matters.
 
 This project hopes to bring a helping hand to performance engineers around the globe by providing them with a 
 solution that can be embedded in their testing process to reliably perform complicated 
@@ -20,10 +20,10 @@ comparison analysis in an automated fashion.
 
 ## Quickly get started comparing the results of two performance tests.
 
-How you can get started using the code written in this project is easy first download the source code specifically the
+How you can get started using the code written in this project is easy first, you download the source code specifically the 
 [StatisticalDistanceTest](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/heuristic_test_result_comparisons/kolmogorov_smirnov_and_wasserstein.py) 
-class from this repository after you have done that. You can give this class two arrays of raw response time 
-measurements and compute the relevant statistics this can be done in the following manner:
+class from this repository. Secondly, you give this class two arrays of raw response time measurements and compute the 
+relevant statistics this can be done in the following manner:
 
 ```python
 from heuristic_test_result_comparisons.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
@@ -46,42 +46,46 @@ print(stats_distance_test.score)                        # >> 89.70
 print(stats_distance_test.rank)                         # >> C
 
 ```
-That is it you are all set now to embed advanced statistical analyse into your CID/CD pipeline, so you can make better
-automated decisions when to continue the pipeline or halt it and raise a defect. As this comparison is not without 
-its pitfalls and complexity ***I would recommend continuing to read below*** on how this comparison works and how you can 
-best interpret its powerful information.
+That is it! You are all set now to embed advanced statistical analysis into your very own CID/CD pipeline
+This method will allow you to make a better-automated decision when to continue the pipeline or halt it and raise 
+a defect. 
+
+> This comparison is not without its pitfalls and complexity that is why ***I would strongly recommend you to continue 
+> to reading and learn more*** about how this automated process works and how you can best interpret its powerful 
+> results.
 
 ## Start using the raw format of your performance test results.
 
 The calculations behind this project rely heavily on having every single measurement from your performance 
-test available. This is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data) in statistics. 
+test available this is commonly known as [raw data](https://en.wikipedia.org/wiki/Raw_data).
+This means that our data has not yet undergone any processing, which means that the data can not be an aggregated sample.
 
-> It could be that you are unfamiliar with this term within the performance testing context and its philosophy within our industry. 
-> I would recommend you to read through some of my mentor [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
-> [articles](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) that cover this topic in great detail.
+You might be unfamiliar with this term within the performance testing context and its philosophy within our industry. 
+That is why I would recommend you to read through some of my mentor
+[Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) excellent Linkedin 
+[articles](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) 
+that cover this topic in great detail.
 
-Why this raw format of your test results is so powerful can be best seen in the graph animation below. 
+To give you a visual example of why this raw format is great for finding weird and interesting patterns 
+in your results you can best review the animation below:
 
 <!-- Raw Data Vs Averages animation -->
 <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/averages-vs-raw-data.gif?raw=true"/>
 
-The first view that is shown in the animation is the average response time over a time axis. 
-In this view, we can see that the response time patterns of the system are relatively stable, 
-but once the overlay switches to the raw data scatter plot (Keep in mind that both views are the same test.).
-We can see a completely different picture of a system that is not quite as stable as the average 
-line graph would have us believe.
+This animation shows us two views of the same performance test, the first view shows a line graph of the average 
+response time. The second view shows the raw scatter plot where each measurement is shown.
 
-As can be seen in this example is that the aggregation of data hides the actual performance of 
-our system under test and gives us a false understanding of what the real patterns are.
+It is clear from this example that there is a significant difference in both these views even though they are from 
+the same test. It seems that the average line makes the performance of the application we are testing look better 
+than it is while the scatter plot shows how the system is actually behaving.
 
-Because of this reason, this project is based on this raw data philosophy from [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) 
-that is why we base our automated analysis, not on a single simple metric like the average or the median, but we look 
-into discovering change throughout the entire raw data set using more advanced statistical methods to 
-verify how much the change between to tests is. 
+If we would only have this average line graph at our disposal we could quickly have a false understanding of what the 
+real response time patterns of our application are. Because of this reason, this project bases itself on the "raw data 
+philosophy" from [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/). 
 
-***That is why using raw data is a prerequisite for being able to use the [heuristic](https://en.wikipedia.org/wiki/Heuristic) 
-that is developed without raw data, it makes less sense to use this solution as aggregation could have "poisoned" our 
-data and make it harder to give an accurate assessment.***.
+That is why base our automated decision-making process not on a single simple metric like the average or the median, 
+but we look into discovering change throughout the data set, using more advanced statistical methods to verify how 
+much the change between the two tests results is.
 
 ## Statistical Distance
 
@@ -237,7 +241,8 @@ scenario.run_consistently_changing_benchmark_fictitious_scenario(
     percent_of_data=100,
     save_image=False,
     show_image=False,  # <-- Watch out will spam your browser full
-    repeats=0  # <-- amount of repeats per increase (increases are randomly distributed.)
+    repeats=0,  # <-- amount of repeats per increase (increases are randomly distributed.)
+    positive=True
 )
 ```
 
