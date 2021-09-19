@@ -113,8 +113,8 @@ a CDF just shows what the probability is that a certain percentage is under a ce
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/empirical-cumulative-distribution-function-example.jpg"/>
 </p>
 
-> A very good explanation that helped me understand how to read CDF's can be best found John DeJesus article 
-> you can find his article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
+> A very good explanation that helped me understand how to read CDF's can be best found on John DeJesus excellent 
+> article on this exact topic you can find his article [here](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480).
 
 ## Computing the Kolmogorov-Smirnov Distance
 
