@@ -378,7 +378,7 @@ shoot in a pull request with your changes or test data, so we can continue to ma
 ___
 <!-- FOOTER -->
 <p align="center">
-    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">- Report Bug or Request Feature</a> -
+    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">- Open a issue</a> -
     <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/data/contributing_data.md">-  Share your raw data</a> -
     <a href="https://events.tricentis.com/pac/home">Made for the Performance Advisory Council </a> -
     <a href="https://www.linkedin.com/in/joey-hendricks/">Follow me on Linkedin </a> -
