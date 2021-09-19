@@ -365,8 +365,8 @@ distance is small, and it would therefore not directly impact our user experienc
 ## Contribute to this project 
 
 Help me to make result analysis easier for more performance engineers around the globe by donating your 
-expertise and knowledge, anonymized test data, or just by sharing this project on your socials together we 
-can make this project smarter and more robust!
+expertise and knowledge, [anonymized test data](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/data/contributing_data.md), 
+or just by sharing this project on your socials together we can make this project smarter and more robust!
 
 Feel free to open up an issue if you have any questions or are experiencing issues. **Want to contribute?** Then 
 shoot in a pull request with your changes or test data, so we can continue to make improvements to this project. 
