@@ -2,6 +2,7 @@
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.png?raw=true"/>
 </p>
+
 ___
 
 ## Contribute raw data to this project for further research and experiments
@@ -51,6 +52,7 @@ the following way with Tableau:
 <p align="center">
     <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/tableau-scatter-plot-instructions.gif?raw=true"/>
 </p>
+
 ___
 <!-- FOOTER -->
 <p align="center">
