@@ -3,12 +3,13 @@
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.png?raw=true"/>
 </p>
 
-Our beautiful digital world is changing faster every day and with increased speed comes unprecedented more demand for 
-automating more complex actions so organizations can pick up speed and face our ever more demanding online world.
 
-That is why there is nothing new for performance engineering experts to execute their tests continuously. However, 
+**Our beautiful digital world is changing faster every day and with increased speed comes unprecedented more demand for 
+automating more complex actions so organizations can pick up speed and face our ever more demanding online world.**
+
+**That is why there is nothing new for performance engineering experts to execute their tests continuously. However, 
 when integrating their entire testing process into a pipeline we quickly recognize that the analysis of our complex 
-test results is not an easy hurdle to overcome.
+test results is not an easy hurdle to overcome.**
 
 ## Don’t bother me unless it is important
 
