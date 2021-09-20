@@ -180,7 +180,9 @@ Mover’s distance.*
 Below you can see this concept in a graphical form the orange part between the red and blue line is the amount of
 work required to change the red line into the blue one:
 
-IMAGE HERE ONCE DONE.
+<p style="float: left;">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/wasserstein-overall-distance-example.png?raw=true"/>
+</p>
 
 The formal equation to calculate the Wasserstein Distance is as follows:
 
