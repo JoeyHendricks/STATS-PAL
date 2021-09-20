@@ -16,9 +16,7 @@ of our complex test results is not an easy hurdle to overcome.**
 
 But what does it mean to analyze our test results automatically in a pipeline? In my opinion, it means that one 
 wants to be able to trust an automatic analysis completely and only be prompted to look at test results when there 
-is an interesting difference.
-
-Otherwise, we would want to let it go to production without any manual intervention as our 
+is an interesting difference. Otherwise, we would want to let it go to production without any manual intervention as our 
 automated analysis has determined that there is no significant risk. 
 
 ## Keep it raw
