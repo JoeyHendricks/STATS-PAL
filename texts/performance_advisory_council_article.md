@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.png?raw=true"/>
 </p>
-___
+__
 
 **Our beautiful digital world is changing faster every day and with increased speed comes unprecedented more demand for 
 automating more complex actions so organizations can pick up speed and face our ever more demanding online world.**
