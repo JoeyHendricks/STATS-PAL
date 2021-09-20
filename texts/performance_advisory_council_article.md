@@ -25,8 +25,9 @@ When learning the ropes to become a performance engineer my mentor and good frie
 [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) would always hammer in the importance of using raw data 
 and, you know what the man is absolutely right.
 
-Raw data is a powerful tool that we have at our disposal to truly study how the system we are testing is acting, 
-looking at the example below this becomes very evident when we look at an average line graph versus a raw scatter plot.
+Because of him I realized that Raw data is a powerful tool that we have at our disposal to truly study how the 
+system we are testing is acting, looking at the example below this becomes very evident when we look at an average 
+line graph versus a raw scatter plot.
 
 <!-- Raw Data Vs Averages animation -->
 <p style="float: left;">
@@ -86,6 +87,29 @@ Truly understanding how this metric and the previous one are calculated is not n
 statistics. What is needed is knowing what they represent that way you can create a 
 [heuristic](https://en.wikipedia.org/wiki/Heuristic) around these metrics to automatically assess if the 
 difference between two performance tests is relatively normal.
+
+## Letter ranks 
+
+Understanding that the Wasserstein & Kolmogorov-Smirnov Distance exists is cool and all but how can we use these two 
+metrics to rank our performance test results? Well for this I love using letter ranks as they are well known around 
+the world and easy to understand by non-technical people.
+
+To be able to rank our metrics, I have determined what our critical values are for both the Wasserstein and 
+Kolmogorov-Smirnov Distances. With these critical values, we can categorize our test results into ranks ranging 
+from S to F. Similar to what you would use to see back in older Japanese video games. 
+
+In this table I have outlined what each letter rank would mean and which critical values and actions are associated 
+with it:
+
+| Impact Category  | Rank | Kolmogorov-Smirnov Distance boundary | Wasserstein Distance boundary | Possible Action |
+|-----------|------|--------------------------------------|-------------------------------|-----------------|
+| Negligible difference | S | 0.080 | 0.030 | No action required |
+| Very Low | A | 0.150 | 0.060 | No action required |
+| Low | B | 0.180 | 0.100 | Go for release create minor defect (or halt) |
+| Medium | C | 0.220 | 0.125 | Halt release and create defect |
+| High | D | 0.260 | 0.150 | Halt release and create defect |
+| Very High | E | 0.300 | 0.200 | Halt release and create defect |
+| Ultra | F | 0.340 | 0.250 | Halt release and create defect |
 
 ___
 <!-- FOOTER -->
