@@ -128,7 +128,7 @@ animation where I consistently increase the amount of distance between our basel
 ___
 <!-- FOOTER -->
 <p align="center">
-    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">- Open a issue</a> -
+    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis">- Visit the project</a> -
     <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/texts/contributing_data.md"> Share your raw data</a> -
     <a href="https://events.tricentis.com/pac/home">Made for the Performance Advisory Council </a> -
     <a href="https://www.linkedin.com/in/joey-hendricks/">Follow me on Linkedin </a> -
