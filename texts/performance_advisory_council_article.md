@@ -111,6 +111,20 @@ with it:
 | Very High | E | 0.300 | 0.200 | Halt release and create defect |
 | Ultra | F | 0.340 | 0.250 | Halt release and create defect |
 
+When creating a heuristic out of the data that is outlined in the table above we can start ranking our performance test 
+results. To give you a visual example of how much distance is tolerated by each rank I have created the following 
+animation where I consistently increase the amount of distance between our baseline and benchmark.
+
+<!-- Ranking Animation-->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/ranking_simulation.gif?raw=true"/>
+</p>
+
+> Both benchmark and baseline test results are transformed into a [normalized](https://en.wikipedia.org/wiki/Normalization_(statistics)) 
+[cumulative distribution functions (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function), 
+> so we can have an idea of what the probability is that a particular response time is produced by the application 
+> we are testing.
+
 ___
 <!-- FOOTER -->
 <p align="center">
