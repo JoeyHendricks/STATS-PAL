@@ -2,6 +2,7 @@
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.png?raw=true"/>
 </p>
+___
 
 <!-- INTRO -->
 ## In a nutshell what is this project all about?

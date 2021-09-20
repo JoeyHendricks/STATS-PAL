@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.png?raw=true"/>
 </p>
-__
+___
 
 **Our beautiful digital world is changing faster every day and with increased speed comes unprecedented more demand for 
 automating more complex actions so organizations can pick up speed and face our ever more demanding online world.**
@@ -88,4 +88,12 @@ statistics. What is needed is knowing what they represent that way you can creat
 [heuristic](https://en.wikipedia.org/wiki/Heuristic) around these metrics to automatically assess if the 
 difference between two performance tests is relatively normal.
 
+---
+<!-- FOOTER -->
+<p align="center">
+    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">- Open a issue</a> -
+    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/texts/contributing_data.md"> Share your raw data</a> -
+    <a href="https://events.tricentis.com/pac/home">Made for the Performance Advisory Council </a> -
+    <a href="https://www.linkedin.com/in/joey-hendricks/">Follow me on Linkedin </a> -
+</p>
 
