@@ -19,7 +19,7 @@ wants to be able to trust an automatic analysis completely and only be prompted 
 is an interesting difference. Otherwise, we would want to let it go to production without any manual intervention as our 
 automated analysis has determined that there is no significant risk. 
 
-## Keep it raw
+## Keep your data raw
 
 When learning the ropes to become a performance engineer my mentor and good friend 
 [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) would always hammer in the importance of using raw data 
