@@ -3,8 +3,6 @@
   <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.png?raw=true"/>
 </p>
 
-___
-
 ## Contribute raw data to this project for further research and experiments
 
 One of the ways you can contribute to this project is by giving anonymized performance test results to further reinforce
