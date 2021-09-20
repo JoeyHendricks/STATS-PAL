@@ -8,7 +8,7 @@ ___
 **Our beautiful digital world is changing faster every day and with increased speed comes unprecedented more demand for 
 automating more complex actions so organizations can pick up speed and face our ever more demanding online world.**
 
-**Because of this demand there is nothing new for performance engineering experts to execute their tests continuously. 
+**Because of this demand, there is nothing new for performance engineering experts to execute their tests continuously. 
 However, when integrating their entire quality assurance process into a pipeline we quickly recognize that the analysis 
 of our complex test results is not an easy hurdle to overcome.**
 
@@ -25,7 +25,7 @@ When learning the ropes to become a performance engineer my mentor and good frie
 [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) would always hammer in the importance of using raw data 
 and, you know what the man is absolutely right.
 
-Because of him I realized that Raw data is a powerful tool that we have at our disposal to truly study how the 
+Because of him, I realized that Raw data is a powerful tool that we have at our disposal to truly study how the 
 system we are testing is acting, looking at the example below this becomes very evident when we look at an average 
 line graph versus a raw scatter plot.
 
@@ -50,7 +50,7 @@ simply inaccurate.
 During this pandemic, you for sure have seen signs everywhere reminding you to keep your 
 [distance](https://en.wikipedia.org/wiki/Statistical_distance)  from your fellow man. But what does 
 [distance](https://en.wikipedia.org/wiki/Statistical_distance)  mean when we are analyzing our performance test 
-results? In a sense, it implies that we would like to know how much difference there is between a baseline, and a 
+results? In a sense, it implies that we would like to know how much difference there is between a baseline and a 
 completed benchmark test.
 
 In the field of statistics, there are a lot of distance metrics that can quantify to us how much distance there is 
@@ -121,16 +121,16 @@ animation where I consistently increase the amount of distance between our basel
 </p>
 
 > Both benchmark and baseline test results are transformed into a [normalized](https://en.wikipedia.org/wiki/Normalization_(statistics)) 
-[cumulative distribution functions (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function), 
+[cumulative distribution function (CDF)](https://en.wikipedia.org/wiki/Cumulative_distribution_function), 
 > so we can have an idea of what the probability is that a particular response time is produced by the application 
 > we are testing.
 
 Now that we understand these distance metrics and know that they can help us find out how different our performance 
 test results are from each other we can start automating this analysis in Python.
-For this purpose I have written a class that can be 
+For this purpose, I have written a class that can be 
 [downloaded from my GitHub repository](https://github.com/JoeyHendricks/automated-performance-test-result-analysis).
 
-Using this class is fairly simple as you only need to execute following code like in the example below:
+Using this class is fairly simple as you only need to execute the following code like in the example below:
 
 ```python
 from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
