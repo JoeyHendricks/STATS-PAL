@@ -154,6 +154,9 @@ print(stats_distance_test.rank)  # >> C
 
 ```
 
+> for more instructions and information please visit 
+> [my GitHub repository](https://github.com/JoeyHendricks/automated-performance-test-result-analysis)
+
 # Conclusion
 
 ___
