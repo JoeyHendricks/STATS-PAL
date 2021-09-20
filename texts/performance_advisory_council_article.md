@@ -12,7 +12,7 @@ automating more complex actions so organizations can pick up speed and face our 
 However, when integrating their entire quality assurance process into a pipeline we quickly recognize that the analysis 
 of our complex test results is not an easy hurdle to overcome.**
 
-## Don’t bother me unless it is important
+## Please don’t bother me unless it is important
 
 But what does it mean to analyze our test results automatically in a pipeline? In my opinion, it means that one 
 wants to be able to trust an automatic analysis completely and only be prompted to look at test results when there 
