@@ -34,7 +34,7 @@ looking at the example below this becomes very evident when we look at an averag
 > [work](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) 
 > on the matter as he has covered this topic very extensively.
 
-*Keep in mind that both illustrations are from the same test* and that these results make it painstakingly clear 
+**Keep in mind that both illustrations are from the same test** and that these results make it painstakingly clear 
 that averages hide the actual behavior while the raw data show exactly what behavior or application has been portraying. 
 
 Because of the magnificent detail, raw data presents us we would any automated decision-making to be based solely 
@@ -64,10 +64,10 @@ as follows:
 For most people, this formula would like some ancient runic spell which makes it a bit daunting to start learning 
 more about this metric. However, understanding this metric becomes a lot easier when we look at its physical example:
 
-**Consider this, both your baseline and benchmark test results are piles of dirt. Your boss asks you to make the 
+*Consider this, both your baseline and benchmark test results are piles of dirt. Your boss asks you to make the 
 benchmark pile of dirt as large as the baseline pile. The amount of work or in other words the amount of dirt required 
 to make both piles the same size is the Wasserstein Distance which is why it is also known as the 
-[Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance).**
+[Earth Mover’s distance](https://en.wikipedia.org/wiki/Earth_mover%27s_distance).*
 
 Another metric that is great to determine how much distance there is between two performance tests would be the 
 Kolmogorov-Smirnov Distance which is calculated when doing the very well-known 
