@@ -49,10 +49,8 @@ During this pandemic, you for sure have seen signs everywhere reminding you to k
 results? In a sense, it implies that we would like to know how much difference there is between a baseline, and a 
 completed benchmark test.
 
-## The Wasserstein & Kolmogorov-Smirnov Distance
-
-In the field of statistics, there are a lot of distance metrics that can indicate to us how much there is between 
-two tests one of these metrics which is utterly great for our use case is the 
+In the field of statistics, there are a lot of distance metrics that can quantify to us how much distance there is 
+between two tests one of these metrics which is utterly great for our use case is the 
 [Wasserstein Distance](https://en.wikipedia.org/wiki/Wasserstein_metric) the equation to calculate this metric goes 
 as follows:
 
