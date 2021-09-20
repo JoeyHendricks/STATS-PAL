@@ -22,10 +22,6 @@ When learning the ropes to become a performance engineer my mentor and good frie
 [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) would always hammer in the importance of using raw data 
 and, you know what the man is absolutely right.
 
-> If you want to learn more about raw data I would recommend reading Stijn's 
-> [work](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) 
-> on the matter as he has covered this topic very extensively.
-
 Raw data is a powerful tool that we have at our disposal to truly study how the system we are testing is acting, 
 looking at the example below this becomes very evident when we look at an average line graph versus a raw scatter plot.
 
@@ -33,6 +29,10 @@ looking at the example below this becomes very evident when we look at an averag
 <p style="float: left;">
     <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/averages-vs-raw-data.gif?raw=true"/>
 </p>
+
+> If you want to learn more about raw data I would recommend reading Stijn's 
+> [work](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) 
+> on the matter as he has covered this topic very extensively.
 
 *Keep in mind that both illustrations are from the same test* and that these results make it painstakingly clear 
 that averages hide the actual behavior while the raw data show exactly what behavior or application has been portraying. 
