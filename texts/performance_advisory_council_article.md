@@ -88,7 +88,7 @@ statistics. What is needed is knowing what they represent that way you can creat
 [heuristic](https://en.wikipedia.org/wiki/Heuristic) around these metrics to automatically assess if the 
 difference between two performance tests is relatively normal.
 
----
+___
 <!-- FOOTER -->
 <p align="center">
     <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">- Open a issue</a> -
