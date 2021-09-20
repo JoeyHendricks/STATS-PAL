@@ -1,4 +1,4 @@
-from heuristic_test_result_comparisons.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
+from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
 from data.wranglers import CreateFictitiousScenario, ConvertCsvResultsIntoDictionary
 from data.visuals import LineGraph
 import random

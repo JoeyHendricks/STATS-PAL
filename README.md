@@ -26,7 +26,7 @@ class from this repository. Secondly, you give this class two arrays of raw resp
 relevant statistics this can be done in the following manner:
 
 ```python
-from heuristic_test_result_comparisons.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
+from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
 from data import file_location_hendricks_raw_data_set_001  # <-- My primary example data set.
 from data.wranglers import ConvertCsvResultsIntoDictionary
 
@@ -41,9 +41,9 @@ stats_distance_test = StatisticalDistanceTest(
 
 # Below printed information can be used to control a CI/CD pipeline. 
 print(stats_distance_test.kolmogorov_smirnov_distance)  # >> 0.096
-print(stats_distance_test.wasserstein_distance)         # >> 0.100
-print(stats_distance_test.score)                        # >> 89.70
-print(stats_distance_test.rank)                         # >> C
+print(stats_distance_test.wasserstein_distance)  # >> 0.100
+print(stats_distance_test.score)  # >> 89.70
+print(stats_distance_test.rank)  # >> C
 
 ```
 That is it! You are all set now to embed advanced statistical analysis into your very own CID/CD pipeline
@@ -379,7 +379,7 @@ ___
 <!-- FOOTER -->
 <p align="center">
     <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/issues">- Open a issue</a> -
-    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/data/contributing_data.md"> Share your raw data</a> -
+    <a href="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/texts/contributing_data.md"> Share your raw data</a> -
     <a href="https://events.tricentis.com/pac/home">Made for the Performance Advisory Council </a> -
     <a href="https://www.linkedin.com/in/joey-hendricks/">Follow me on Linkedin </a> -
 </p>

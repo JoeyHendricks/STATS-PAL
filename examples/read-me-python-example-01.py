@@ -1,4 +1,4 @@
-from heuristic_test_result_comparisons.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
+from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
 from data import file_location_hendricks_raw_data_set_001  # <-- My primary example data set.
 from data.wranglers import ConvertCsvResultsIntoDictionary
 
