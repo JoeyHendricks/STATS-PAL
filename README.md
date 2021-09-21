@@ -20,10 +20,12 @@ comparison analysis in an automated fashion.
 
 ## Installation
 
-Install this projects dependencies easily using [pip](https://pip.pypa.io/en/stable/) through the following command:
+Install this projects dependencies easily using [pip](https://pip.pypa.io/en/stable/) 
+through the [requirements file](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/requirements.txt) 
+you can use the following command to install them:
 
 ```bash
-pip install -r /path/to/requirements.txt
+pip install -r /path/to/requirements.txt  
 ```
 
 > If you are having trouble check out this [stack overflow article](https://stackoverflow.com/questions/7225900/how-can-i-install-packages-using-pip-according-to-the-requirements-txt-file-from/54405453#54405453).
