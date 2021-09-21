@@ -152,8 +152,7 @@ class StatisticalDistanceTest:
     def _calculate_empirical_cumulative_distribution_function(self, population: list) -> object:
         """
         Will calculate the eCDF to find the empirical distribution of our population.
-        It will randomly build a sample based on the smallest population size from there
-        this function will then create a dataframe which will contain the measure
+        This function will then create a dataframe which will contain the measure
         and its probability.
 
         Further more this function also gives the option to filter out the outliers
