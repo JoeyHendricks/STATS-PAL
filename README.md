@@ -387,6 +387,8 @@ shoot in a pull request with your changes or test data, so we can continue to ma
 
 - [An article from data dog about selecting statistical distance for machine learning.](https://www.datadoghq.com/blog/engineering/robust-statistical-distances-for-machine-learning/)
 - [How to read empirical cumulative distribution functions.](https://towardsdatascience.com/what-why-and-how-to-read-empirical-cdf-123e2b922480)
+- [Performance Testing: Act like a detective. Use Raw Data! By Stijn Schepers](https://www.linkedin.com/pulse/performance-testing-act-like-detective-use-raw-data-stijn-schepers/) 
+- [Stijn Schepers about raw data @ the Performance Advisory Council 2020](https://www.youtube.com/watch?v=TOYo5nIs7KE&list=PLdITSV_zl58qdb6fXZTqbsdE-j6h9J2gA&index=9)
 ___
 <!-- FOOTER -->
 <p align="center">
