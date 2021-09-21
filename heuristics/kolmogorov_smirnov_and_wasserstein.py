@@ -165,8 +165,7 @@ class StatisticalDistanceTest:
         :param population: The provided measurements from one collected population.
         :return: The empirical cumulative distribution function (outliers filtered or not filtered)
         """
-        raw_data = np.random.choice(population, self.sample_size)
-        normalized_sample = self.normalize_raw_data(raw_data)
+        normalized_sample = self.normalize_raw_data(population)
         sample = pd.DataFrame(
             {
                 'measure': np.sort(normalized_sample),
