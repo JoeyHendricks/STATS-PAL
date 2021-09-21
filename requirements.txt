@@ -3,3 +3,4 @@ pandas~=1.3.2
 imageio~=2.9.0
 numpy~=1.20.3
 scipy~=1.7.1
+QuickPotato~=1.0.1
