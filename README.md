@@ -18,6 +18,16 @@ This project hopes to bring a helping hand to performance engineers around the g
 solution that can be embedded in their testing process to reliably perform complicated 
 comparison analysis in an automated fashion. 
 
+## Installation
+
+Install this projects dependencies easily using [pip](https://pip.pypa.io/en/stable/) through the following command:
+
+```bash
+pip install -r /path/to/requirements.txt
+```
+
+> If you are having trouble check out this [stack overflow article](https://stackoverflow.com/questions/7225900/how-can-i-install-packages-using-pip-according-to-the-requirements-txt-file-from/54405453#54405453).
+
 ## Quickly get started comparing the results of two performance tests.
 
 How you can get started using the code written in this project is easy first, you download the source code specifically the 
