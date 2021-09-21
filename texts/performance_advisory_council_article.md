@@ -17,11 +17,9 @@ of our complex test results is not an easy hurdle to overcome.**
 But what does it mean to analyze our test results automatically in a pipeline? In my opinion, it means that one 
 wants to be able to trust an automatic analysis completely and only be prompted to look at test results when there 
 is an interesting difference. Otherwise, we would want to let it go to production without any manual intervention as our 
-automated analysis has determined that there is no significant risk. 
+automated analysis has determined that there is no significant risk.
 
-## Keep your data raw
-
-When learning the ropes to become a performance engineer my mentor and good friend 
+When I was learning the ropes to become a performance engineer my mentor and good friend 
 [Stijn Schepers](https://www.linkedin.com/in/stijnschepers/) would always hammer in the importance of using raw data 
 and, you know what the man is absolutely right.
 
