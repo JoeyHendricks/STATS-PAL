@@ -171,7 +171,7 @@ class StatisticalDistanceTest:
                 'probability': np.arange(len(normalized_sample)) / float(len(normalized_sample)),
             }
         )
-        sample = sample[~(sample['probability'] >= 0.96)]
+        sample = sample[~(sample['probability'] >= 0.95)]
         return sample
 
     def _calculate_wasserstein_distance_statistics(self) -> float:

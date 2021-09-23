@@ -335,17 +335,17 @@ normal amount of difference to each other as you can tell from the image below:
 When these test are compared in the following order and pulled through our ranking 
 heuristic we would get the following results:
 
-| Baseline RunID | Benchmark RunID | Rank | Kolmogorov-Smirnov Distance | Wasserstein Distance |
-|----------------|-----------------|------|-----------------------------|----------------------|
-| RID-1 | RID-2 | S | 0.042 | 0.018 |
-| RID-2 | RID-3 | S | 0.027 | 0.019 |
-| RID-3 | RID-4 | S | 0.061 | 0.029 |
-| RID-4 | RID-5 | S | 0.025 | 0.011 |
-| RID-5 | RID-6 | S | 0.078 | 0.027 |
-| RID-6 | RID-7 | S | 0.066 | 0.022 |
-| RID-8 | RID-9 | S | 0.021 | 0.022 |
-| RID-9 | RID-10 | A | 0.067 | 0.033 |
-
+| Baseline RunID | Benchmark RunID | Rank | Score | Kolmogorov-Smirnov Distance | Wasserstein Distance |
+|----------------|-----------------|------|-------|-----------------------------|----------------------|
+| RID-1 | RID-2 | S | 99.79 | 0.037 | 0.012 |
+| RID-2 | RID-3 | S | 99.39 | 0.041 | 0.018 |
+| RID-3 | RID-4 | S | 98.48 | 0.061 | 0.025 |
+| RID-4 | RID-5 | S | 99.89 | 0.024 | 0.008 |
+| RID-5 | RID-6 | A | 95.19 | 0.095 | 0.034 |
+| RID-6 | RID-7 | S | 97.99 | 0.078 | 0.024 |
+| RID-8 | RID-9 | S | 99.79 | 0.030 | 0.013 |
+| RID-9 | RID-10 | S | 99.79 |0.016 | 0.014 |
+ |
 > You can run this experiment also for yourself by executing the following 
 > [script from this project](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/simulations/simulate__with_always_stable_tests_results_no_regression.py).
 
@@ -361,13 +361,13 @@ impact, a negative impact, and no impact below you can see the data set:
 
 When we also automatically analyze this data using our ranking heuristic we are left with the following results:
 
-| Baseline RunID | Benchmark RunID | Rank | Kolmogorov-Smirnov Distance | Wasserstein Distance |
-|----------------|-----------------|------|-----------------------------|----------------------|
-| RID-1 | RID-2 | C | 0.142 | 0.120 |
-| RID-2 | RID-3 | S | 0.062 | 0.025 |
-| RID-3 | RID-4 | A | 0.091 | 0.040 |
-| RID-4 | RID-5 | A | 0.057 | 0.055 |
-| RID-5 | RID-6 | F | 0.283 | 0.255 |
+| Baseline RunID | Benchmark RunID | Rank | Score | Kolmogorov-Smirnov Distance | Wasserstein Distance |
+|----------------|-----------------|------|-------|-----------------------------|----------------------|
+| RID-1 | RID-2 | C | 74.4 |0.109 | 0.109 |
+| RID-2 | RID-3 | S | 98.78 |0.067 | 0.020 |
+| RID-3 | RID-4 | A | 91.87 |0.114 | 0.042 |
+| RID-4 | RID-5 | A | 97.05 |0.047 | 0.041 |
+| RID-5 | RID-6 | F | 0.000 |0.285 | 0.254 |
 
 > You can find the source code for this experiment also in the following 
 > [file in the project](https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/simulations/simulate__with_always_unstable_tests_results_release_situation.py).
