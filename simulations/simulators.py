@@ -1,6 +1,6 @@
 from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
 from data.wranglers import CreateFictitiousScenario, ConvertCsvResultsIntoDictionary
-from data.visuals import LineGraph
+from data.visuals import LineGraph, ScatterPlot
 import random
 
 
@@ -47,21 +47,13 @@ class SimulateScenario:
             data_set_location=self.data_set_location
         )
 
-    def _execute_statistical_distance_test_on_fictitious_data(self, percent_of_data_set, delta, positive) -> object:
+    @staticmethod
+    def _execute_statistical_distance_test_on_fictitious_scenario(scenario: object) -> object:
         """
         Will compare the scenario using the distance test and returning the metrics.
-        :param percent_of_data_set: The amount in percentage of the
-        data set that needs to be changed.
-        :param delta: The amount of change.
-        :param positive: True when the change the delta needs to increase on false delta will be used
-        to decrease response time.
+        :param scenario: the simulated scenario containing all of the data
         :return: All of the statistics that have been computed.
         """
-        scenario = self._create_scenario(
-            percent_of_data_set=percent_of_data_set,
-            delta=delta,
-            positive=positive
-        )
         return StatisticalDistanceTest(
             population_a=scenario.baseline_y,
             population_b=scenario.benchmark_y
@@ -73,17 +65,38 @@ class SimulateScenario:
         Will generate a graph object which can be used to verify the results.
         :return: The plotly graph object/
         """
-        graph = LineGraph(
+        return LineGraph(
             baseline=statistical_distance_test.sample_a,
             benchmark=statistical_distance_test.sample_b,
             wasserstein_distance=statistical_distance_test.wasserstein_distance,
             kolmogorov_smirnov_distance=statistical_distance_test.kolmogorov_smirnov_distance,
             rank=statistical_distance_test.rank,
+            score=statistical_distance_test.score,
             change=delta
         )
-        return graph
 
-    def _simulate_scenario(self, percent_of_data_set, delta, c_id, positive, save_image=False, show_image=False) -> None:
+    @staticmethod
+    def _generate_scatter_plot(scenario: object, statistical_distance_test: object, delta: int):
+        """
+        Will generate a graph object which can be used to verify the results.
+        :return: The plotly graph object.
+        """
+        return ScatterPlot(
+            scenario=scenario,
+            rank=statistical_distance_test.rank,
+            score=statistical_distance_test.score,
+            change=delta
+        )
+
+    def _simulate_scenario(
+            self,
+            percent_of_data_set,
+            delta,
+            c_id,
+            positive,
+            image_type="line",
+            save_image=False,
+            show_image=False) -> None:
         """
         Will run a simulation.
         :param percent_of_data_set: The amount in percentage of the
@@ -96,11 +109,12 @@ class SimulateScenario:
         :param positive: True when the change the delta needs to increase on false delta will be used
         to decrease response time.
         """
-        statistical_distance_test = self._execute_statistical_distance_test_on_fictitious_data(
+        scenario = self._create_scenario(
             percent_of_data_set=percent_of_data_set,
             delta=delta,
             positive=positive
         )
+        statistical_distance_test = self._execute_statistical_distance_test_on_fictitious_scenario(scenario)
         statistics = {
             "percentage_of_data_set": percent_of_data_set,
             "delta": delta,
@@ -114,22 +128,37 @@ class SimulateScenario:
         self._computed_statistics.append(statistics)
         print(statistics)  # <-- Log to the terminal
 
-        graph = self._generate_line_graph(statistical_distance_test, delta)
-        if save_image:
-            graph.save_frame(self.image_export_folder, filename=f"{delta}_{c_id}__")
+        ecdf_line_graph = self._generate_line_graph(statistical_distance_test, delta)
+        raw_scatter_plot = self._generate_scatter_plot(scenario, statistical_distance_test, delta)
 
-        elif show_image:
-            graph.show()
+        if save_image and image_type == "line":
+            ecdf_line_graph.save_frame(self.image_export_folder, filename=f"{delta}_{c_id}__")
+
+        elif save_image and image_type == "scatter":
+            raw_scatter_plot.save_frame(self.image_export_folder, filename=f"{delta}_{c_id}__")
+
+        elif show_image and image_type == "line":
+            ecdf_line_graph.show()
+
+        elif show_image and image_type == "scatter":
+            raw_scatter_plot.show()
 
         else:
-            del graph
+            del ecdf_line_graph
 
-    def run_consistently_changing_benchmark_fictitious_scenario(self, percent_of_data, save_image, positive,
-                                                                show_image, repeats=0) -> None:
+    def run_consistently_changing_benchmark_fictitious_scenario(
+            self,
+            percent_of_data,
+            save_image,
+            positive,
+            show_image,
+            image_type="line",
+            repeats=0) -> None:
         """
         A simulation where the benchmark is consistently randomly increased.
         This will generate an ever changing benchmark that can help us find the correct critical values.
 
+        :param image_type:
         :param percent_of_data: The amount in percentage of the
         data set that needs to be changed.
         :param save_image: If you want to save the image
@@ -154,6 +183,7 @@ class SimulateScenario:
                     c_id=repeat_id,
                     save_image=save_image,
                     show_image=show_image,
+                    image_type=image_type,
                     positive=positive
                 )
 

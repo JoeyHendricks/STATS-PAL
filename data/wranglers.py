@@ -60,7 +60,7 @@ class ConvertCsvResultsIntoDictionary:
 
 class CreateFictitiousScenario:
 
-    def __init__(self, data_set_location, positive, percentage=0, delta=0, baseline_id="RID-3", benchmark_id="RID-4", ):
+    def __init__(self, baseline_id, benchmark_id, data_set_location, positive, percentage=0, delta=0):
         """
 
         :param percentage:
@@ -72,15 +72,16 @@ class CreateFictitiousScenario:
         """
         scenarios = ConvertCsvResultsIntoDictionary(data_set_location).data
 
-        self.baseline_x = scenarios[baseline_id]["timestamps"]
-        self.baseline_y = scenarios[baseline_id]["response_times"]
-        self.benchmark_y = scenarios[benchmark_id]["response_times"]
-        self.benchmark_x = scenarios[benchmark_id]["timestamps"]
+        time_stamps = scenarios[baseline_id]["timestamps"]
+        response_times = scenarios[baseline_id]["response_times"]
+        self.baseline_x = list(time_stamps)
+        self.baseline_y = list(response_times)
 
-        self.baseline_test_id = baseline_id
-        self.benchmark_test_id = benchmark_id
+        time_stamps = scenarios[benchmark_id]["timestamps"]
+        response_times = scenarios[benchmark_id]["response_times"]
+        self.benchmark_x = list(time_stamps)
         self.benchmark_y = self.randomly_decrease_or_increase_part_of_the_population(
-            population=self.benchmark_y,
+            population=response_times,
             percentage=percentage,
             delta=delta,
             positive=positive
