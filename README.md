@@ -376,7 +376,7 @@ When correlating the  rank to what we see in our scatter plot we can determine t
 **RID-2 to RID-5** are very similar in performance but have a low amount of difference one could accept as the amount of
 distance is small, and it would therefore not directly impact our user experience.
 
-##
+## Scoring our distance metrics
 
 Ranks are great for categorizing your test results and making the performance impact understandable for other people. 
 However, they can introduce some blind spots in your automatic analysis as they do allow a minimal amount of regression. 
