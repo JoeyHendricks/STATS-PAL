@@ -30,7 +30,7 @@ class StatisticalDistanceTest:
     The models used in this class can there for be consider as a general guideline
     which can be adjusted to fit your own need.
     """
-
+    SEED = 1996
     # The letter rank that interprets the wasserstein & kolmogorov smirnov distance.
     LETTER_RANKS = [
 
@@ -44,40 +44,6 @@ class StatisticalDistanceTest:
 
     ]
 
-    # The matrix used to score the d-value from 0 to 100.
-    SCORING_MATRIX = [
-
-        {"wasserstein_boundary": 0.005, "kolmogorov_smirnov_boundary": 0.060, "punishment": 0.00210437},
-        {"wasserstein_boundary": 0.010, "kolmogorov_smirnov_boundary": 0.065, "punishment": 0.00217105},
-        {"wasserstein_boundary": 0.015, "kolmogorov_smirnov_boundary": 0.070, "punishment": 0.00787242},
-        {"wasserstein_boundary": 0.020, "kolmogorov_smirnov_boundary": 0.075, "punishment": 0.00791472},
-        {"wasserstein_boundary": 0.025, "kolmogorov_smirnov_boundary": 0.080, "punishment": 0.00814541},
-        {"wasserstein_boundary": 0.030, "kolmogorov_smirnov_boundary": 0.085, "punishment": 0.00884361},
-        {"wasserstein_boundary": 0.035, "kolmogorov_smirnov_boundary": 0.090, "punishment": 0.00907313},
-        {"wasserstein_boundary": 0.040, "kolmogorov_smirnov_boundary": 0.095, "punishment": 0.01296521},
-        {"wasserstein_boundary": 0.045, "kolmogorov_smirnov_boundary": 0.100, "punishment": 0.01383224},
-        {"wasserstein_boundary": 0.050, "kolmogorov_smirnov_boundary": 0.105, "punishment": 0.01443168},
-        {"wasserstein_boundary": 0.055, "kolmogorov_smirnov_boundary": 0.110, "punishment": 0.01624729},
-        {"wasserstein_boundary": 0.060, "kolmogorov_smirnov_boundary": 0.115, "punishment": 0.01760769},
-        {"wasserstein_boundary": 0.065, "kolmogorov_smirnov_boundary": 0.120, "punishment": 0.01886994},
-        {"wasserstein_boundary": 0.070, "kolmogorov_smirnov_boundary": 0.125, "punishment": 0.02218302},
-        {"wasserstein_boundary": 0.075, "kolmogorov_smirnov_boundary": 0.130, "punishment": 0.02376578},
-        {"wasserstein_boundary": 0.080, "kolmogorov_smirnov_boundary": 0.135, "punishment": 0.02734606},
-        {"wasserstein_boundary": 0.085, "kolmogorov_smirnov_boundary": 0.140, "punishment": 0.03823586},
-        {"wasserstein_boundary": 0.090, "kolmogorov_smirnov_boundary": 0.145, "punishment": 0.03894435},
-        {"wasserstein_boundary": 0.095, "kolmogorov_smirnov_boundary": 0.150, "punishment": 0.04147971},
-        {"wasserstein_boundary": 0.100, "kolmogorov_smirnov_boundary": 0.155, "punishment": 0.04562214},
-        {"wasserstein_boundary": 0.105, "kolmogorov_smirnov_boundary": 0.160, "punishment": 0.04700291},
-        {"wasserstein_boundary": 0.110, "kolmogorov_smirnov_boundary": 0.165, "punishment": 0.04833569},
-        {"wasserstein_boundary": 0.115, "kolmogorov_smirnov_boundary": 0.170, "punishment": 0.06287215},
-        {"wasserstein_boundary": 0.120, "kolmogorov_smirnov_boundary": 0.175, "punishment": 0.06680662},
-        {"wasserstein_boundary": 0.125, "kolmogorov_smirnov_boundary": 0.180, "punishment": 0.07658837},
-        {"wasserstein_boundary": 0.130, "kolmogorov_smirnov_boundary": 0.185, "punishment": 0.08191112},
-        {"wasserstein_boundary": 0.135, "kolmogorov_smirnov_boundary": 0.190, "punishment": 0.08290606},
-        {"wasserstein_boundary": 0.140, "kolmogorov_smirnov_boundary": 0.195, "punishment": 0.15592140},
-
-    ]
-
     def __init__(self, population_a: list, population_b: list) -> None:
         """
         Will construct the class and calculate all the required statistics.
@@ -87,6 +53,14 @@ class StatisticalDistanceTest:
         :param population_a: An list of floats of the A population (baseline).
         :param population_b: An list of floats of the B population (benchmark).
         """
+        # Building scoring matrix
+        self._wasserstein_lowest_boundary = 0.020
+        self._kolmogorov_smirnov_lowest_boundary = 0.060
+        self._matrix_size = 100
+        self.boundary_increment = 0.001
+        self.SCORING_MATRIX = self._generate_scoring_matrix()
+
+        # Calculate statistics
         self.sample_size = min([len(population_a), len(population_b)])
         self.sample_a = self._calculate_empirical_cumulative_distribution_function(population_a)
         self.sample_b = self._calculate_empirical_cumulative_distribution_function(population_b)
@@ -148,6 +122,33 @@ class StatisticalDistanceTest:
         :return:
         """
         return (np.array(raw_data) - np.array(raw_data).mean()) / np.array(raw_data).std()
+
+    def _generate_scoring_matrix(self) -> list:
+        """
+
+        :return:
+        """
+        # Building predictive dirichlet scoring matrix using seed 1996
+        np.random.seed(self.SEED)
+        dirichlet_distribution = np.random.dirichlet(alpha=np.ones(self._matrix_size), size=1)[0]
+        dirichlet_distribution.sort()
+
+        # Generating scoring grid
+        wst_start_val = self._wasserstein_lowest_boundary
+        ks_start_val = self._kolmogorov_smirnov_lowest_boundary
+        scoring_matrix = []
+        for punishment in dirichlet_distribution:
+            scoring_matrix.append(
+                {
+                    "wasserstein_boundary": wst_start_val,
+                    "kolmogorov_smirnov_boundary": ks_start_val,
+                    "punishment": punishment
+                }
+            )
+            wst_start_val += self.boundary_increment
+            ks_start_val += self.boundary_increment
+
+        return scoring_matrix
 
     def _calculate_empirical_cumulative_distribution_function(self, population: list) -> object:
         """
@@ -222,7 +223,7 @@ class StatisticalDistanceTest:
 
             if self._ks_d_value >= boundary["kolmogorov_smirnov_boundary"]:
                 ks_score -= boundary["punishment"]
-        return round(float(ks_score + ws_score) / 2 * 100, 2)
+        return abs(round(float(ks_score + ws_score) / 2 * 100, 2))
 
     def _letter_rank_distance_statistics(self) -> str:
         """
