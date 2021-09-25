@@ -1,6 +1,6 @@
 <!-- LOGO -->
 <p align="center">
-  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.png?raw=true"/>
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/images/banner.jpg?raw=true"/>
 </p>
 
 ___
