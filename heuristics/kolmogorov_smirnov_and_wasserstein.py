@@ -54,8 +54,8 @@ class StatisticalDistanceTest:
         :param population_b: An list of floats of the B population (benchmark).
         """
         # Building scoring matrix
-        self._wasserstein_lowest_boundary = 0.020
-        self._kolmogorov_smirnov_lowest_boundary = 0.060
+        self._wasserstein_lowest_boundary = 0.010
+        self._kolmogorov_smirnov_lowest_boundary = 0.040
         self._matrix_size = 100
         self.boundary_increment = 0.001
         self.SCORING_MATRIX = self._generate_scoring_matrix()

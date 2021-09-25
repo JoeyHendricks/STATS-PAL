@@ -118,7 +118,7 @@ class ScatterPlot:
         )
         figure.update_layout(
             height=800, width=1200,
-            title_text=f"Benchmark Vs Baseline, ranked: <b>{self.rank}</b>",
+            title_text=f"Benchmark Vs Baseline, scored: <b>{self.score}</b>",
         )
         figure.update_yaxes(type="log", range=[-2.5, 2.5], title_text="Response Time in Seconds (logarithmic scale)")
         figure.update_xaxes(title_text="Epoch Time Stamps")
@@ -163,6 +163,8 @@ class Animation:
         """
         images = []
         files_in_target_folder = [f for f in listdir(target_folder) if isfile(join(target_folder, f))]
+        files_in_target_folder = sorted(files_in_target_folder,key=lambda x: int(os.path.splitext(x)[0]))
         for file_name in files_in_target_folder:
+            print(file_name)
             images.append(imageio.imread(f"{target_folder}\\{file_name}"))
         imageio.mimsave(f"{export_folder}\\out.gif", images)

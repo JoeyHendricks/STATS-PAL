@@ -132,10 +132,10 @@ class SimulateScenario:
         raw_scatter_plot = self._generate_scatter_plot(scenario, statistical_distance_test, delta)
 
         if save_image and image_type == "line":
-            ecdf_line_graph.save_frame(self.image_export_folder, filename=f"{delta}_{c_id}__")
+            ecdf_line_graph.save_frame(self.image_export_folder, filename=f"{delta}")
 
         elif save_image and image_type == "scatter":
-            raw_scatter_plot.save_frame(self.image_export_folder, filename=f"{delta}_{c_id}__")
+            raw_scatter_plot.save_frame(self.image_export_folder, filename=f"{delta}")
 
         elif show_image and image_type == "line":
             ecdf_line_graph.show()
