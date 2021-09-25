@@ -376,6 +376,23 @@ When correlating the  rank to what we see in our scatter plot we can determine t
 **RID-2 to RID-5** are very similar in performance but have a low amount of difference one could accept as the amount of
 distance is small, and it would therefore not directly impact our user experience.
 
+##
+
+Ranks are great for categorizing your test results and making the performance impact understandable for other people. 
+However, they can introduce some blind spots in your automatic analysis as they do allow a minimal amount of regression. 
+
+Because of this reason, a stricter threshold like a score is better, so you can better define the amount of regression 
+you will tolerate in your automatic analysis. Scoring test results would therefore look like the animation below where 
+we keep slowing down our benchmark test, but we keep our identical baseline test stable:
+
+<!-- raw data being scored -->
+<p align="center">
+  <img src="https://github.com/JoeyHendricks/automated-performance-test-result-analysis/blob/master/media/gif/scoring-simulation-on-raw-data.gif?raw=true"/>
+</p>
+
+As you can see with a score you could define a harsher cut-off point of how much change you will tolerate between runs.
+
+
 ## Contribute to this project 
 
 Help me to make result analysis easier for more performance engineers around the globe by donating your 
