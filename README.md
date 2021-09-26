@@ -381,9 +381,9 @@ distance is small, and it would therefore not directly impact our user experienc
 Ranks are great for categorizing your test results and making the performance impact understandable for other people. 
 However, they can introduce some blind spots in your automatic analysis as they do allow a minimal amount of regression. 
 
-Because of this reason, a stricter threshold like a score is better, so you can better define the amount of regression 
-you will tolerate in your automatic analysis. Scoring test results would therefore look like the animation below where 
-we keep slowing down our benchmark test, but we keep our identical baseline test stable:
+Because of this reason, a stricter threshold like a score is better, so you can better define the amount of natural 
+regression you will tolerate in your automatic analysis. Scoring test results would therefore look like the animation 
+below where we keep slowing down our benchmark test, but we keep our identical baseline test stable:
 
 <!-- raw data being scored -->
 <p align="center">
