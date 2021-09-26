@@ -154,8 +154,10 @@ print(stats_distance_test.rank)  # >> C
 Automating performance test result analysis is very well possible and can provide a lot of value as we can 
 liberate performance engineers from complex manual labour. It lets engineers  tackle more pressing issues and 
 allow DevOps teams to take up slack when it comes to interpreting the results of performance tests that have been 
-executed for them. If this was an interesting read, and you want to learn more about this topic, I would suggest 
-taking a look at my GitHub repository. 
+executed for them. 
+
+If this was an interesting read, and you want to learn more about this topic, I would suggest taking a look at my 
+GitHub repository. 
 
 ___
 <!-- FOOTER -->
