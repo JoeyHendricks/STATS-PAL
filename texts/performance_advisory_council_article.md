@@ -5,13 +5,13 @@
 
 ___
 
-*Our beautiful digital world is changing faster every day and with increased speed comes an unprecedented increase in 
+**Our beautiful digital world is changing faster every day and with increased speed comes an unprecedented increase in 
 demand for automating complex actions so organizations can save time and pick up speed and be ready to face the ever 
-more demanding online world.*
+more demanding online world.**
 
-*Because of this demand for automation, there is nothing new to continuously execute performance tests in an CI/CD 
+**Because of this demand for automation, there is nothing new to continuously execute performance tests in an CI/CD 
 pipeline. However, when integrating our performance testing process into a pipeline, we quickly recognize that 
-automating the analysis of our complex test results is not an easy to hurdle to overcome.*
+automating the analysis of our complex test results is not an easy to hurdle to overcome.**
 
 ## Please don’t bother me unless it is important
 
