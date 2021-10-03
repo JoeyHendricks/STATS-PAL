@@ -215,61 +215,10 @@ class SimulateScenario:
             }
             self._computed_statistics.append(statistics)
             print(statistics)  # <-- Log to the terminal
-
-
-class SimulateAgainstRealWorldData:
-
-    def __init__(self, scenario_simulation_order: dict):
-        """
-
-        :param scenario_simulation_order:
-        """
-        self.scenario_simulation_order = scenario_simulation_order
-
-
-def verify_against_real_world_data_prod():
-    print("real world data")
-
-    sample_order = [
-        {"data": ["RID-1", "RID-2"]},
-        {"data": ["RID-2", "RID-3"]},
-        {"data": ["RID-3", "RID-4"]},
-        {"data": ["RID-4", "RID-5"]},
-        {"data": ["RID-5", "RID-6"]},
-        {"data": ["RID-1", "RID-6"]},
-        {"data": ["RID-1", "RID-1"]},
-    ]
-
-    for samples in sample_order:
-        print("----------------------------")
-        print(samples["data"])
-        distance_test = StatisticalDistanceTest(
-            population_a=response_times_prod[samples["data"][0]]["response_times"],
-            population_b=response_times_prod[samples["data"][1]]["response_times"]
-        )
-        print(
-            f"ks-d {distance_test._ks_d_value} -- ws {distance_test._ws_d_value} -- Rank: {distance_test.rank} -- Score: {distance_test.score}")
-
-        print("----------------------------")
-
-
-def verify_against_real_world_data_dummy():
-    print("real world data")
-
-    sample_order = [
-        {"data": ["RID-0", "RID-1"]},
-        {"data": ["RID-1", "RID-2"]},
-        {"data": ["RID-2", "RID-3"]},
-        {"data": ["RID-3", "RID-4"]},
-    ]
-
-    for samples in sample_order:
-        print("----------------------------")
-        print(samples["data"])
-        distance_test = StatisticalDistanceTest(
-            population_a=response_times_dummy[samples["data"][0]]["response_times"],
-            population_b=response_times_dummy[samples["data"][1]]["response_times"]
-        )
-        print(
-            f"-- ks-d {distance_test._ks_d_value} -- ws {distance_test._ws_d_value} -- Rank: {distance_test.rank} -- Score: {distance_test.score}")
-        print("----------------------------")
+            ecdf_line_graph = self._generate_line_graph(statistical_distance_test, 0)
+            """
+            raw_scatter_plot = self._generate_scatter_plot(self._create_scenario(
+                100, 0, True
+            ), statistical_distance_test, 0)
+            """
+            ecdf_line_graph.show()
