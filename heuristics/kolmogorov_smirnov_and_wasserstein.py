@@ -27,33 +27,25 @@ class StatisticalDistance:
     which can be adjusted to fit your own need.
     """
     SEED = 1996
-    # The letter rank that interprets the wateriness & kolmogorov smirnov distance.
-    LETTER_RANKS = [
 
-        {"wasserstein_boundary": 0.020, "kolmogorov_smirnov_boundary": 0.060, "rank": "S"},
-        {"wasserstein_boundary": 0.030, "kolmogorov_smirnov_boundary": 0.070, "rank": "A"},
-        {"wasserstein_boundary": 0.040, "kolmogorov_smirnov_boundary": 0.080, "rank": "B"},
-        {"wasserstein_boundary": 0.050, "kolmogorov_smirnov_boundary": 0.090, "rank": "C"},
-        {"wasserstein_boundary": 0.075, "kolmogorov_smirnov_boundary": 0.100, "rank": "D"},
-        {"wasserstein_boundary": 0.100, "kolmogorov_smirnov_boundary": 0.125, "rank": "E"},
-        {"wasserstein_boundary": 0.125, "kolmogorov_smirnov_boundary": 0.150, "rank": "F"},
-
-    ]
-
-    def __init__(self, baseline_ecdf: DataFrame, benchmark_ecdf: DataFrame) -> None:
+    def __init__(self, baseline_ecdf: DataFrame, benchmark_ecdf: DataFrame, heuristics_boundaries: dict) -> None:
         """
         Will construct the class and calculate all the required statistics.
         After all the computation have been completed the following information can then
         be extracted from this class:
         :param baseline_ecdf: An list of floats of the A population (baseline).
         :param benchmark_ecdf: An list of floats of the B population (benchmark).
+        :param heuristics_boundaries: a set of boundaries that determine the outcome of the heuristic -
+        interpretation of the distance comparison.
         """
         # Building scoring matrix
-        self._wasserstein_lowest_boundary = 0.030
-        self._kolmogorov_smirnov_lowest_boundary = 0.060
-        self._matrix_size = 100
-        self.boundary_increment = 0.001
+        self._wasserstein_lowest_boundary = heuristics_boundaries["score_boundaries"]["wasserstein_lowest_boundary"]
+        self._kolmogorov_smirnov_lowest_boundary = heuristics_boundaries["score_boundaries"]["kolmogorov_smirnov"
+                                                                                             "_lowest_boundary"]
+        self._matrix_size = heuristics_boundaries["score_boundaries"]["matrix_size"]
+        self.boundary_increment = heuristics_boundaries["score_boundaries"]["boundary_increment"]
         self.SCORING_MATRIX = self._generate_scoring_matrix()
+        self.LETTER_RANKS = heuristics_boundaries["letter_ranks"]
 
         # Calculate statistics
         self.sample_a = baseline_ecdf
