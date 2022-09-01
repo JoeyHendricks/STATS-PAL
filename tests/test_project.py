@@ -1,5 +1,5 @@
 from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
-from data import file_location_hendricks_raw_data_set_001
+from data import location_hendricks_set_001
 from data.wranglers import ConvertCsvResultsIntoDictionary
 from QuickPotato import performance_test as pt
 from QuickPotato.statistical.visualizations import BarChart, FlameGraph
@@ -16,7 +16,7 @@ class TestHeuristic(unittest.TestCase):
         """
         Will structure the raw data object used in the tests.
         """
-        self.raw_data = ConvertCsvResultsIntoDictionary(file_location_hendricks_raw_data_set_001).data
+        self.raw_data = ConvertCsvResultsIntoDictionary(location_hendricks_set_001).data
 
     def test_metrics_if_the_correct_rank_can_be_estimated(self) -> None:
         """
