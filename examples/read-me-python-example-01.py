@@ -11,8 +11,8 @@ from data.wranglers import ConvertCsvResultsIntoDictionary
 data_set = ConvertCsvResultsIntoDictionary(file_location_hendricks_raw_data_set_001).data
 
 # Feed your raw data to the measurements object to calculate the relevant statistics.
-baseline_measurements = Measurements(data=data_set["RID-1"]["response_times"])
-benchmark_measurements = Measurements(data=data_set["RID-2"]["response_times"])
+baseline_measurements = Measurements(data=data_set["RID-5"]["response_times"])
+benchmark_measurements = Measurements(data=data_set["RID-4"]["response_times"])
 
 # Setup and run the distance test against the given data.
 stats_distance_test = StatisticalDistance(
