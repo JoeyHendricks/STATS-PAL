@@ -7,7 +7,7 @@ import pandas as pd
 
 class Measurements:
 
-    def __init__(self, data: list):
+    def __init__(self, data: list, perc: float = 95):
         """
         Will load in the object and map the object arguments to attributes.
         These attributes ares used to identify the data.
@@ -18,6 +18,7 @@ class Measurements:
 
         # Arguments
         self._provided_measurements = data
+        self._percentile = perc
 
     @property
     def raw(self) -> list:
@@ -48,7 +49,7 @@ class Measurements:
         :return:
         """
         if "_normalized_" not in self.__dict__.keys():
-            self.__dict__["_normalized_"] = normalize_array(self.raw)
+            self.__dict__["_normalized_"] = normalize_array(self.raw, self._percentile)
         return self.__dict__["_normalized_"]
 
     @property
