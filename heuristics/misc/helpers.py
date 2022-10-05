@@ -21,15 +21,15 @@ def calculate_percentage_change(old: float, new: float) -> float:
         return 0.00
 
 
-def normalize_array(data: list) -> tuple:
+def normalize_array(data: list, perc: float) -> tuple:
     """
     Will normalize a given raw distribution to its maximum.
     :param data: A list of raw measurements that need to be normalized.
     :return: An normalized list of data.
     """
-    percentile = np.percentile(data, 95)
+    percentile = np.percentile(data, perc)
     data = [value for value in data if value <= percentile]
-    return (np.array(data) - np.array(data).mean()) / np.array(data).std()
+    return np.array(data)
 
 
 def calculate_ecdf(normalized_sample: tuple) -> pd.DataFrame:
