@@ -20,16 +20,18 @@ def calculate_percentage_change(old: float, new: float) -> float:
     except ZeroDivisionError:
         return 0.00
 
-
-def normalize_array(data: list, perc: float) -> tuple:
+    
+def normalize_array(data: list):
     """
-    Will normalize a given raw distribution to its maximum.
-    :param data: A list of raw measurements that need to be normalized.
-    :return: An normalized list of data.
+    Will normalize the data the below the 95th percentile using the
+    min/max method.
+    :param data:
+    :return:
     """
-    percentile = np.percentile(data, perc)
-    data = [value for value in data if value <= percentile]
-    return np.array(data)
+    data = outlier_filter(data)
+    max_value = max(data)
+    min_value = min(data)
+    return [(x - min_value) / (max_value - min_value) for x in data]
 
 
 def calculate_ecdf(normalized_sample: tuple) -> pd.DataFrame:
