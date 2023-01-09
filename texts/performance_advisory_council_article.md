@@ -126,11 +126,11 @@ Using this class is fairly simple as you only need to execute the following code
 
 ```python
 from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
-from data import file_location_hendricks_raw_data_set_001  # <-- My primary example data set.
+from data import location_hendricks_set_001  # <-- My primary example data set.
 from data.wranglers import ConvertCsvResultsIntoDictionary
 
 # As an example I provided a way to quickly convert a csv file into a Python dictionary.
-raw_data = ConvertCsvResultsIntoDictionary(file_location_hendricks_raw_data_set_001).data
+raw_data = ConvertCsvResultsIntoDictionary(location_hendricks_set_001).data
 
 # Run the distance test against the given data.
 stats_distance_test = StatisticalDistanceTest(
