@@ -20,7 +20,16 @@ def calculate_percentage_change(old: float, new: float) -> float:
     except ZeroDivisionError:
         return 0.00
 
-    
+
+def outlier_filter(data: list) -> list:
+    """
+    Will filter out all outliers above the 95th percentile of the test.
+    :return: A list of floats that excluded its outliers.
+    """
+    percentile = np.percentile(data, 95)
+    return [value for value in data if value <= percentile]
+
+
 def normalize_array(data: list):
     """
     Will normalize the data the below the 95th percentile using the
