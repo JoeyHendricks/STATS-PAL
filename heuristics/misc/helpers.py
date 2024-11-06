@@ -21,26 +21,17 @@ def calculate_percentage_change(old: float, new: float) -> float:
         return 0.00
 
 
-def outlier_filter(data: list) -> list:
+def normalize_array(data: list, percentile: float) -> np.array:
     """
-    Will filter out all outliers above the 95th percentile of the test.
-    :return: A list of floats that excluded its outliers.
+    Will normalize a given raw distribution to its maximum.
+    param data: A list of raw measurements that need to be normalized.
+    param percentile: the percentile cut-off point of the data everything below this point
+    will be excluded from normalisation
+    :return: An normalized list of data.
     """
-    percentile = np.percentile(data, 95)
-    return [value for value in data if value <= percentile]
-
-
-def normalize_array(data: list):
-    """
-    Will normalize the data the below the 95th percentile using the
-    min/max method.
-    :param data:
-    :return:
-    """
-    data = outlier_filter(data)
-    max_value = max(data)
-    min_value = min(data)
-    return [(x - min_value) / (max_value - min_value) for x in data]
+    percentile = np.percentile(data, percentile)
+    data = [value for value in data if value <= percentile]
+    return np.array(data)
 
 
 def calculate_ecdf(normalized_sample: tuple) -> pd.DataFrame:
