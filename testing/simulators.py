@@ -1,4 +1,4 @@
-from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistanceTest
+from heuristics.kolmogorov_smirnov_and_wasserstein import StatisticalDistance
 from data.wranglers import CreateFictitiousScenario, ConvertCsvResultsIntoDictionary
 from data.visuals import LineGraph, ScatterPlot
 import random
@@ -11,7 +11,7 @@ class SimulateScenario:
     """
     SEED = 65981
 
-    def __init__(self, data_set_location, benchmark_id=None, baseline_id=None):
+    def __init__(self, data_set_location, heuristics_boundaries, benchmark_id=None, baseline_id=None):
         """
         Will construct the simulation object and provide a few attributes
         which can be changed.
@@ -22,12 +22,13 @@ class SimulateScenario:
         """
         self.benchmark_scenario_id = benchmark_id
         self.baseline_scenario_id = baseline_id
+        self.heuristics_boundaries = heuristics_boundaries
 
         self.data_set_location = data_set_location
         self.image_export_folder = "C:\\temp\\change"
         self._computed_statistics = []
 
-    def _create_scenario(self, percent_of_data_set, delta, positive) -> object:
+    def _create_scenario(self, percent_of_data_set, delta, positive) -> CreateFictitiousScenario:
         """
         Will create a scenario based on the scenario information.
         :param percent_of_data_set: The amount in percentage of the
@@ -47,43 +48,43 @@ class SimulateScenario:
             data_set_location=self.data_set_location
         )
 
-    @staticmethod
-    def _execute_statistical_distance_test_on_fictitious_scenario(scenario: object) -> object:
+    def _run_distance_test_on_fictitious_scenario(self, scenario: CreateFictitiousScenario) -> StatisticalDistance:
         """
         Will compare the scenario using the distance test and returning the metrics.
         :param scenario: the simulated scenario containing all of the data
         :return: All of the statistics that have been computed.
         """
-        return StatisticalDistanceTest(
-            population_a=scenario.baseline_y,
-            population_b=scenario.benchmark_y
+        return StatisticalDistance(
+            baseline_ecdf=scenario.baseline_y,
+            benchmark_ecdf=scenario.benchmark_y,
+            heuristics_boundaries=self.heuristics_boundaries
         )
 
     @staticmethod
-    def _generate_line_graph(statistical_distance_test: object, delta):
+    def _generate_line_graph(distance_test: StatisticalDistance, delta):
         """
         Will generate a graph object which can be used to verify the results.
         :return: The plotly graph object/
         """
         return LineGraph(
-            baseline=statistical_distance_test.sample_a,
-            benchmark=statistical_distance_test.sample_b,
-            wasserstein_distance=statistical_distance_test.wasserstein_distance,
-            kolmogorov_smirnov_distance=statistical_distance_test.kolmogorov_smirnov_distance,
-            rank=statistical_distance_test.rank,
-            score=statistical_distance_test.score,
+            baseline=distance_test.sample_a,
+            benchmark=distance_test.sample_b,
+            wasserstein_distance=distance_test.wasserstein_distance,
+            kolmogorov_smirnov_distance=distance_test.kolmogorov_smirnov_distance,
+            rank=distance_test.letter_rank,
+            score=distance_test.score,
             change=delta
         )
 
     @staticmethod
-    def _generate_scatter_plot(scenario: object, statistical_distance_test: object, delta: int):
+    def _generate_scatter_plot(scenario: object, statistical_distance_test: StatisticalDistance, delta: int):
         """
         Will generate a graph object which can be used to verify the results.
         :return: The plotly graph object.
         """
         return ScatterPlot(
             scenario=scenario,
-            rank=statistical_distance_test.rank,
+            rank=statistical_distance_test.letter_rank,
             score=statistical_distance_test.score,
             change=delta
         )
@@ -103,7 +104,7 @@ class SimulateScenario:
         data set that needs to be changed.
         :param delta: The amount of change.
         :param c_id: an unique id that can be added to the file name
-        to make sure that each file name is unique. (Normally only used when repeating simulations)
+        to make sure that each file name is unique. (Normally only used when repeating testing)
         :param save_image: If you want to save the image.
         :param show_image: If you want to view the image in your browser
         :param positive: True when the change the delta needs to increase on false delta will be used
@@ -114,7 +115,7 @@ class SimulateScenario:
             delta=delta,
             positive=positive
         )
-        statistical_distance_test = self._execute_statistical_distance_test_on_fictitious_scenario(scenario)
+        statistical_distance_test = self._run_distance_test_on_fictitious_scenario(scenario)
         statistics = {
             "percentage_of_data_set": percent_of_data_set,
             "delta": delta,
@@ -122,8 +123,8 @@ class SimulateScenario:
             "kolmogorov_smirnov_probability": statistical_distance_test.kolmogorov_smirnov_probability,
             "wasserstein_distance": statistical_distance_test.wasserstein_distance,
             "score": statistical_distance_test.score,
-            "rank": statistical_distance_test.rank,
-            "sample_size": statistical_distance_test.sample_size,
+            "rank": statistical_distance_test.letter_rank,
+            "sample_size": len(scenario.baseline_y),
         }
         self._computed_statistics.append(statistics)
         print(statistics)  # <-- Log to the terminal
@@ -192,16 +193,16 @@ class SimulateScenario:
 
         :return:
         """
-
         for simulation in order_of_comparison:
             instructions = simulation["instructions"]
             raw_data = ConvertCsvResultsIntoDictionary(self.data_set_location).data
             baseline_response_times = raw_data[instructions[0]]["response_times"]
             benchmark_response_times = raw_data[instructions[1]]["response_times"]
 
-            statistical_distance_test = StatisticalDistanceTest(
-                population_a=baseline_response_times,
-                population_b=benchmark_response_times
+            statistical_distance_test = StatisticalDistance(
+                baseline_ecdf=baseline_response_times,
+                benchmark_ecdf=benchmark_response_times,
+                heuristics_boundaries=self.heuristics_boundaries
             )
             statistics = {
                 "baseline-runid": instructions[0],
@@ -210,8 +211,8 @@ class SimulateScenario:
                 "kolmogorov_smirnov_probability": statistical_distance_test.kolmogorov_smirnov_probability,
                 "wasserstein_distance": statistical_distance_test.wasserstein_distance,
                 "score": statistical_distance_test.score,
-                "rank": statistical_distance_test.rank,
-                "sample_size": statistical_distance_test.sample_size,
+                "rank": statistical_distance_test.letter_rank,
+                "sample_size": len(benchmark_response_times),
             }
             self._computed_statistics.append(statistics)
             print(statistics)  # <-- Log to the terminal

@@ -21,13 +21,15 @@ def calculate_percentage_change(old: float, new: float) -> float:
         return 0.00
 
 
-def normalize_array(data: list, perc: float) -> tuple:
+def normalize_array(data: list, percentile: float) -> np.array:
     """
     Will normalize a given raw distribution to its maximum.
-    :param data: A list of raw measurements that need to be normalized.
+    param data: A list of raw measurements that need to be normalized.
+    param percentile: the percentile cut-off point of the data everything below this point
+    will be excluded from normalisation
     :return: An normalized list of data.
     """
-    percentile = np.percentile(data, perc)
+    percentile = np.percentile(data, percentile)
     data = [value for value in data if value <= percentile]
     return np.array(data)
 

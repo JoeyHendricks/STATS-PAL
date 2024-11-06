@@ -1,4 +1,4 @@
-from simulations.simulators import SimulateScenario
+from testing.simulators import SimulateScenario
 
 # will create the fictitious scenario object
 scenario = SimulateScenario(
